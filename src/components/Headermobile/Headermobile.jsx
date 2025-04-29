@@ -1,4 +1,4 @@
-import SearchbarMobile from "../Searchbar/SearchbarMobile";
+import SearchbarMobile from "../SearchbarMobile/SearchbarMobile";
 import styles from "./headermobile.module.css";
 
 const Headermobile = () => {
@@ -12,7 +12,7 @@ const Headermobile = () => {
         />
         <SearchbarMobile />
         <img
-          className={`${styles.imgMobile}`}
+          className={`${styles.imgMobile} ${styles.imgNav}`}
           src="/assets/bars-solid.svg"
           alt="logo"
         />
