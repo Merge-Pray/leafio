@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import useUserStore from "../../hooks/userStore";
+import userData from "../../data/users.json";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -6,21 +8,7 @@ const Login = () => {
     password: "",
   });
 
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("/users.json");
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+  const [users, setUsers] = useState(userData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
