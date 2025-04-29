@@ -1,5 +1,22 @@
 [
   {
+    "username": "admin",
+    "realName": {
+      "first": "Klara",
+      "last": "Schrader"
+    },
+    "email": "Klara.Schrader34@hotmail.com",
+    "password": "admin",
+    "address": {
+      "city": "Kettedorf",
+      "street": "Klief 32",
+      "zip": "83040"
+    },
+    "userID": "61bd3b03-3c27-422d-837b-415aa528fa80",
+    "ownAds": [],
+    "likedAds": []
+  },
+  {
     "username": "Klara.Schrader",
     "realName": {
       "first": "Klara",
