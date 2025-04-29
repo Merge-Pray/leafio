@@ -1,4 +1,10 @@
-.imgLogo {
+.headerMobile {
+  display: flex;
+  justify-content: space-around;
+  margin: 0.5rem;
+}
+
+.imgMobile {
   width: 30px;
   height: 30px;
 }
