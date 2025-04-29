@@ -1,4 +1,13 @@
-.imgLogo {
+.headerMobile {
+  display: flex;
+  margin: 0.5rem;
+}
+
+.imgMobile {
   width: 30px;
   height: 30px;
+}
+
+.imgNav {
+  margin-left: 5px;
 }
