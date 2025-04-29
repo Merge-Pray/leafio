@@ -1,6 +1,6 @@
-import styles from "./header.module.css";
+import styles from "./headermobile.module.css";
 
-const Header = () => {
+const Headermobile = () => {
   return (
     <div>
       <img
@@ -11,4 +11,5 @@ const Header = () => {
     </div>
   );
 };
-export default Header;
+
+export default Headermobile;

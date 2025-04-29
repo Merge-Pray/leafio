@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
 import "./App.css";
-import Header from "./components/Header/Header";
+import Headermobile from "./components/Headermobile/Headermobile";
 import Landingpage from "./pages/Landingpage/Landingpage";
 import Login from "./pages/Login/Login";
 import About from "./pages/About/About";
@@ -8,7 +8,7 @@ import About from "./pages/About/About";
 function App() {
   return (
     <>
-      <Header />
+      <Headermobile />
       <Routes>
         <Route path="/" element={<Landingpage />} />
         <Route path="login" element={<Login />} />
