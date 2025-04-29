@@ -7,7 +7,7 @@ const Headermobile = () => {
       <div className={`${styles.headerMobile}`}>
         <img
           className={`${styles.imgMobile}`}
-          src="/assets/logo-sample.svg"
+          src="/assets/icon.svg"
           alt="logo"
         />
         <SearchbarMobile />
