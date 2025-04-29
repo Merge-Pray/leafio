@@ -1,0 +1,22 @@
+{
+    "adID": "0a1b2c3d-4567-890a-bcde-123456789abc",
+    "title": "Monstera Deliciosa Ableger",
+    "price": "VB",
+    "description": "Gesunder Monstera-Ableger mit kräftigen Wurzeln. Ca. 25 cm hoch. Abholung bevorzugt.",
+    "category": "Zimmerpflanzen",
+    "tags": ["pflegeleicht", "grünpflanze", "halbschatten", "urban jungle"],
+    "createdAt": "2025-04-29T10:30:00Z",
+    "views": 12,
+    "likes": 3,
+    "images": [
+      "https://res.cloudinary.com/demo/image/upload/v1610000000/leafio/monstera1.jpg",
+      "https://res.cloudinary.com/demo/image/upload/v1610000001/leafio/monstera2.jpg"
+    ],
+    "location": {
+      "city": "Kettedorf",
+      "zip": "83040",
+      "street": "Klief 32"
+    },
+    "userID": "61bd3b03-3c27-422d-837b-415aa528fa80"
+  }
+  
