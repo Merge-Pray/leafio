@@ -10,6 +10,11 @@ const Login = () => {
 
   const [users, setUsers] = useState(userData);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const currentUser = useUserStore((state) => state.currentUser);
+  const setCurrentUser = useUserStore((state) => state.setCurrentUser);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -17,7 +22,22 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const matchedUser = users.find(
+      (user) => user.username === formData.username
+    );
+
+    if (!matchedUser) {
+      setErrorMessage("! User not found");
+    } else if (matchedUser.password !== formData.password) {
+      setErrorMessage("! Wrong password");
+    } else {
+      setCurrentUser(matchedUser);
+    }
   };
+
+  useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -46,7 +66,7 @@ const Login = () => {
           required
         />
       </div>
-
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       <button type="submit">Login</button>
     </form>
   );
