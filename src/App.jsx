@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router";
 import "./App.css";
-import Header from "./components/Header/Header";
 import Landingpage from "./pages/Landingpage/Landingpage";
 import Login from "./pages/Login/Login";
 import About from "./pages/About/About";
 import PlaceAd from "./pages/PlaceAd/PlaceAd";
 import Register from "./pages/Register/Register";
 import User from "./pages/User/User";
+import Header from "./components/Header/Header";
 
 function App() {
   return (
