@@ -14,11 +14,15 @@ const Header = () => {
   return (
     <>
       <div className={`${styles.header}`}>
-        <img
-          className={`${styles.imgLogo}`}
-          src="/assets/logo.svg"
-          alt="logo"
-        />
+        <NavLink to="/">
+          {" "}
+          <img
+            className={`${styles.imgLogo}`}
+            src="/assets/logo.svg"
+            alt="logo"
+          />
+        </NavLink>
+
         <div>
           {currentUser ? (
             <div>
