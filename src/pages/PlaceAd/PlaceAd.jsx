@@ -1,7 +1,7 @@
 import styles from "./placead.module.css";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import CategorySelector from "./CategorySelector"; // Stelle sicher, dass der Pfad korrekt ist
+import CategorySelector from "./CategorySelector"; 
 
 const PlaceAd = ({ user }) => {
   const [formData, setFormData] = useState({
