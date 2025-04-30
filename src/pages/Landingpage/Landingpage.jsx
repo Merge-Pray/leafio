@@ -1,5 +1,6 @@
 import Banner from "../../components/Banner/Banner";
 import CategoryBar from "../../components/CategoryBar/CategoryBar";
+import ProductStart from "../../components/ProductsStart/ProductsStart";
 // import styles from "./landingpage.module.css";
 
 const Landingpage = () => {
@@ -10,6 +11,7 @@ const Landingpage = () => {
       <h2>Willkommen bei Leafio!</h2>
       </div> */}
       <CategoryBar/>
+      <ProductStart/>
     </div>
   );
 };
