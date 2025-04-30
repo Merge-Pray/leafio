@@ -1,12 +1,10 @@
-
 import styles from "./placead.module.css";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import CategorySelector from "./CategorySelector";
-import { db, storage } from "../../config/firebaseConfig"; // Import Firebase database and storage instances
+import { db } from "../../config/firebaseConfig"; // Import Firebase database instance
 import { collection, addDoc, serverTimestamp } from "firebase/firestore"; // Import Firestore functions
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"; // Import Storage functions
-import useUserStore from "../../hooks/userStore"; // Import the Zustand store
+import useUserStore from "../../hooks/userStore"; // Import Zustand store
 
 const PlaceAd = () => {
   const currentUser = useUserStore((state) => state.currentUser); // Get currentUser from Zustand store
@@ -38,50 +36,38 @@ const PlaceAd = () => {
     setError("");
   };
 
-  const handleUploadToFirebase = async () => {
+  const handleUploadToCloudinary = async () => {
     setIsUploading(true);
     setUploadProgress(0);
     const urls = [];
 
     for (const file of images) {
-      const storageRef = ref(storage, `ads/${currentUser.userID}/${uuidv4()}-${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ebqndymu");
+      formData.append("folder", `ads/${currentUser.userID}`);
 
       try {
-        await new Promise((resolve, reject) => {
-          uploadTask.on(
-            'state_changed',
-            (snapshot) => {
-              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              setUploadProgress((prevProgress) => Math.max(prevProgress, progress)); // Update progress
-              console.log('Upload is ' + progress + '% done');
-              switch (snapshot.state) {
-                case 'paused':
-                  console.log('Upload is paused');
-                  break;
-                case 'running':
-                  console.log('Upload is running');
-                  break;
-                default:
-                  break;
-              }
-            },
-            (error) => {
-              console.error("Fehler beim Hochladen des Bildes:", error);
-              setError("Fehler beim Hochladen eines oder mehrerer Bilder.");
-              setIsUploading(false);
-              reject(error);
-            },
-            async () => {
-              // Upload completed successfully, now we can get the download URL
-              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-              urls.push(downloadURL);
-              resolve();
-            }
-          );
-        });
-      } catch (uploadError) {
-        return; // Stop further uploads if one fails
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/dgzbudchq/image/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Fehler beim Hochladen eines oder mehrerer Bilder.");
+        }
+
+        const data = await response.json();
+        urls.push(data.secure_url);
+        setUploadProgress((prev) => prev + 100 / images.length);
+      } catch (error) {
+        console.error("Fehler beim Hochladen des Bildes:", error);
+        setError("Fehler beim Hochladen eines oder mehrerer Bilder.");
+        setIsUploading(false);
+        return;
       }
     }
 
@@ -116,7 +102,9 @@ const PlaceAd = () => {
     }
 
     if (imageURLs.length === 0 && images.length > 0) {
-      setError("Die Bilder konnten nicht hochgeladen werden. Bitte versuche es erneut.");
+      setError(
+        "Die Bilder konnten nicht hochgeladen werden. Bitte versuche es erneut."
+      );
       return;
     }
 
@@ -132,7 +120,7 @@ const PlaceAd = () => {
       description: formData.description,
       category: selectedCategory,
       tags: selectedFlags,
-      createdAt: serverTimestamp(), // Use Firebase server timestamp
+      createdAt: serverTimestamp(),
       views: 0,
       likes: 0,
       images: imageURLs,
@@ -155,7 +143,9 @@ const PlaceAd = () => {
       setImageURLs([]);
     } catch (error) {
       console.error("Fehler beim Speichern der Anzeige in Firebase:", error);
-      setError("Fehler beim Erstellen der Anzeige. Bitte versuche es später erneut.");
+      setError(
+        "Fehler beim Erstellen der Anzeige. Bitte versuche es später erneut."
+      );
     }
   };
 
@@ -203,23 +193,38 @@ const PlaceAd = () => {
         />
 
         {images.length > 0 && !isUploading && (
-          <button type="button" className={styles.uploadButton} onClick={handleUploadToFirebase}>
+          <button
+            type="button"
+            className={styles.uploadButton}
+            onClick={handleUploadToCloudinary}
+          >
             Bilder hochladen
           </button>
         )}
 
         {isUploading && (
           <div className={styles.progressBarContainer}>
-            <div className={styles.progressBar} style={{ width: `${uploadProgress}%` }}>
+            <div
+              className={styles.progressBar}
+              style={{ width: `${uploadProgress}%` }}
+            >
               {Math.round(uploadProgress)}%
             </div>
           </div>
         )}
 
         {error && <p className={styles.errorMessage}>{error}</p>}
-        {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
+        {successMessage && (
+          <p className={styles.successMessage}>{successMessage}</p>
+        )}
 
-        <button type="submit" className={styles.submitButton} disabled={isUploading || imageURLs.length === 0 && images.length > 0}>
+        <button
+          type="submit"
+          className={styles.submitButton}
+          disabled={
+            isUploading || (imageURLs.length === 0 && images.length > 0)
+          }
+        >
           Anzeige erstellen
         </button>
       </form>
