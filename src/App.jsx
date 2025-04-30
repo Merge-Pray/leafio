@@ -12,14 +12,16 @@ function App() {
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<Landingpage />} />
-        <Route path="login" element={<Login />} />
-        <Route path="placead" element={<PlaceAd/>}/>
-        <Route path="about" element={<About />} />
-        <Route path="/user/:userID" element={<User />} />
-        <Route path="register" element={<Register />} />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path="/" element={<Landingpage />} />
+          <Route path="login" element={<Login />} />
+          <Route path="placead" element={<PlaceAd />} />
+          <Route path="about" element={<About />} />
+          <Route path="/user/:userID" element={<User />} />
+          <Route path="register" element={<Register />} />
+        </Routes>
+      </main>
     </>
   );
 }
