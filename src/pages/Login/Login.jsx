@@ -12,6 +12,7 @@ const Login = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const setCurrentUser = useUserStore((state) => state.setCurrentUser);
   const currentUser = useUserStore((state) => state.currentUser);
@@ -69,13 +70,24 @@ const Login = () => {
           <div>
             <label htmlFor="password">Password</label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} // Toggle between "text" and "password"
               name="password"
               id="password"
               value={formData.password}
               onChange={handleChange}
               required
             />
+          </div>
+
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                checked={showPassword}
+                onChange={() => setShowPassword((prev) => !prev)} // Toggle password visibility
+              />
+              Show Password
+            </label>
           </div>
 
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}

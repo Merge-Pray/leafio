@@ -9,8 +9,8 @@ const useUserStore = create(
       clearUser: () => set({ currentUser: null }),
     }),
     {
-      name: "user-storage", // name of item in localStorage
-      getStorage: () => localStorage, // default is localStorage
+      name: "user-storage",
+      getStorage: () => localStorage,
     }
   )
 );
