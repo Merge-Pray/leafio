@@ -2,12 +2,12 @@ import styles from "./placead.module.css";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import CategorySelector from "./CategorySelector";
-import { db } from "../../config/firebaseConfig"; // Import Firebase database instance
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"; // Import Firestore functions
-import useUserStore from "../../hooks/userStore"; // Import Zustand store
+import { db } from "../../config/firebaseConfig";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import useUserStore from "../../hooks/userStore";
 
 const PlaceAd = () => {
-  const currentUser = useUserStore((state) => state.currentUser); // Get currentUser from Zustand store
+  const currentUser = useUserStore((state) => state.currentUser);
   const [formData, setFormData] = useState({
     title: "",
     price: "",
@@ -32,7 +32,7 @@ const PlaceAd = () => {
       return;
     }
     setImages(files);
-    setImageURLs([]); // Clear previous URLs when new files are selected
+    setImageURLs([]);
     setError("");
   };
 
