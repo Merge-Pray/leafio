@@ -1,15 +1,16 @@
 import styles from "./placead.module.css";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import useUserStore from "../../hooks/userStore";
 import CategorySelector from "./CategorySelector"; 
 
-const PlaceAd = ({ user }) => {
+const PlaceAd = () => {
   const [formData, setFormData] = useState({
     title: "",
     price: "",
     description: "",
   });
-
+  const currentUser = useUserStore((state) => state.currentUser);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedFlags, setSelectedFlags] = useState([]);
   // eslint-disable-next-line no-unused-vars
@@ -55,7 +56,7 @@ const PlaceAd = ({ user }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!user) {
+    if (!currentUser) {
       setError("Du musst eingeloggt sein, um eine Anzeige zu erstellen.");
       return;
     }
@@ -82,11 +83,11 @@ const PlaceAd = ({ user }) => {
       likes: 0,
       images: imageURLs,
       location: {
-        city: user.address.city,
-        zip: user.address.zip,
-        street: user.address.street,
+        city: currentUser.address.city,
+        zip: currentUser.address.zip,
+        street: currentUser.address.street,
       },
-      userID: user.userID,
+      userID: currentUser.userID,
     };
 
     console.log("Neue Anzeige:", ad);
