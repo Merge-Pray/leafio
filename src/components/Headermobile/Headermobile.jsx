@@ -13,7 +13,7 @@ const Headermobile = () => {
         <SearchbarMobile />
         <img
           className={`${styles.imgMobile} ${styles.imgNav}`}
-          src="/assets/bars-solid.svg"
+          src="/assets/burger-w.svg"
           alt="logo"
         />
       </div>

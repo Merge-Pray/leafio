@@ -1,5 +1,5 @@
 import styles from "./searchbarMobile.module.css";
-const Searchbar = () => {
+const SearchbarMobile = () => {
   return (
     <div className={`${styles.wrapper}`}>
       <div className={`${styles.searchBarContainer}`}>
@@ -20,4 +20,4 @@ const Searchbar = () => {
   );
 };
 
-export default Searchbar;
+export default SearchbarMobile;
