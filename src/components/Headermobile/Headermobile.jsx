@@ -1,22 +1,67 @@
+import { useState } from "react";
 import SearchbarMobile from "../SearchbarMobile/SearchbarMobile";
 import styles from "./headermobile.module.css";
+import { NavLink } from "react-router";
+import useUserStore from "../../hooks/userStore";
 
 const Headermobile = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const currentUser = useUserStore((state) => state.currentUser);
+  const setCurrentUser = useUserStore((state) => state.setCurrentUser);
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setIsMenuOpen(false);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
   return (
     <>
       <div className={`${styles.headerMobile}`}>
-        <img
-          className={`${styles.imgMobile}`}
-          src="/assets/icon.svg"
-          alt="logo"
-        />
+        <NavLink to="/">
+          <img
+            className={`${styles.imgMobile}`}
+            src="/assets/icon.svg"
+            alt="logo"
+          />
+        </NavLink>
         <SearchbarMobile />
         <img
           className={`${styles.imgMobile} ${styles.imgNav}`}
           src="/assets/burger_w.svg"
           alt="logo"
+          onClick={toggleMenu}
         />
       </div>
+      {isMenuOpen && (
+        <div className={styles.toggleMenu}>
+          {" "}
+          <NavLink to="/" onClick={toggleMenu}>
+            Home
+          </NavLink>
+          {currentUser === null ? (
+            <NavLink to="/login" onClick={toggleMenu}>
+              Login
+            </NavLink>
+          ) : (
+            <>
+              <p>Willkommen {`${currentUser.username}`}, du bist eingeloggt!</p>
+              <NavLink to={`/`}>
+                {" "}
+                <NavLink to="/placead" onClick={toggleMenu}>
+                  Anzeige erstellen
+                </NavLink>
+                <button onClick={handleLogout} className={styles.logoutButton}>
+                  Logout
+                </button>{" "}
+              </NavLink>
+            </>
+          )}
+        </div>
+      )}
     </>
   );
 };

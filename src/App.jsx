@@ -7,11 +7,13 @@ import PlaceAd from "./pages/PlaceAd/PlaceAd";
 import Register from "./pages/Register/Register";
 import User from "./pages/User/User";
 import Header from "./components/Header/Header";
+// import Headermobile from "./components/Headermobile/Headermobile";
 
 function App() {
   return (
     <>
       <Header />
+      {/* <Headermobile /> */}
       <main>
         <Routes>
           <Route path="/" element={<Landingpage />} />
