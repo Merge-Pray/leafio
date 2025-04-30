@@ -45,40 +45,48 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+    <div>
+      {currentUser ? (
+        <div>
+          <h2>You are currently logged in as: {currentUser.username}</h2>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <h2>Login</h2>
 
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-      </div>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
-      <button type="submit">Login</button>
-      <p>
-        <NavLink to="/register">New User? Register</NavLink>
-      </p>
-    </form>
+          <button type="submit">Login</button>
+          <p>
+            <NavLink to="/register">New User? Register</NavLink>
+          </p>
+        </form>
+      )}
+    </div>
   );
 };
 
