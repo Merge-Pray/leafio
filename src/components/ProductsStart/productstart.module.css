@@ -1,7 +1,7 @@
 .productSection {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 0rem 1rem;
   background-color: #ffffff;
 }
 
@@ -19,10 +19,10 @@
 }
 
 .productCard {
-  border: 1px solid #e0e0e0;
+  /* border: 1px solid #e0e0e0; */
   /* border-radius: 8px; */
-  overflow: visible; /* wichtig */
-  position: relative; /* nötig für Overlay außerhalb */
+  overflow: visible;
+  position: relative; 
   background-color: #f9f9f9;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;

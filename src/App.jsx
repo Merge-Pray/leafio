@@ -7,6 +7,7 @@ import PlaceAd from "./pages/PlaceAd/PlaceAd";
 import Register from "./pages/Register/Register";
 import User from "./pages/User/User";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/footer";
 // import Headermobile from "./components/Headermobile/Headermobile";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/user/:userID" element={<User />} />
           <Route path="register" element={<Register />} />
         </Routes>
+        <Footer/>
       </main>
     </>
   );
