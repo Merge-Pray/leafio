@@ -1,7 +1,7 @@
 import styles from "./placead.module.css";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import CategorySelector from "./CategorySelector"; // ❗ Pfad ggf. anpassen
+import CategorySelector from "./CategorySelector"; // Stelle sicher, dass der Pfad korrekt ist
 
 const PlaceAd = ({ user }) => {
   const [formData, setFormData] = useState({
@@ -33,7 +33,6 @@ const PlaceAd = ({ user }) => {
       const data = await res.json();
       urls.push(data.secure_url);
     }
-
     setImageURLs(urls);
   };
 
@@ -96,9 +95,10 @@ const PlaceAd = ({ user }) => {
 
   return (
     <div className={styles.container}>
-      <h1>Neue Anzeige erstellen</h1>
-      <form onSubmit={handleSubmit}>
+      <h1 className={styles.headline}>Neue Anzeige erstellen</h1>
+      <form onSubmit={handleSubmit} className={styles.formContainer}>
         <input
+          className={styles.textInput}
           name="title"
           placeholder="Titel"
           value={formData.title}
@@ -106,6 +106,7 @@ const PlaceAd = ({ user }) => {
           required
         />
         <input
+          className={styles.textInput}
           name="price"
           placeholder="Preis (z. B. VB, 15€)"
           value={formData.price}
@@ -113,6 +114,7 @@ const PlaceAd = ({ user }) => {
           required
         />
         <textarea
+          className={styles.textArea}
           name="description"
           placeholder="Beschreibung"
           value={formData.description}
@@ -120,13 +122,13 @@ const PlaceAd = ({ user }) => {
           required
         />
 
-        {/* Kategorie- und Flag-Auswahl */}
         <CategorySelector
           onCategoryChange={setSelectedCategory}
           onFlagsChange={setSelectedFlags}
         />
 
         <input
+          className={styles.fileInput}
           type="file"
           accept="image/*"
           multiple
@@ -134,15 +136,20 @@ const PlaceAd = ({ user }) => {
           required
         />
 
-        {error && <p className={styles.error}>{error}</p>}
+        {error && <p className={styles.errorMessage}>{error}</p>}
 
-        <button type="submit">Anzeige erstellen</button>
+        <button type="submit" className={styles.submitButton}>Anzeige erstellen</button>
       </form>
 
       {imageURLs.length > 0 && (
-        <div className={styles.imagePreview}>
+        <div className={styles.imagePreviewContainer}>
           {imageURLs.map((url, idx) => (
-            <img key={idx} src={url} alt={`Bild ${idx + 1}`} />
+            <img
+              key={idx}
+              className={styles.previewImage}
+              src={url}
+              alt={`Bild ${idx + 1}`}
+            />
           ))}
         </div>
       )}
