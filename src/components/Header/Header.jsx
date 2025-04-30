@@ -5,6 +5,12 @@ import { NavLink } from "react-router";
 
 const Header = () => {
   const currentUser = useUserStore((state) => state.currentUser);
+  const setCurrentUser = useUserStore((state) => state.setCurrentUser);
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+  };
+
   return (
     <>
       <div className={`${styles.header}`}>
@@ -23,7 +29,12 @@ const Header = () => {
                   <p>Zum Konto</p>
                 </NavLink>
                 <NavLink to={`/`}>
-                  <p>Logout</p>
+                  <button
+                    onClick={handleLogout}
+                    className={styles.logoutButton}
+                  >
+                    Logout
+                  </button>
                 </NavLink>
               </div>
             </div>
