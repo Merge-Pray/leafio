@@ -1,57 +1,60 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { auth, db } from "../../config/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import useUserStore from "../../hooks/userStore";
-import userData from "../../data/users.json";
-import styles from "./login.module.css";
 import { NavLink } from "react-router";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
-  const [users, setUsers] = useState(userData);
-
   const [errorMessage, setErrorMessage] = useState("");
 
-  const currentUser = useUserStore((state) => state.currentUser);
   const setCurrentUser = useUserStore((state) => state.setCurrentUser);
+  const currentUser = useUserStore((state) => state.currentUser);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const matchedUser = users.find(
-      (user) => user.username === formData.username
-    );
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const user = userCredential.user;
 
-    if (!matchedUser) {
-      setErrorMessage("! User not found");
-    } else if (matchedUser.password !== formData.password) {
-      setErrorMessage("! Wrong password");
-    } else {
-      setCurrentUser(matchedUser);
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setCurrentUser(userData);
+        setErrorMessage("");
+      } else {
+        setErrorMessage("User data not found in the database.");
+      }
+    } catch (error) {
+      setErrorMessage("Invalid email or password.");
     }
   };
-
-  useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
 
   return (
     <form onSubmit={handleSubmit}>
       <h2>Login</h2>
 
       <div>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="email">Email</label>
         <input
-          type="username"
-          name="username"
-          id="username"
-          value={formData.username}
+          type="email"
+          name="email"
+          id="email"
+          value={formData.email}
           onChange={handleChange}
           required
         />
@@ -68,10 +71,12 @@ const Login = () => {
           required
         />
       </div>
+
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+
       <button type="submit">Login</button>
       <p>
-        <NavLink to="/register">Register</NavLink>
+        <NavLink to="/register">New User? Register</NavLink>
       </p>
     </form>
   );
