@@ -30,5 +30,5 @@
 }
 
 .searchbar {
-  background-color: green;
+  background: var(--green--Background);
 }
