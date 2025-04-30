@@ -70,7 +70,7 @@ const Login = () => {
           <div>
             <label htmlFor="password">Password</label>
             <input
-              type={showPassword ? "text" : "password"} // Toggle between "text" and "password"
+              type={showPassword ? "text" : "password"}
               name="password"
               id="password"
               value={formData.password}
@@ -84,7 +84,7 @@ const Login = () => {
               <input
                 type="checkbox"
                 checked={showPassword}
-                onChange={() => setShowPassword((prev) => !prev)} // Toggle password visibility
+                onChange={() => setShowPassword((prev) => !prev)}
               />
               Show Password
             </label>
