@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<Landingpage />} />
         <Route path="login" element={<Login />} />
         <Route path="about" element={<About />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="register" element={<Register />} />
       </Routes>
     </>
   );
