@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import useUserStore from "../../hooks/userStore";
 import userData from "../../data/users.json";
+import styles from "./login.module.css";
+import { NavLink } from "react-router";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -68,6 +70,9 @@ const Login = () => {
       </div>
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       <button type="submit">Login</button>
+      <p>
+        <NavLink to="/register">Register</NavLink>
+      </p>
     </form>
   );
 };
