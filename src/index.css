@@ -1,3 +1,13 @@
+:root {
+  --green--Background: linear-gradient(-81deg, rgba(122, 201, 67, 1) 0%, rgba(0, 104, 55, 1) 100%);
+  --dark--green: #006837;
+  --light--green: #7ac943;
+  --soft--green: #bfdf9c;
+  --light--gray: #e6e6e6;
+}
+
+
+
 * {
   margin: 0;
   box-sizing: border-box;
