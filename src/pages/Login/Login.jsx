@@ -12,7 +12,7 @@ const Login = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const setCurrentUser = useUserStore((state) => state.setCurrentUser);
   const currentUser = useUserStore((state) => state.currentUser);

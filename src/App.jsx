@@ -15,7 +15,7 @@ function App() {
     <>
       <Header />
       {/* <Headermobile /> */}
-      <main>
+      <section className="routercontent">
         <Routes>
           <Route path="/" element={<Landingpage />} />
           <Route path="login" element={<Login />} />
@@ -24,8 +24,8 @@ function App() {
           <Route path="/user/:userID" element={<User />} />
           <Route path="register" element={<Register />} />
         </Routes>
-        <Footer/>
-      </main>
+      </section>
+      <Footer />
     </>
   );
 }

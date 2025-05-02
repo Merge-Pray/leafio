@@ -82,7 +82,6 @@ const Register = () => {
         username: formData.username,
         realName: formData.realName,
         email: formData.email,
-        password: formData.password,
         address: formData.address,
         userID: userID,
         ownAds: [],
