@@ -2,9 +2,21 @@ import React, { useEffect, useState } from "react";
 import styles from "./banner.module.css";
 
 const banners = [
-  "/assets/banner/banner1.png",
-  "/assets/banner/Banner2.png",
-  "/assets/banner/Banner3.png"
+  {
+    image: "/assets/banner/banner1.png",
+    leftText: "PLANT SHARING",
+    rightText: "& GIFTING"
+  },
+  {
+    image: "/assets/banner/Banner2.png",
+    leftText: "GROW TOGETHER",
+    rightText: "GIVE WITH HEART"
+  },
+  {
+    image: "/assets/banner/Banner3.png",
+    leftText: "GREEN FRIENDS",
+    rightText: "BIG IMPACT"
+  }
 ];
 
 const Banner = () => {
@@ -26,15 +38,29 @@ const Banner = () => {
   }, []);
 
   return (
-    <div className={styles.bannerContainer}>
-      <button className={styles.arrow} onClick={handlePrev}>&lt;</button>
-      <img
-        src={banners[current]}
-        alt={`Banner ${current + 1}`}
-        className={styles.bannerImage}
-      />
-      <button className={styles.arrow} onClick={handleNext}>&gt;</button>
-    </div>
+<div className={styles.bannerContainer}>
+  <div
+    className={styles.slider}
+    style={{ transform: `translateX(-${current * 100}%)` }}
+  >
+    {banners.map((banner, index) => (
+      <div className={styles.slide} key={index}>
+        <img src={banner.image} alt={`Banner ${index + 1}`} />
+        <div className={styles.textOverlay} key={current}>
+  <div className={styles.leftText}>
+    {banner.leftText}
+  </div>
+  <div className={styles.rightText}>
+    {banner.rightText}
+  </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <button className={styles.arrow} onClick={handlePrev}>&lt;</button>
+  <button className={styles.arrow} onClick={handleNext}>&gt;</button>
+</div>
   );
 };
 

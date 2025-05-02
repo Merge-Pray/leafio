@@ -1,51 +1,128 @@
 .bannerContainer {
-    
-    width: 100%;
-    max-width: 1000px;
-    height: 200px;
-    position: relative;
-    overflow: hidden;
-    margin: 0 auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1000px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  margin: 10px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.slider {
+  display: flex;
+  height: 100%;
+  transition: transform 0.8s ease-in-out;
+}
+
+.slide {
+  flex: 0 0 100%;
+  position: relative;
+  height: 100%;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  z-index: 3;
+  user-select: none;
+}
+
+.arrow:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.arrow:first-of-type {
+  left: 10px;
+}
+
+.arrow:last-of-type {
+  right: 10px;
+}
+
+/* ---------------- TEXT OVERLAY ---------------- */
+
+.textOverlay {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.leftText,
+.rightText {
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 1);
+  opacity: 0;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  margin: -0.6rem 0;
+}
+
+/* Animationslogik */
+.leftText {
+  animation-name: slideInLeft;
+}
+
+.rightText {
+  animation-name: slideInRight;
+  animation-delay: 0.3s; /* Verzögert den 2. Text leicht */
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-200%);
   }
-  
-  .bannerImage {
-    margin-top: 10px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.5s ease;
+  to {
+    opacity: 1;
+    transform: translateX(-20%);
   }
-  
-  .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.7);
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    z-index: 2;
-    user-select: none;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
   }
-  
-  .arrow:hover {
-    background: rgba(255, 255, 255, 0.9);
+  to {
+    opacity: 1;
+    transform: translateX(20%);
   }
-  
-  .arrow:first-of-type {
-    left: 10px;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media (max-width: 700px) {
+  .bannerContainer {
+    height: 250px;
   }
-  
-  .arrow:last-of-type {
-    right: 10px;
+
+  .leftText,
+  .rightText {
+    font-size: 1.8rem;
+    margin: 0rem 0;
   }
-  
-  @media (max-width: 700px) {
-    .bannerContainer {
-      height: 250px;
-    }
-  }
-  
+}
