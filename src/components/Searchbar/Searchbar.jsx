@@ -21,7 +21,7 @@ const Searchbar = () => {
           <option value="">City</option>
           <option value="">Hamburg</option>
         </select>
-        <button className={`${styles.buttonSearchbar}`}>Find</button>
+        <button className={`${styles.buttonSearchbar}`}>Finden</button>
       </form>
     </div>
   );
