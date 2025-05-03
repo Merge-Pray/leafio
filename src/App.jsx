@@ -24,7 +24,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="/user/:userID" element={<User />} />
           <Route path="register" element={<Register />} />
-          <Route path="/produkt/:id" element={<ProductPage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
         </Routes>
       </section>
       <Footer />

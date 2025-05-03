@@ -37,7 +37,7 @@ const ProductStart = () => {
       {/* <h2 className={styles.heading}>Unsere neuesten Pflanzen</h2> */}
       <div className={styles.productGrid}>
         {ads.map((ad) => (
-         <Link to={`/produkt/${ad.id}`} key={ad.id} className={styles.cardLink}>
+         <Link to={`/product/${ad.id}`} key={ad.id} className={styles.cardLink}>
          <div className={styles.productCard}>
            <div className={styles.imageWrapper}>
              <img src={ad.images?.[0]} alt={ad.title} />
