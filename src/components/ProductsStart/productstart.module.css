@@ -22,7 +22,7 @@
   /* border: 1px solid #e0e0e0; */
   /* border-radius: 8px; */
   overflow: visible;
-  position: relative; 
+  position: relative;
   background-color: #f9f9f9;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;
@@ -51,7 +51,7 @@
   font-size: 0.8rem;
   font-weight: bold;
   border-radius: 3px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .productCardContent {
