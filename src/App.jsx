@@ -13,10 +13,9 @@ import ProductPage from "./pages/ProductPage/ProductPage";
 
 function App() {
   return (
-    <>
+    <div className="app-wrapper">
       <Header />
-      {/* <Headermobile /> */}
-      <section className="routercontent">
+      <main className="routercontent">
         <Routes>
           <Route path="/" element={<Landingpage />} />
           <Route path="login" element={<Login />} />
@@ -26,9 +25,9 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="/product/:id" element={<ProductPage />} />
         </Routes>
-      </section>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

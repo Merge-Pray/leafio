@@ -1,0 +1,10 @@
+.app-wrapper {
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .routercontent {
+    flex: 1; 
+    padding: 2rem;    
+  }
