@@ -8,13 +8,23 @@ import Register from "./pages/Register/Register";
 import User from "./pages/User/User";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/footer";
-// import Headermobile from "./components/Headermobile/Headermobile";
+import Headermobile from "./components/Headermobile/Headermobile";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 769px)");
+    const handleChange = (e) => setIsDesktop(e.matches);
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
   return (
     <>
-      <Header />
-      {/* <Headermobile /> */}
+      {isDesktop ? <Header /> : <Headermobile />}
       <section className="routercontent">
         <Routes>
           <Route path="/" element={<Landingpage />} />

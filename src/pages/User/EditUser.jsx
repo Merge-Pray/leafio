@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../config/firebaseConfig";
 import useUserStore from "../../hooks/userStore";
-import styles from "./editProfile.module.css";
+import styles from "./editUser.module.css";
 
-const EditProfile = () => {
+const EditUser = () => {
   const currentUser = useUserStore((state) => state.currentUser);
   const [formData, setFormData] = useState({
     username: "",
@@ -131,4 +131,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default EditUser;
