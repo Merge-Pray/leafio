@@ -1,14 +1,21 @@
 import { useParams } from "react-router";
 import useUserStore from "../../hooks/userStore";
 import styles from "./user.module.css";
+import { useState } from "react";
+import Register from "../Register/Register";
 
 const User = () => {
   const { userID } = useParams();
   const currentUser = useUserStore((state) => state.currentUser);
+  const [editUserData, setEditUserData] = useState(false);
+
+  if (!currentUser) {
+    return <p>Du musst dich einloggen!</p>;
+  }
 
   return (
     <>
-      {currentUser !== null ? (
+      {!editUserData && currentUser !== null ? (
         <div className={styles.container}>
           <h1 className={styles.headline}>
             Willkommen {`${currentUser.username}`} in deinem Benutzerkonto!
@@ -26,11 +33,17 @@ const User = () => {
             </p>
 
             <h2 className={styles.headline}>Deine Anzeigen</h2>
-            <button>Daten ändern</button>
+            <button
+              type="submit"
+              onClick={() => setEditUserData(true)}
+              className={styles.submitButton}
+            >
+              Daten ändern
+            </button>
           </div>
         </div>
       ) : (
-        <p>Du musst dich einloggen!</p>
+        <Register currentUser={currentUser} />
       )}
     </>
   );

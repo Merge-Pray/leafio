@@ -21,3 +21,18 @@
   font-size: 1rem;
   width: 100%;
 }
+
+.submitButton {
+  background: linear-gradient(to right, #7ac943, #006837);
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submitButton:hover {
+  background: linear-gradient(to right, #6ab031, #005b2f);
+}
