@@ -57,7 +57,7 @@ const Header = () => {
                   alt="userlogo"
                 />
 
-                <p className={`${styles.loginFont}`}>Log In</p>
+                <p className={`${styles.loginFont}`}>Login</p>
               </NavLink>
             </div>
           )}
