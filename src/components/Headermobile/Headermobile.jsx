@@ -30,7 +30,8 @@ const Headermobile = () => {
         </NavLink>
         <SearchbarMobile />
         <img
-          className={`${styles.imgMobile} ${styles.imgNav}`}
+          className={`${styles.imgMobile} ${styles.imgNav}
+          ${isMenuOpen ? styles.imgNavOpen : ""}`}
           src="/assets/burger_w.svg"
           alt="logo"
           onClick={toggleMenu}

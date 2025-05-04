@@ -5,12 +5,14 @@ import { NavLink } from "react-router";
 import { auth, db } from "../../config/firebaseConfig";
 import useUserStore from "../../hooks/userStore";
 import styles from "./login.module.css";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -38,6 +40,7 @@ const Login = () => {
         const userData = userDoc.data();
         setCurrentUser(userData);
         setErrorMessage("");
+        navigate("/");
       } else {
         setErrorMessage("User data not found in the database.");
       }

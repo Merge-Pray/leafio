@@ -25,6 +25,7 @@ body {
   color: black;
   font-family: "Poppins", sans-serif;
   height: 100%;
+  position: relative;
 }
 
 #root {
