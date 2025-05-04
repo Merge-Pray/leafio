@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import useUserStore from "../../hooks/userStore";
 import styles from "./user.module.css";
 import { useState } from "react";
-import Register from "../Register/Register";
+import EditUser from "./EditUser.jsx";
 
 const User = () => {
   const { userID } = useParams();
@@ -43,7 +43,7 @@ const User = () => {
           </div>
         </div>
       ) : (
-        <Register currentUser={currentUser} />
+        <EditUser />
       )}
     </>
   );
