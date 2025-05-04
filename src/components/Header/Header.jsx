@@ -26,11 +26,16 @@ const Header = () => {
         <div>
           {currentUser ? (
             <div>
-              <p>Willkommen {`${currentUser.username}`}, du bist eingeloggt!</p>
+              <p className={styles.loginFont}>
+                Willkommen {`${currentUser.username}`}, du bist eingeloggt!
+              </p>
               <div className={`${styles.nav}`}>
                 {" "}
-                <NavLink to={`/user/${currentUser.userID}`}>
-                  <p>Zum Konto</p>
+                <NavLink
+                  className={styles.link}
+                  to={`/user/${currentUser.userID}`}
+                >
+                  <p className={styles.loginFont}>Zum Konto</p>
                 </NavLink>
                 <NavLink to={`/`}>
                   <button

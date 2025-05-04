@@ -39,7 +39,7 @@ const Headermobile = () => {
       {isMenuOpen && (
         <div className={styles.toggleMenu}>
           {" "}
-          <NavLink to="/" onClick={toggleMenu}>
+          <NavLink className={styles.linkHome} to="/" onClick={toggleMenu}>
             Home
           </NavLink>
           {currentUser === null ? (
@@ -50,14 +50,24 @@ const Headermobile = () => {
             <>
               <p>Willkommen {`${currentUser.username}`}, du bist eingeloggt!</p>
               <NavLink to={`/`}>
-                {" "}
-                <NavLink to="/placead" onClick={toggleMenu}>
-                  Anzeige erstellen
-                </NavLink>
                 <button onClick={handleLogout} className={styles.logoutButton}>
                   Logout
                 </button>{" "}
               </NavLink>
+              <NavLink
+                className={styles.link}
+                to={`/user/${currentUser.userID}`}
+                onClick={toggleMenu}
+              >
+                <p>Zum Konto</p>
+              </NavLink>{" "}
+              <NavLink
+                className={styles.link}
+                to="/placead"
+                onClick={toggleMenu}
+              >
+                Anzeige erstellen
+              </NavLink>{" "}
             </>
           )}
         </div>

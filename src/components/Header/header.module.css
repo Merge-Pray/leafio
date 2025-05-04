@@ -28,6 +28,8 @@
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 0.9rem;
+  padding: 0.1rem;
+  color: black;
 }
 
 .searchbar {
@@ -37,4 +39,21 @@
 .nav {
   display: flex;
   justify-content: space-evenly;
+}
+
+.logoutButton {
+  font-size: 0.9rem;
+  background: var(--dark--green);
+  height: 25px;
+  width: 130px;
+  margin: 0.1rem;
+  padding: 0.1rem;
+  border-radius: 1rem;
+  color: white;
+  border: none;
+  font-family: "Poppins", sans-serif;
+}
+
+.link:visited {
+  color: black;
 }
