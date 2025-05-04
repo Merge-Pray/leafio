@@ -1,3 +1,4 @@
+import styles from "./register.module.css";
 import { useState } from "react";
 import { auth, db } from "../../config/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -97,110 +98,92 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
-
-      <div>
-        <label htmlFor="username">Username</label>
+    <div className={styles.container}>
+      <h1 className={styles.headline}>Registration</h1>
+      <form onSubmit={handleSubmit} className={styles.formContainer}>
         <input
+          className={styles.textInput}
           type="text"
           name="username"
-          id="username"
+          placeholder="Username"
           value={formData.username}
           onChange={handleChange}
           required
         />
-      </div>
-
-      <div>
-        <label htmlFor="firstName">First Name</label>
         <input
+          className={styles.textInput}
           type="text"
           name="realName.first"
-          id="firstName"
+          placeholder="First Name"
           value={formData.realName.first}
           onChange={handleChange}
           required
         />
-      </div>
-
-      <div>
-        <label htmlFor="lastName">Last Name</label>
         <input
+          className={styles.textInput}
           type="text"
           name="realName.last"
-          id="lastName"
+          placeholder="Last Name"
           value={formData.realName.last}
           onChange={handleChange}
           required
         />
-      </div>
-
-      <div>
-        <label htmlFor="email">Email</label>
         <input
+          className={styles.textInput}
           type="email"
           name="email"
-          id="email"
+          placeholder="Email"
           value={formData.email}
           onChange={handleChange}
           required
         />
-      </div>
-
-      <div>
-        <label htmlFor="password">Password</label>
         <input
+          className={styles.textInput}
           type="password"
           name="password"
-          id="password"
+          placeholder="Password"
           value={formData.password}
           onChange={handleChange}
           required
         />
-      </div>
-
-      <div>
-        <label htmlFor="city">City</label>
         <input
+          className={styles.textInput}
           type="text"
           name="address.city"
-          id="city"
+          placeholder="City"
           value={formData.address.city}
           onChange={handleChange}
           required
         />
-      </div>
-
-      <div>
-        <label htmlFor="street">Street</label>
         <input
+          className={styles.textInput}
           type="text"
           name="address.street"
-          id="street"
+          placeholder="Street"
           value={formData.address.street}
           onChange={handleChange}
           required
         />
-      </div>
-
-      <div>
-        <label htmlFor="zip">ZIP Code</label>
         <input
+          className={styles.textInput}
           type="text"
           name="address.zip"
-          id="zip"
+          placeholder="ZIP Code"
           value={formData.address.zip}
           onChange={handleChange}
           required
         />
-      </div>
 
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+        {successMessage && (
+          <p className={styles.successMessage}>{successMessage}</p>
+        )}
 
-      <button type="submit">Register</button>
-    </form>
+        <button type="submit" className={styles.submitButton}>
+          Register
+        </button>
+      </form>
+    </div>
   );
 };
 
