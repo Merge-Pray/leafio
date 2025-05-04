@@ -10,6 +10,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/footer";
 import Headermobile from "./components/Headermobile/Headermobile";
 import { useEffect, useState } from "react";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
@@ -33,6 +34,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="/user/:userID" element={<User />} />
           <Route path="register" element={<Register />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </section>
       <Footer />
