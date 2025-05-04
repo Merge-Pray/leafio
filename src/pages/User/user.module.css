@@ -5,6 +5,15 @@
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .headline {
@@ -27,6 +36,7 @@
   color: white;
   font-weight: bold;
   border: none;
+  width: 90%;
   padding: 0.75rem 1.5rem;
   border-radius: 12px;
   cursor: pointer;
@@ -35,4 +45,13 @@
 
 .submitButton:hover {
   background: linear-gradient(to right, #6ab031, #005b2f);
+}
+
+.user {
+  color: var(--light--green);
+}
+
+.userContent {
+  color: var(--light--green);
+  font-weight: 600;
 }
