@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import styles from "./productstart.module.css";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router";
 
 const ProductStart = () => {
   const [ads, setAds] = useState([]);
@@ -37,7 +37,7 @@ const ProductStart = () => {
       {/* <h2 className={styles.heading}>Unsere neuesten Pflanzen</h2> */}
       <div className={styles.productGrid}>
         {ads.map((ad) => (
-         <Link to={`/product/${ad.id}`} key={ad.id} className={styles.cardLink}>
+         <NavLink to={`/product/${ad.id}`} key={ad.id} className={styles.cardLink}>
          <div className={styles.productCard}>
            <div className={styles.imageWrapper}>
              <img src={ad.images?.[0]} alt={ad.title} />
@@ -59,7 +59,7 @@ const ProductStart = () => {
              </div>
            </div>
          </div>
-       </Link>
+       </NavLink>
         ))}
       </div>
     </section>

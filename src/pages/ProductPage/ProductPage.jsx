@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import styles from "./ProductPage.module.css";
