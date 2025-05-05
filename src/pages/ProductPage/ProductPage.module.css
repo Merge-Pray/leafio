@@ -11,7 +11,7 @@
     flex: 1 1 40%;
   }
   
-  .productImage {
+  .productImageß {
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -55,8 +55,7 @@
     margin-top: 1rem;
     flex-wrap: wrap;
   }
-  
-  /* Gemeinsame Basisklasse für alle Buttons */
+
   .actionButton {
     padding: 0.5rem 1rem;
     border-radius: 8px;
@@ -86,7 +85,6 @@
     /* z.B. leicht andere Farbe */
   }
   
-
   .contactForm {
     margin-top: 1.5rem;
     display: flex;
