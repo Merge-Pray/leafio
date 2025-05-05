@@ -6,24 +6,21 @@ const CategoryListing = () => {
   return (
     <div className={styles.categoryList}>
       <h3>Kategorien</h3>
-      <ul>
+      <ul className={styles.list}>
         {categories.map((category, index) => (
-          <NavLink
-            to={`/category/${encodeURIComponent(category.name)}`}
-            key={index}
-          >
-            {({ isActive }) => (
-              <li
-                className={
-                  isActive
-                    ? `${styles.active} ${styles.categoryItem}`
-                    : styles.categoryItem
-                }
-              >
-                {category.name}
-              </li>
-            )}
-          </NavLink>
+          <li key={index} className={styles.categoryItem}>
+            <NavLink
+              to={`/category/${encodeURIComponent(category.name)}`}
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles.link} ${styles.active}`
+                  : styles.link
+              }
+            >
+              {category.name}
+            </NavLink>
+          </li>
+
         ))}
       </ul>
     </div>
