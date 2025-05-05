@@ -27,7 +27,9 @@ const Header = () => {
           {currentUser ? (
             <div>
               <p className={styles.loginFont}>
-                Willkommen {`${currentUser.username}`}, du bist eingeloggt!
+                Willkommen{" "}
+                <span className={styles.user}>{`${currentUser.username}`}</span>{" "}
+                , du bist eingeloggt!
               </p>
               <div className={`${styles.nav}`}>
                 {" "}

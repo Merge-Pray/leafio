@@ -57,3 +57,7 @@
 .link:visited {
   color: black;
 }
+
+.user {
+  color: var(--light--green);
+}

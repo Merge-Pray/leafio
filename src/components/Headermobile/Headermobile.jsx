@@ -40,46 +40,58 @@ const Headermobile = () => {
       {isMenuOpen && (
         <div className={styles.toggleMenu}>
           {" "}
-          <NavLink
-            className={`${styles.linkHome} ${styles.link}`}
-            to="/"
-            onClick={toggleMenu}
-          >
-            Home
-          </NavLink>
           {currentUser === null ? (
-            <NavLink
-              className={`${styles.linkUser} ${styles.link}`}
-              to="/login"
-              onClick={toggleMenu}
-            >
-              Login
-            </NavLink>
+            <>
+              <NavLink
+                className={`${styles.linkHome} ${styles.link}`}
+                to="/"
+                onClick={toggleMenu}
+              >
+                Home
+              </NavLink>
+              <NavLink
+                className={`${styles.linkUser} ${styles.link}`}
+                to="/login"
+                onClick={toggleMenu}
+              >
+                Login
+              </NavLink>
+            </>
           ) : (
             <>
               <p>Willkommen {`${currentUser.username}`}, du bist eingeloggt!</p>
+              <NavLink
+                className={`${styles.linkHome} ${styles.link}`}
+                to="/"
+                onClick={toggleMenu}
+              >
+                Home
+              </NavLink>
               <NavLink to={`/`}>
                 <p
                   onClick={handleLogout}
-                  className={`${styles.linkUser} ${styles.link} ${styles.logoutButton}`}
+                  className={`${styles.linkUser} ${styles.link}`}
                 >
                   Logout
                 </p>{" "}
               </NavLink>
-              <NavLink
-                className={styles.link}
-                to={`/user/${currentUser.userID}`}
-                onClick={toggleMenu}
-              >
-                <p>Zum Konto</p>
-              </NavLink>{" "}
-              <NavLink
-                className={styles.link}
-                to="/placead"
-                onClick={toggleMenu}
-              >
-                Anzeige erstellen
-              </NavLink>{" "}
+              <div className={`${styles.line} ${styles.user}`}>
+                {" "}
+                <NavLink
+                  className={`${styles.linkUser} ${styles.link}`}
+                  to={`/user/${currentUser.userID}`}
+                  onClick={toggleMenu}
+                >
+                  <p>Zum Konto</p>
+                </NavLink>{" "}
+                <NavLink
+                  className={`${styles.link} ${styles.placead}`}
+                  to="/placead"
+                  onClick={toggleMenu}
+                >
+                  <p>Anzeige erstellen</p>
+                </NavLink>{" "}
+              </div>
             </>
           )}
         </div>

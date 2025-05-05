@@ -18,21 +18,25 @@ const User = () => {
       {!editUserData && currentUser !== null ? (
         <div className={styles.container}>
           <h1 className={styles.headline}>
-            Willkommen {`${currentUser.username}`} in deinem Benutzerkonto!
+            Willkommen{" "}
+            <span className={styles.user}>{`${currentUser.username}`}</span> in
+            deinem Benutzerkonto!
           </h1>
           <h2 className={styles.headline}>Deine Daten</h2>
-          <div>
-            <p>{`${currentUser.email}`}</p>
+          <div className={styles.box}>
             <p>
+              <span className={styles.userContent}>Emailadresse:</span>{" "}
+              {`${currentUser.email}`}
+            </p>
+            <p>
+              <span className={styles.userContent}>Name: </span>
               {`${currentUser.realName.first}`} {`${currentUser.realName.last}`}
             </p>
             <p>
-              Deine Adresse {`${currentUser.address.street}`}{" "}
-              {`${currentUser.address.zip}`}
+              <span className={styles.userContent}>Adresse: </span>{" "}
+              {`${currentUser.address.street}`}, {`${currentUser.address.zip}`}{" "}
               {`${currentUser.address.city}`}
             </p>
-
-            <h2 className={styles.headline}>Deine Anzeigen</h2>
             <button
               type="submit"
               onClick={() => setEditUserData(true)}
@@ -40,6 +44,7 @@ const User = () => {
             >
               Daten ändern
             </button>
+            <h2 className={styles.headline}>Deine Anzeigen</h2>
           </div>
         </div>
       ) : (
