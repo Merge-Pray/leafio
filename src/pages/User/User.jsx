@@ -48,7 +48,10 @@ const User = () => {
           </div>
         </div>
       ) : (
-        <EditUser />
+        <EditUser
+          setEditUserData={setEditUserData}
+          editUserData={editUserData}
+        />
       )}
     </>
   );
