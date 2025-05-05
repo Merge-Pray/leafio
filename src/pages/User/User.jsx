@@ -1,18 +1,39 @@
 import { useParams } from "react-router";
 import useUserStore from "../../hooks/userStore";
 import styles from "./user.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditUser from "./EditUser.jsx";
+import { useNavigate } from "react-router";
 
 const User = () => {
   const { userID } = useParams();
   const currentUser = useUserStore((state) => state.currentUser);
   const [editUserData, setEditUserData] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      navigate("/login");
+    }, 9000);
+    return () => clearTimeout(timeout);
+  }, [navigate]);
 
   if (!currentUser) {
     return (
       <div className={styles.container}>
-        <p>Du musst dich einloggen!</p>
+        <h1 className={styles.errorCode}>Du musst dich einloggen!</h1>
+        <h2 className={styles.headline}>
+          Der User konnte nicht gefunden werden.
+        </h2>
+        <p className={styles.subtext}>
+          Du wirst automatisch zum Login weitergeleitet...
+        </p>
+        <button
+          className={styles.backButton}
+          onClick={() => navigate("/login")}
+        >
+          Zum Login
+        </button>
       </div>
     );
   }
