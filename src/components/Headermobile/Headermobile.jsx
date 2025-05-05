@@ -3,6 +3,7 @@ import SearchbarMobile from "../SearchbarMobile/SearchbarMobile";
 import styles from "./headermobile.module.css";
 import { NavLink } from "react-router";
 import useUserStore from "../../hooks/userStore";
+import { categories } from "../../pages/PlaceAd/CategorySelector";
 
 const Headermobile = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,6 +57,21 @@ const Headermobile = () => {
               >
                 Login
               </NavLink>
+              <div className={styles.categories}>
+                <h3 className={styles.headline}>Kategorien</h3>
+                <ul className={styles.categorylist}>
+                  {categories.map((category, index) => (
+                    <NavLink
+                      to={`/category/${encodeURIComponent(category.name)}`}
+                      className={`${styles.linkPlant} ${styles.link}`}
+                      key={index}
+                      onClick={toggleMenu}
+                    >
+                      <li>{category.name}</li>
+                    </NavLink>
+                  ))}
+                </ul>
+              </div>
             </>
           ) : (
             <>
@@ -91,6 +107,19 @@ const Headermobile = () => {
                 >
                   <p>Anzeige erstellen</p>
                 </NavLink>{" "}
+                <h3 className={styles.headline}>Kategorien</h3>
+                <ul>
+                  {categories.map((category, index) => (
+                    <NavLink
+                      to={`/category/${encodeURIComponent(category.name)}`}
+                      className={`${styles.linkPlant} ${styles.link}`}
+                      key={index}
+                      onClick={toggleMenu}
+                    >
+                      <li>{category.name}</li>
+                    </NavLink>
+                  ))}
+                </ul>
               </div>
             </>
           )}

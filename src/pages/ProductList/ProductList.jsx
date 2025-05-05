@@ -1,4 +1,3 @@
-import { useParams } from "react-router";
 import CategoryListing from "../../components/CategoryListing/CategoryListing";
 import styles from "./productlist.module.css";
 

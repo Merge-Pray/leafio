@@ -15,6 +15,5 @@
 }
 
 .active {
-  color: green;
-  background-color: blue;
+  color: var(--light--green);
 }

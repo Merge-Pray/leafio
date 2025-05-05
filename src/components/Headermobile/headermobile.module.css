@@ -3,7 +3,6 @@
   height: 6vh;
   padding: 0.5rem;
   position: fixed;
-
   z-index: 1000;
   top: 0;
   left: 0;
@@ -52,6 +51,10 @@
   background-image: url(/public/assets/placead.svg);
 }
 
+.linkPlant::before {
+  background-image: url(/public/assets/icon.svg);
+}
+
 .toggleMenu {
   position: fixed;
   top: 6vh;
@@ -62,10 +65,11 @@
   z-index: 999;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   gap: 0.5rem;
   padding: 0.5rem;
   overflow-y: auto;
+  color: white;
 }
 
 .user {
@@ -78,10 +82,20 @@
 
 .link:visited,
 .link {
-  color: black;
+  color: white;
 }
 
-.line {
+.categories {
   border-top: 1px solid black;
+  width: 90%;
+}
+
+.categorylist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
   width: 90%;
 }
