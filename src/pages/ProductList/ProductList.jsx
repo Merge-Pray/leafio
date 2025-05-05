@@ -1,6 +1,5 @@
-
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 
@@ -13,7 +12,7 @@ const ProductList = () => {
   const [error, setError] = useState(null);
 
   const location = useLocation();
-  const { category: paramCategory } = useParams(); 
+  const { category: paramCategory } = useParams();
   const queryParams = new URLSearchParams(location.search);
 
   const searchCategory = queryParams.get("category");
@@ -71,7 +70,9 @@ const ProductList = () => {
             <div className={styles.productInfo}>
               <h3>{product.title}</h3>
               <p>{product.description?.slice(0, 80)}...</p>
-              <p><strong>{product.price}</strong></p>
+              <p>
+                <strong>{product.price}</strong>
+              </p>
               <p>{product.location?.city}</p>
             </div>
           </NavLink>
