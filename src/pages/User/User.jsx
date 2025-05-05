@@ -10,7 +10,11 @@ const User = () => {
   const [editUserData, setEditUserData] = useState(false);
 
   if (!currentUser) {
-    return <p>Du musst dich einloggen!</p>;
+    return (
+      <div className={styles.container}>
+        <p>Du musst dich einloggen!</p>
+      </div>
+    );
   }
 
   return (
@@ -37,6 +41,14 @@ const User = () => {
               {`${currentUser.address.street}`}, {`${currentUser.address.zip}`}{" "}
               {`${currentUser.address.city}`}
             </p>
+            <p>
+              {" "}
+              <span className={styles.userContent}>Mitglied seit: </span>
+              {new Date(
+                currentUser.createdAt.seconds * 1000 +
+                  Math.floor(currentUser.createdAt.nanoseconds / 1_000_000)
+              ).toLocaleString()}
+            </p>
             <button
               type="submit"
               onClick={() => setEditUserData(true)}
@@ -48,7 +60,7 @@ const User = () => {
           </div>
         </div>
       ) : (
-        <EditUser />
+        <EditUser setEditUserData={setEditUserData} />
       )}
     </>
   );

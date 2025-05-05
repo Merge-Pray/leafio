@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import NotFound from "./pages/NotFound/NotFound";
 import ProductNotFound from "./pages/ProductNotFound/ProductNotFound";
 
-
 function App() {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
 
@@ -39,7 +38,10 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/product/productnotfound" element={<ProductNotFound />} />
+          <Route
+            path="/product/productnotfound"
+            element={<ProductNotFound />}
+          />
         </Routes>
       </section>
       <Footer />

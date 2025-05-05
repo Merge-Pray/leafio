@@ -4,7 +4,7 @@ import { auth, db } from "../../config/firebaseConfig";
 import useUserStore from "../../hooks/userStore";
 import styles from "./editUser.module.css";
 
-const EditUser = () => {
+const EditUser = ({ setEditUserData }) => {
   const currentUser = useUserStore((state) => state.currentUser);
   const [formData, setFormData] = useState({
     username: "",
@@ -125,6 +125,13 @@ const EditUser = () => {
 
         <button type="submit" className={styles.submitButton}>
           Save Changes
+        </button>
+        <button
+          type="submit"
+          onClick={() => setEditUserData(false)}
+          className={styles.submitButton}
+        >
+          Zurück zum Konto
         </button>
       </form>
     </div>
