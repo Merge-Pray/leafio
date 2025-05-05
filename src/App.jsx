@@ -37,6 +37,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="/user/:userID" element={<User />} />
           <Route path="register" element={<Register />} />
+          <Route path="/products" element={<ProductList />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="*" element={<NotFound />} />
           <Route
