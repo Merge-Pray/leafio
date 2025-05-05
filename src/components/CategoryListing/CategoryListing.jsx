@@ -1,17 +1,27 @@
+import { NavLink, useParams } from "react-router";
 import styles from "./categorylisting.module.css";
+import { categories } from "../../pages/PlaceAd/CategorySelector";
 
-const CategoryListing = ({ categories }) => {
+const CategoryListing = () => {
   return (
     <div className={styles.categoryList}>
-    <h3>Kategorien</h3>
-    <ul>
-      {categories.map((category) => (
-        <li key={category.name} className={styles.categoryItem}>
-          {category.name}
-        </li>
-      ))}
-    </ul>
-  </div>
+      <h3>Kategorien</h3>
+      <ul>
+        {categories.map((category, index) => (
+          <NavLink
+            to={`/category/${encodeURIComponent(category.name)}`}
+            key={index}
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.categoryItem} ${styles.active}`
+                : styles.categoryItem
+            }
+          >
+            <li className={styles.categoryItem}>{category.name}</li>
+          </NavLink>
+        ))}
+      </ul>
+    </div>
   );
 };
 

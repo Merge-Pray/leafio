@@ -1,3 +1,4 @@
+import { NavLink } from "react-router";
 import styles from "./categorybar.module.css";
 
 const categories = [
@@ -14,10 +15,15 @@ const CategoryBar = () => {
   return (
     <div className={styles.categoryBar}>
       {categories.map((cat) => (
-        <div key={cat.name} className={styles.categoryItem}>
-          <img src={cat.icon} alt={cat.name} className={styles.icon} />
-          <span className={styles.label}>{cat.name}</span>
-        </div>
+        <NavLink
+          to={`/category/${encodeURIComponent(cat.name)}`}
+          key={cat.name}
+        >
+          <div className={styles.categoryItem}>
+            <img src={cat.icon} alt={cat.name} className={styles.icon} />
+            <span className={styles.label}>{cat.name}</span>
+          </div>
+        </NavLink>
       ))}
     </div>
   );
