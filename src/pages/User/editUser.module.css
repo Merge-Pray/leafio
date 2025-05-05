@@ -53,3 +53,11 @@
   color: green;
   font-weight: bold;
 }
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 200;
+  margin-bottom: 2px;
+  display: block;
+  color: #333;
+}

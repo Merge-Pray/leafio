@@ -3,7 +3,14 @@ import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import CategorySelector from "./CategorySelector";
 import { db } from "../../config/firebaseConfig";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  arrayUnion,
+  doc,
+  serverTimestamp,
+} from "firebase/firestore";
 import useUserStore from "../../hooks/userStore";
 
 const PlaceAd = () => {
@@ -14,6 +21,7 @@ const PlaceAd = () => {
     description: "",
   });
 
+  const [uploadedFiles, setUploadedFiles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedFlags, setSelectedFlags] = useState([]);
   const [images, setImages] = useState([]);
@@ -40,6 +48,7 @@ const PlaceAd = () => {
     setIsUploading(true);
     setUploadProgress(0);
     const urls = [];
+    const filenames = [];
 
     for (const file of images) {
       const formData = new FormData();
@@ -62,6 +71,7 @@ const PlaceAd = () => {
 
         const data = await response.json();
         urls.push(data.secure_url);
+        filenames.push(file.name);
         setUploadProgress((prev) => prev + 100 / images.length);
       } catch (error) {
         console.error("Fehler beim Hochladen des Bildes:", error);
@@ -73,6 +83,7 @@ const PlaceAd = () => {
 
     setImageURLs(urls);
     setIsUploading(false);
+    setUploadedFiles(filenames);
     setUploadProgress(0);
   };
 
@@ -113,34 +124,43 @@ const PlaceAd = () => {
       return;
     }
 
-    const ad = {
-      adID: uuidv4(),
-      title: formData.title,
-      price: formData.price,
-      description: formData.description,
-      category: selectedCategory,
-      tags: selectedFlags,
-      createdAt: serverTimestamp(),
-      views: 0,
-      likes: 0,
-      images: imageURLs,
-      location: {
-        city: currentUser.address?.city || "",
-        zip: currentUser.address?.zip || "",
-        street: currentUser.address?.street || "",
-      },
-      userID: currentUser.userID,
-    };
-
     try {
-      const allAdsCollection = collection(db, "allads");
-      await addDoc(allAdsCollection, ad);
+      const adData = {
+        title: formData.title,
+        price: formData.price,
+        description: formData.description,
+        category: selectedCategory,
+        tags: selectedFlags,
+        createdAt: serverTimestamp(),
+        views: 0,
+        likes: 0,
+        images: imageURLs,
+        location: {
+          city: currentUser.address?.city || "",
+          zip: currentUser.address?.zip || "",
+          street: currentUser.address?.street || "",
+        },
+        userID: currentUser.userID,
+      };
+
+      const adRef = await addDoc(collection(db, "allads"), adData);
+
+      const adID = adRef.id;
+
+      await updateDoc(adRef, { adID });
+
+      const userRef = doc(db, "users", currentUser.userID);
+      await updateDoc(userRef, {
+        ownAds: arrayUnion(adID),
+      });
+
       setSuccessMessage("Anzeige erfolgreich erstellt!");
       setFormData({ title: "", price: "", description: "" });
       setSelectedCategory("");
       setSelectedFlags([]);
       setImages([]);
       setImageURLs([]);
+      setUploadedFiles([]);
     } catch (error) {
       console.error("Fehler beim Speichern der Anzeige in Firebase:", error);
       setError(
@@ -184,13 +204,17 @@ const PlaceAd = () => {
         />
 
         <input
-          className={styles.fileInput}
+          id="fileInput"
+          className={styles.hiddenFileInput}
           type="file"
           accept="image/*"
           multiple
           onChange={handleFileChange}
-          required
         />
+
+        <label htmlFor="fileInput" className={styles.customFileButton}>
+          Bilder auswählen
+        </label>
 
         {images.length > 0 && !isUploading && (
           <button
@@ -210,6 +234,19 @@ const PlaceAd = () => {
             >
               {Math.round(uploadProgress)}%
             </div>
+          </div>
+        )}
+
+        {uploadedFiles.length > 0 && (
+          <div className={styles.fileNamesContainer}>
+            <h3>Hochgeladene Dateien:</h3>
+            <ul>
+              {uploadedFiles.map((filename, idx) => (
+                <li key={idx} className={styles.fileName}>
+                  {filename}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
 

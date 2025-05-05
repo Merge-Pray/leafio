@@ -4,7 +4,6 @@ import { auth, db } from "../../config/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { query, where, collection, getDocs } from "firebase/firestore";
-import { v4 as uuidv4 } from "uuid";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -77,16 +76,15 @@ const Register = () => {
       );
       const user = userCredential.user;
 
-      const userID = uuidv4();
-
       await setDoc(doc(db, "users", user.uid), {
         username: formData.username,
         realName: formData.realName,
         email: formData.email,
         address: formData.address,
-        userID: userID,
+        userID: user.uid,
         ownAds: [],
         likedAds: [],
+        createdAt: serverTimestamp(),
       });
 
       setSuccessMessage("User registered successfully!");

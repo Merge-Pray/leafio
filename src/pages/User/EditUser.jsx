@@ -6,6 +6,7 @@ import styles from "./editUser.module.css";
 
 const EditUser = () => {
   const currentUser = useUserStore((state) => state.currentUser);
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -21,12 +22,12 @@ const EditUser = () => {
   useEffect(() => {
     if (currentUser) {
       setFormData({
-        username: currentUser.username,
-        email: currentUser.email,
+        username: currentUser.username || "",
+        email: currentUser.email || "",
         address: {
-          city: currentUser.address.city,
-          street: currentUser.address.street,
-          zip: currentUser.address.zip,
+          city: currentUser.address?.city || "",
+          street: currentUser.address?.street || "",
+          zip: currentUser.address?.zip || "",
         },
       });
     }
@@ -53,7 +54,6 @@ const EditUser = () => {
     e.preventDefault();
     try {
       const userDocRef = doc(db, "users", currentUser.userID);
-
       await updateDoc(userDocRef, {
         username: formData.username,
         email: formData.email,
@@ -72,46 +72,70 @@ const EditUser = () => {
     <div className={styles.container}>
       <h1 className={styles.headline}>Edit Profile</h1>
       <form onSubmit={handleSubmit} className={styles.formContainer}>
+        <label htmlFor="username" className={styles.label}>
+          Username
+        </label>
         <input
           className={styles.textInput}
           type="text"
           name="username"
+          id="username"
           placeholder="Username"
           value={formData.username}
           onChange={handleChange}
           required
         />
+
+        <label htmlFor="email" className={styles.label}>
+          Email
+        </label>
         <input
           className={styles.textInput}
           type="email"
           name="email"
+          id="email"
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
           required
         />
+
+        <label htmlFor="city" className={styles.label}>
+          Stadt
+        </label>
         <input
           className={styles.textInput}
           type="text"
           name="address.city"
+          id="city"
           placeholder="City"
           value={formData.address.city}
           onChange={handleChange}
           required
         />
+
+        <label htmlFor="street" className={styles.label}>
+          Strasse
+        </label>
         <input
           className={styles.textInput}
           type="text"
           name="address.street"
+          id="street"
           placeholder="Street"
           value={formData.address.street}
           onChange={handleChange}
           required
         />
+
+        <label htmlFor="zip" className={styles.label}>
+          PLZ
+        </label>
         <input
           className={styles.textInput}
           type="text"
           name="address.zip"
+          id="zip"
           placeholder="ZIP Code"
           value={formData.address.zip}
           onChange={handleChange}
