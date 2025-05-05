@@ -1,5 +1,5 @@
 import styles from "./placead.module.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import CategorySelector from "./CategorySelector";
 import { db } from "../../config/firebaseConfig";
@@ -11,9 +11,21 @@ import {
   doc,
   serverTimestamp,
 } from "firebase/firestore";
+
 import useUserStore from "../../hooks/userStore";
 
+import { useNavigate } from "react-router";
+
 const PlaceAd = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!currentUser) {
+      setTimeout(() => {
+        navigate("/login");
+      }, 5000);
+    }
+  }, []);
+
   const currentUser = useUserStore((state) => state.currentUser);
   const [formData, setFormData] = useState({
     title: "",
@@ -168,6 +180,24 @@ const PlaceAd = () => {
       );
     }
   };
+
+  if (!currentUser) {
+    return (
+      <div className={styles.container}>
+        <h1 className={styles.errorCode}>Du musst dich einloggen!</h1>
+
+        <p className={styles.subtext}>
+          Du wirst automatisch zum Login weitergeleitet...
+        </p>
+        <button
+          className={styles.backButton}
+          onClick={() => navigate("/login")}
+        >
+          Zum Login
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>

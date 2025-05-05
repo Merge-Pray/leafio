@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { NavLink } from "react-router";
 import { auth, db } from "../../config/firebaseConfig";
@@ -34,10 +34,11 @@ const Login = () => {
         formData.password
       );
       const user = userCredential.user;
-
+      const userRef = doc(db, "users", user.uid);
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
+        await updateDoc(userRef, { loggedIn: true });
         setCurrentUser(userData);
         setErrorMessage("");
         navigate("/");
