@@ -85,3 +85,9 @@
   color: #999;
   margin-top: auto;
 }
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
