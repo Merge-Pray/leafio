@@ -13,7 +13,7 @@ import ProductPage from "./pages/ProductPage/ProductPage";
 
 function App() {
   return (
-    <div className="app-wrapper">
+    <>
       <Header />
       <main className="routercontent">
         <Routes>
@@ -27,7 +27,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
 
