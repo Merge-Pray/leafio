@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
-import styles from "./notfound.module.css";
+import styles from "./productNotFound.module.css";
 import { useEffect } from "react";
 
-const NotFound = () => {
+const ProductNotFound = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,8 +14,8 @@ const NotFound = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.errorCode}>404</h1>
-      <h2 className={styles.headline}>Seite nicht gefunden</h2>
+      <h1 className={styles.errorCode}>Product Not Found</h1>
+      <h2 className={styles.headline}>Das Produkt konnte nicht gefunden werden.</h2>
       <p className={styles.subtext}>Du wirst automatisch zur Startseite weitergeleitet...</p>
       <button className={styles.backButton} onClick={() => navigate("/")}>
         Zurück zur Startseite
@@ -24,4 +24,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default ProductNotFound;
