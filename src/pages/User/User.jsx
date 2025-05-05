@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { NavLink, useParams } from "react-router";
 import useUserStore from "../../hooks/userStore";
 import styles from "./user.module.css";
 import { useEffect, useState } from "react";
@@ -78,6 +78,7 @@ const User = () => {
             >
               Daten ändern
             </button>
+            <NavLink to="/placead">Anzeige erstellen</NavLink>
             <h2 className={styles.headline}>Deine Anzeigen</h2>
           </div>
         </div>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import styles from "./ProductPage.module.css";
+import useUserStore from "../../hooks/userStore";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -15,7 +16,8 @@ const ProductPage = () => {
   const [likeDisabled, setLikeDisabled] = useState(false);
   const [mapLat, setMapLat] = useState(null);
   const [mapLon, setMapLon] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const currentUser = useUserStore((state) => state.currentUser);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -24,9 +26,8 @@ const ProductPage = () => {
         const docSnap = await getDoc(docRef);
 
         if (!docSnap.exists()) {
-          // setError("Produkt nicht gefunden.");
           setLoading(false);
-          navigate('/product/productnotfound')
+          navigate("/product/productnotfound");
           return;
         }
 
@@ -37,7 +38,21 @@ const ProductPage = () => {
 
         setProduct({ id: docSnap.id, ...data, views: newViews });
 
-        // 🔍 PLZ → Koordinaten
+        // Check if the user has already liked the product
+        if (currentUser) {
+          const userRef = doc(db, "users", currentUser.userID);
+          const userSnap = await getDoc(userRef);
+
+          if (userSnap.exists()) {
+            const userData = userSnap.data();
+            if (userData.likedAds?.includes(id)) {
+              setLiked(true);
+              setLikeDisabled(true);
+            }
+          }
+        }
+
+        // Fetch location coordinates based on ZIP code
         if (data.location?.zip) {
           const res = await fetch(
             `https://nominatim.openstreetmap.org/search?postalcode=${data.location.zip}&country=Germany&format=json`
@@ -57,7 +72,7 @@ const ProductPage = () => {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, currentUser]);
 
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -71,11 +86,18 @@ const ProductPage = () => {
     const docRef = doc(db, "allads", product.id);
     const newLikes = (product.likes || 0) + 1;
 
+    const userRef = doc(db, "users", currentUser.userID);
+
     try {
       await updateDoc(docRef, { likes: newLikes });
       setProduct({ ...product, likes: newLikes });
       setLiked(true);
       setLikeDisabled(true);
+
+      const userRef = doc(db, "users", currentUser.userID);
+      await updateDoc(userRef, {
+        likedAds: arrayUnion(id),
+      });
     } catch (err) {
       console.error("Fehler beim Liken:", err);
     }
@@ -93,12 +115,12 @@ const ProductPage = () => {
           className={styles.productImage}
         />
       </div>
-  
+
       <div className={styles.infoSection}>
         <h1 className={styles.title}>{product.title}</h1>
         <p className={styles.price}>{product.price}</p>
         <p className={styles.description}>{product.description}</p>
-  
+
         <div className={styles.meta}>
           <span>Standort: {product.location?.city}</span>
           <span>
@@ -112,7 +134,7 @@ const ProductPage = () => {
           <span>👁️ {product.views ?? 0} Aufrufe</span>
           <span>❤️ {product.likes ?? 0} Likes</span>
         </div>
-  
+
         <div className={styles.actions}>
           <button
             onClick={() => setShowForm(!showForm)}
@@ -123,7 +145,9 @@ const ProductPage = () => {
           <button
             onClick={handleLike}
             disabled={likeDisabled}
-            className={`${styles.actionButton} ${styles.likeButton} ${liked ? styles.liked : ''}`}
+            className={`${styles.actionButton} ${styles.likeButton} ${
+              liked ? styles.liked : ""
+            }`}
           >
             {liked ? "❤️ Geliked" : "🤍 Liken"}
           </button>
@@ -134,7 +158,7 @@ const ProductPage = () => {
             📤 Teilen {shared && "(Kopiert ✔)"}
           </button>
         </div>
-  
+
         {showForm && (
           <form className={styles.contactForm}>
             <input
@@ -149,7 +173,7 @@ const ProductPage = () => {
           </form>
         )}
       </div>
-  
+
       {mapLat && mapLon && (
         <div className={styles.mapWrapper}>
           <h3>Ungefährer Standort</h3>
@@ -161,7 +185,13 @@ const ProductPage = () => {
             referrerPolicy="no-referrer-when-downgrade"
             src={`https://www.google.com/maps?q=${mapLat},${mapLon}&z=15&output=embed`}
           />
-          <p style={{ fontSize: "0.8rem", textAlign: "center", marginTop: "0.5rem" }}>
+          <p
+            style={{
+              fontSize: "0.8rem",
+              textAlign: "center",
+              marginTop: "0.5rem",
+            }}
+          >
             basierend auf PLZ: {product.location?.zip}
           </p>
         </div>
