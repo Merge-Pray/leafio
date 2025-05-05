@@ -35,7 +35,7 @@
 }
 
 .submitButton {
-  background: linear-gradient(to right, #7AC943, #006837);
+  background: linear-gradient(to right, #7ac943, #006837);
   color: white;
   font-weight: bold;
   border: none;
@@ -66,4 +66,38 @@
   height: auto;
   border-radius: 8px;
   object-fit: cover;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+.customFileButton {
+  display: inline-block;
+  background: linear-gradient(to right, #7ac943, #006837);
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.3s ease;
+  margin-bottom: 1rem;
+  width: 50%;
+}
+
+.customFileButton:hover {
+  background: linear-gradient(to right, #6ab031, #005b2f);
+}
+
+.fileNamesContainer {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.fileName {
+  margin-bottom: 0.5rem;
+  list-style-type: disc;
+  margin-left: 1.5rem;
 }
