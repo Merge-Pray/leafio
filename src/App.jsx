@@ -13,6 +13,7 @@ import Headermobile from "./components/Headermobile/Headermobile";
 import { useEffect, useState } from "react";
 import NotFound from "./pages/NotFound/NotFound";
 import ProductNotFound from "./pages/ProductNotFound/ProductNotFound";
+import ProductList from "./pages/ProductList/ProductList";
 
 function App() {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
@@ -42,6 +43,7 @@ function App() {
             path="/product/productnotfound"
             element={<ProductNotFound />}
           />
+          <Route path="/category/:category" element={<ProductList />} />
         </Routes>
       </section>
       <Footer />

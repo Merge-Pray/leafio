@@ -1,14 +1,20 @@
 .categoryList {
-    background-color: #f5f5f5;
-    padding: 1rem;
-  }
-  
-  .categoryItem {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #ddd; 
-    font-size: 0.8rem;
-  }
-  
-  .categoryItem:last-child {
-    border-bottom: none;
-  }
+  background-color: #f5f5f5;
+  padding: 1rem;
+}
+
+.categoryItem {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.8rem;
+  color: black;
+}
+
+.categoryItem:last-child {
+  border-bottom: none;
+}
+
+.active {
+  color: green;
+  background-color: blue;
+}
