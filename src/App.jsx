@@ -12,6 +12,7 @@ import ProductPage from "./pages/ProductPage/ProductPage";
 import Headermobile from "./components/Headermobile/Headermobile";
 import { useEffect, useState } from "react";
 import NotFound from "./pages/NotFound/NotFound";
+import ProductNotFound from "./pages/ProductNotFound/ProductNotFound";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/product/productnotfound" element={<ProductNotFound />} />
         </Routes>
       </section>
       <Footer />
