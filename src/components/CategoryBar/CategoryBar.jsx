@@ -6,7 +6,7 @@ const categories = [
   { name: "Gartenpflanzen", icon: "/assets/gartenpflanzen.svg" },
   { name: "Bäume & Sträucher", icon: "/assets/bauume.svg" },
   { name: "Blühpflanzen", icon: "/assets/bluepflanzen.svg" },
-  { name: "Seltene Pflanzen", icon: "/assets/selten.svg" },
+  { name: "Seltene Pflanzen & Raritäten", icon: "/assets/selten.svg" },
   { name: "Bonsai & Miniaturpflanzen", icon: "/assets/bonsai.svg" },
   { name: "Pflanzenzubehör", icon: "/assets/zubehoer.svg" },
 ];
