@@ -20,6 +20,7 @@ const CategoryListing = () => {
               {category.name}
             </NavLink>
           </li>
+
         ))}
       </ul>
     </div>
