@@ -11,6 +11,14 @@ const User = () => {
   const [editUserData, setEditUserData] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!currentUser) {
+      setTimeout(() => {
+        navigate("/login");
+      }, 5000);
+    }
+  }, []);
+
   if (!currentUser) {
     return (
       <div className={styles.container}>

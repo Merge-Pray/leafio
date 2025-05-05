@@ -2,13 +2,29 @@ import styles from "./header.module.css";
 import useUserStore from "../../hooks/userStore";
 import Searchbar from "../Searchbar/Searchbar";
 import { NavLink } from "react-router";
+import { auth, db } from "../../config/firebaseConfig";
+import { doc, updateDoc } from "firebase/firestore";
+import { signOut } from "firebase/auth";
 
 const Header = () => {
   const currentUser = useUserStore((state) => state.currentUser);
   const setCurrentUser = useUserStore((state) => state.setCurrentUser);
 
-  const handleLogout = () => {
-    setCurrentUser(null);
+  const handleLogout = async () => {
+    try {
+      const user = auth.currentUser;
+
+      if (user) {
+        const userRef = doc(db, "users", user.uid);
+        await updateDoc(userRef, { loggedIn: false });
+      }
+
+      await signOut(auth);
+      setCurrentUser(null);
+      console.log("User successfully logged out.");
+    } catch (error) {
+      console.error("Error logging out:", error.message);
+    }
   };
 
   return (
