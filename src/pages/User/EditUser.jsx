@@ -1,29 +1,36 @@
-import styles from "./register.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../config/firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { query, where, collection, getDocs } from "firebase/firestore";
-import { v4 as uuidv4 } from "uuid";
+import useUserStore from "../../hooks/userStore";
+import styles from "./editUser.module.css";
 
-const Register = () => {
+const EditUser = () => {
+  const currentUser = useUserStore((state) => state.currentUser);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    password: "",
-    realName: {
-      first: "",
-      last: "",
-    },
     address: {
       city: "",
       street: "",
       zip: "",
     },
   });
-
-  const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (currentUser) {
+      setFormData({
+        username: currentUser.username,
+        email: currentUser.email,
+        address: {
+          city: currentUser.address.city,
+          street: currentUser.address.street,
+          zip: currentUser.address.zip,
+        },
+      });
+    }
+  }, [currentUser]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,61 +52,25 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const usersRef = collection(db, "users");
+      const userDocRef = doc(db, "users", currentUser.userID);
 
-      const usernameQuery = query(
-        usersRef,
-        where("username", "==", formData.username)
-      );
-      const usernameSnapshot = await getDocs(usernameQuery);
-
-      if (!usernameSnapshot.empty) {
-        setErrorMessage(
-          "Username is already taken. Please choose another one."
-        );
-        return;
-      }
-
-      const emailQuery = query(usersRef, where("email", "==", formData.email));
-      const emailSnapshot = await getDocs(emailQuery);
-
-      if (!emailSnapshot.empty) {
-        setErrorMessage(
-          "Email is already registered. Please use another email."
-        );
-        return;
-      }
-
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-      const user = userCredential.user;
-
-      const userID = uuidv4();
-
-      await setDoc(doc(db, "users", user.uid), {
+      await updateDoc(userDocRef, {
         username: formData.username,
-        realName: formData.realName,
         email: formData.email,
         address: formData.address,
-        userID: userID,
-        ownAds: [],
-        likedAds: [],
       });
 
-      setSuccessMessage("User registered successfully!");
+      setSuccessMessage("Profile updated successfully!");
       setErrorMessage("");
     } catch (error) {
-      setErrorMessage(error.message);
+      setErrorMessage("Failed to update profile. Please try again.");
       setSuccessMessage("");
     }
   };
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.headline}>Registration</h1>
+      <h1 className={styles.headline}>Edit Profile</h1>
       <form onSubmit={handleSubmit} className={styles.formContainer}>
         <input
           className={styles.textInput}
@@ -112,37 +83,10 @@ const Register = () => {
         />
         <input
           className={styles.textInput}
-          type="text"
-          name="realName.first"
-          placeholder="First Name"
-          value={formData.realName.first}
-          onChange={handleChange}
-          required
-        />
-        <input
-          className={styles.textInput}
-          type="text"
-          name="realName.last"
-          placeholder="Last Name"
-          value={formData.realName.last}
-          onChange={handleChange}
-          required
-        />
-        <input
-          className={styles.textInput}
           type="email"
           name="email"
           placeholder="Email"
           value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          className={styles.textInput}
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
           onChange={handleChange}
           required
         />
@@ -180,11 +124,11 @@ const Register = () => {
         )}
 
         <button type="submit" className={styles.submitButton}>
-          Register
+          Save Changes
         </button>
       </form>
     </div>
   );
 };
 
-export default Register;
+export default EditUser;

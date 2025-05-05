@@ -30,7 +30,8 @@ const Headermobile = () => {
         </NavLink>
         <SearchbarMobile />
         <img
-          className={`${styles.imgMobile} ${styles.imgNav}`}
+          className={`${styles.imgMobile} ${styles.imgNav}
+          ${isMenuOpen ? styles.imgNavOpen : ""}`}
           src="/assets/burger_w.svg"
           alt="logo"
           onClick={toggleMenu}
@@ -39,25 +40,46 @@ const Headermobile = () => {
       {isMenuOpen && (
         <div className={styles.toggleMenu}>
           {" "}
-          <NavLink to="/" onClick={toggleMenu}>
+          <NavLink
+            className={`${styles.linkHome} ${styles.link}`}
+            to="/"
+            onClick={toggleMenu}
+          >
             Home
           </NavLink>
           {currentUser === null ? (
-            <NavLink to="/login" onClick={toggleMenu}>
+            <NavLink
+              className={`${styles.linkUser} ${styles.link}`}
+              to="/login"
+              onClick={toggleMenu}
+            >
               Login
             </NavLink>
           ) : (
             <>
               <p>Willkommen {`${currentUser.username}`}, du bist eingeloggt!</p>
               <NavLink to={`/`}>
-                {" "}
-                <NavLink to="/placead" onClick={toggleMenu}>
-                  Anzeige erstellen
-                </NavLink>
-                <button onClick={handleLogout} className={styles.logoutButton}>
+                <p
+                  onClick={handleLogout}
+                  className={`${styles.linkUser} ${styles.link} ${styles.logoutButton}`}
+                >
                   Logout
-                </button>{" "}
+                </p>{" "}
               </NavLink>
+              <NavLink
+                className={styles.link}
+                to={`/user/${currentUser.userID}`}
+                onClick={toggleMenu}
+              >
+                <p>Zum Konto</p>
+              </NavLink>{" "}
+              <NavLink
+                className={styles.link}
+                to="/placead"
+                onClick={toggleMenu}
+              >
+                Anzeige erstellen
+              </NavLink>{" "}
             </>
           )}
         </div>

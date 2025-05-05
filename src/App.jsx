@@ -9,13 +9,26 @@ import User from "./pages/User/User";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/footer";
 import ProductPage from "./pages/ProductPage/ProductPage";
-// import Headermobile from "./components/Headermobile/Headermobile";
+import Headermobile from "./components/Headermobile/Headermobile";
+import { useEffect, useState } from "react";
+import NotFound from "./pages/NotFound/NotFound";
+
 
 function App() {
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 769px)");
+    const handleChange = (e) => setIsDesktop(e.matches);
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
   return (
     <>
-      <Header />
-      <main className="routercontent">
+      {isDesktop ? <Header /> : <Headermobile />}
+      <section className="routercontent">
         <Routes>
           <Route path="/" element={<Landingpage />} />
           <Route path="login" element={<Login />} />
@@ -24,8 +37,9 @@ function App() {
           <Route path="/user/:userID" element={<User />} />
           <Route path="register" element={<Register />} />
           <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-      </main>
+      </section>
       <Footer />
     </>
   );

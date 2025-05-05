@@ -14,13 +14,6 @@
   text-align: center;
 }
 
-.formContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 300px;
-}
-
 .textInput {
   padding: 0.75rem 1rem;
   border: 1px solid #ccc;
@@ -42,47 +35,4 @@
 
 .submitButton:hover {
   background: linear-gradient(to right, #6ab031, #005b2f);
-}
-
-.errorMessage {
-  color: red;
-  font-weight: bold;
-}
-
-.register {
-  font-size: 0.7rem;
-}
-
-.passwordWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.textInputPw {
-  padding: 0.75rem 2.5rem 0.75rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  font-size: 1rem;
-
-  width: 100%;
-}
-
-.eyeIcon {
-  position: absolute;
-  right: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.eyeIcon:hover {
-  color: #555;
-}
-
-.eyeIconImage {
-  width: 1.5rem;
-  height: 1.5rem;
 }
