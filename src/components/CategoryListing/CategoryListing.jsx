@@ -12,9 +12,7 @@ const CategoryListing = () => {
             to={`/category/${encodeURIComponent(category.name)}`}
             key={index}
             className={({ isActive }) =>
-              isActive
-                ? `${styles.categoryItem} ${styles.active}`
-                : styles.categoryItem
+              isActive ? `${styles.active}` : `${styles.categoryItem}`
             }
           >
             <li className={styles.categoryItem}>{category.name}</li>
