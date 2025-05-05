@@ -26,11 +26,18 @@ const Header = () => {
         <div>
           {currentUser ? (
             <div>
-              <p>Willkommen {`${currentUser.username}`}, du bist eingeloggt!</p>
+              <p className={styles.loginFont}>
+                Willkommen{" "}
+                <span className={styles.user}>{`${currentUser.username}`}</span>{" "}
+                , du bist eingeloggt!
+              </p>
               <div className={`${styles.nav}`}>
                 {" "}
-                <NavLink to={`/user/${currentUser.userID}`}>
-                  <p>Zum Konto</p>
+                <NavLink
+                  className={styles.link}
+                  to={`/user/${currentUser.userID}`}
+                >
+                  <p className={styles.loginFont}>Zum Konto</p>
                 </NavLink>
                 <NavLink to={`/`}>
                   <button
@@ -52,7 +59,7 @@ const Header = () => {
                   alt="userlogo"
                 />
 
-                <p className={`${styles.loginFont}`}>Log In</p>
+                <p className={`${styles.loginFont}`}>Login</p>
               </NavLink>
             </div>
           )}

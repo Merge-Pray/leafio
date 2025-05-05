@@ -1,7 +1,14 @@
 .headerMobile {
   display: flex;
-  margin: 0.5rem;
-  height: 10vh;
+  height: 6vh;
+  padding: 0.5rem;
+  position: fixed;
+
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
 }
 
 .imgMobile {
@@ -11,17 +18,70 @@
 
 .imgNav {
   margin-left: 5px;
+  transition: transform 0.3s ease;
+}
+
+.imgNavOpen {
+  transform: rotate(-90deg);
+}
+.link {
+  display: flex;
+  align-items: center;
+}
+
+.link::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  background-repeat: no-repeat;
+}
+
+.linkHome::before {
+  background-image: url(/public/assets/house-solid.svg);
+}
+
+.linkUser::before {
+  background-image: url(/public/assets/user-solid.svg);
+}
+
+.placead::before {
+  background-image: url(/public/assets/placead.svg);
 }
 
 .toggleMenu {
-  position: absolute;
-  top: 60px;
-  left: 0;
+  position: fixed;
+  top: 6vh;
+  right: 0;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 6vh);
   background: var(--light--green);
-  z-index: 1000;
+  z-index: 999;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  overflow-y: auto;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.link:visited,
+.link {
+  color: black;
+}
+
+.line {
+  border-top: 1px solid black;
+  width: 90%;
 }

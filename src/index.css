@@ -24,9 +24,18 @@ body {
   background-color: white;
   color: black;
   font-family: "Poppins", sans-serif;
+  height: 100%;
+  position: relative;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .routercontent {
   max-width: 1000px;
   margin: auto;
+  flex: 1;
 }
