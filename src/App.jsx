@@ -12,10 +12,11 @@ import ProductPage from "./pages/ProductPage/ProductPage";
 import Headermobile from "./components/Headermobile/Headermobile";
 import { useEffect, useState } from "react";
 import NotFound from "./pages/NotFound/NotFound";
-
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 769px)");
@@ -34,7 +35,14 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="placead" element={<PlaceAd />} />
           <Route path="about" element={<About />} />
-          <Route path="/user/:userID" element={<User />} />
+          <Route
+            path="/user/:userID"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <User />
+              </ProtectedRoute>
+            }
+          />
           <Route path="register" element={<Register />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="*" element={<NotFound />} />
