@@ -9,7 +9,7 @@
 .categoryLink {
   display: inline-block;
   background-color: rgb(236, 236, 236); 
-  color: #004d2d;;
+  color: black;
   padding: 0.3rem 0.6rem;
   border-radius: 5px;
   font-size: 0.85rem;
@@ -19,7 +19,7 @@
 }
 
 .categoryLink:hover {
-  background-color: #004d2d; 
+  background-color: #6d6d6d; 
   color: white;
   text-decoration: none;
 }
