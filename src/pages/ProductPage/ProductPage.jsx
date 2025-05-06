@@ -35,22 +35,35 @@ const ProductPage = () => {
         const data = docSnap.data();
         const newViews = (data.views || 0) + 1;
 
-        await updateDoc(docRef, { views: newViews });
-
-        setProduct({ id: docSnap.id, ...data, views: newViews });
-
+        // Update views without requiring userID in the payload
         if (currentUser) {
-          const userRef = doc(db, "users", currentUser.userID);
-          const userSnap = await getDoc(userRef);
-          if (userSnap.exists()) {
-            const userData = userSnap.data();
-            if (userData.likedAds?.includes(id)) {
-              setLiked(true);
-              setLikeDisabled(true);
-            }
+          try {
+            await updateDoc(docRef, { views: newViews });
+          } catch (err) {
+            console.error("Error updating views:", err);
           }
         }
 
+        setProduct({ id: docSnap.id, ...data, views: newViews });
+
+        // Fetch user data
+        if (currentUser) {
+          try {
+            const userRef = doc(db, "users", currentUser.userID);
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists()) {
+              const userData = userSnap.data();
+              if (userData.likedAds?.includes(id)) {
+                setLiked(true);
+                setLikeDisabled(true);
+              }
+            }
+          } catch (err) {
+            console.error("Error fetching user data:", err);
+          }
+        }
+
+        // Fetch location data
         if (data.location?.zip) {
           const res = await fetch(
             `https://nominatim.openstreetmap.org/search?postalcode=${data.location.zip}&country=Germany&format=json`
@@ -62,7 +75,7 @@ const ProductPage = () => {
           }
         }
       } catch (err) {
-        console.error("Fehler beim Laden:", err);
+        console.error("Error fetching product:", err);
         setError("Fehler beim Laden des Produkts.");
       } finally {
         setLoading(false);
@@ -79,12 +92,13 @@ const ProductPage = () => {
   };
 
   const handleLike = async () => {
-    if (!product || likeDisabled) return;
+    if (!product || likeDisabled || !currentUser) return;
 
     const docRef = doc(db, "allads", product.id);
     const newLikes = (product.likes || 0) + 1;
 
     try {
+      // Update likes without requiring userID in the payload
       await updateDoc(docRef, { likes: newLikes });
       setProduct({ ...product, likes: newLikes });
       setLiked(true);
@@ -105,10 +119,10 @@ const ProductPage = () => {
   return (
     <section className={styles.productPage}>
       <div className={styles.backButtonWrapper}>
-  <button className={styles.backButton} onClick={() => navigate(-1)}>
-    ← Zurück
-  </button>
-</div>
+        <button className={styles.backButton} onClick={() => navigate(-1)}>
+          ← Zurück
+        </button>
+      </div>
       <div className={styles.imageSection}>
         <img
           src={product.images?.[0]}
@@ -120,25 +134,24 @@ const ProductPage = () => {
       <div className={styles.infoSection}>
         <h1 className={styles.title}>{product.title}</h1>
         <span>
-           {" "}
-            <Link
-              to={`/products?category=${encodeURIComponent(product.category)}`}
-              className={styles.categoryLink}
-            >
-              {product.category}
-            </Link>
-          </span>
+          <Link
+            to={`/products?category=${encodeURIComponent(product.category)}`}
+            className={styles.categoryLink}
+          >
+            {product.category}
+          </Link>
+        </span>
         <p className={styles.price}>{product.price}</p>
         <p className={styles.description}>{product.description}</p>
         {product.tags?.length > 0 && (
-            <div className={styles.tagWrapper}>
-              {product.tags.map((tag, index) => (
-                <span key={index} className={styles.tagBadge}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
+          <div className={styles.tagWrapper}>
+            {product.tags.map((tag, index) => (
+              <span key={index} className={styles.tagBadge}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
         <div className={styles.meta}>
           <span>📍 Standort: {product.location?.city}</span>
           <span>
@@ -151,9 +164,6 @@ const ProductPage = () => {
           </span>
           <span>👁️ {product.views ?? 0} Aufrufe</span>
           <span>❤️ {product.likes ?? 0} Likes</span>
-         
-
-          
         </div>
 
         <div className={styles.actions}>
