@@ -28,6 +28,13 @@
   align-items: center;
 }
 
+.linkHome,
+.logout,
+.linkUser {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 .link::before {
   content: "";
   width: 1rem;
@@ -56,7 +63,7 @@
 }
 
 .linkPlant::before {
-  background-image: url(/public/assets/icon.svg);
+  background-image: url(/public/assets/icon_w.svg);
 }
 
 .toggleMenu {
@@ -65,7 +72,7 @@
   right: 0;
   width: 100%;
   height: calc(100vh - 6vh);
-  background: var(--light--green);
+  background: var(--green--Background);
   z-index: 999;
   display: flex;
   flex-direction: column;
@@ -96,6 +103,9 @@
   width: 90%;
 }
 
+.headline {
+  padding-top: 1.5rem;
+}
 .categoryItem {
   padding: 0.5rem 0;
   border-bottom: 1px solid #ddd;
