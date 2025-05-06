@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router";
-import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import styles from "./ProductPage.module.css";
 import useUserStore from "../../hooks/userStore";
@@ -113,6 +119,27 @@ const ProductPage = () => {
     }
   };
 
+  const handleUnlike = async () => {
+    if (!product || !liked) return;
+
+    const docRef = doc(db, "allads", product.id);
+    const newLikes = (product.likes || 0) - 1;
+
+    try {
+      await updateDoc(docRef, { likes: newLikes });
+      setProduct({ ...product, likes: newLikes });
+      setLiked(false);
+      setLikeDisabled(false);
+
+      const userRef = doc(db, "users", currentUser.userID);
+      await updateDoc(userRef, {
+        likedAds: arrayRemove(id),
+      });
+    } catch (err) {
+      console.error("Fehler beim Entliken:", err);
+    }
+  };
+
   if (loading) return <div className={styles.status}>Lade Produkt...</div>;
   if (error) return <div className={styles.status}>{error}</div>;
 
@@ -134,6 +161,7 @@ const ProductPage = () => {
       <div className={styles.infoSection}>
         <h1 className={styles.title}>{product.title}</h1>
         <span>
+
           <Link
             to={`/products?category=${encodeURIComponent(product.category)}`}
             className={styles.categoryLink}
@@ -174,13 +202,13 @@ const ProductPage = () => {
             Nachricht schreiben
           </button>
           <button
-            onClick={handleLike}
-            disabled={likeDisabled}
+            onClick={liked ? handleUnlike : handleLike}
+            disabled={!currentUser}
             className={`${styles.actionButton} ${styles.likeButton} ${
               liked ? styles.liked : ""
             }`}
           >
-            {liked ? "❤️ Geliked" : "🤍 Liken"}
+            {liked ? "💔 Entliken" : "🤍 Liken"}
           </button>
           <button
             onClick={handleShare}

@@ -10,6 +10,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  getDoc,
   query,
   updateDoc,
   where,
@@ -20,6 +21,7 @@ const User = () => {
   const { userID } = useParams();
   const currentUser = useUserStore((state) => state.currentUser);
   const [userAds, setUserAds] = useState([]);
+  const [favorites, setFavorites] = useState([]); // State für Favoriten
   const [error, setError] = useState(null);
   const [editUserData, setEditUserData] = useState(false);
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ const User = () => {
       }, 5000);
     } else {
       fetchUserAds();
+      fetchFavorites(); // Favoriten laden
     }
   }, []);
 
@@ -47,6 +50,37 @@ const User = () => {
     } catch (err) {
       console.error(err);
       setError("Fehler beim Laden der Anzeigen.");
+    }
+  };
+
+  const fetchFavorites = async () => {
+    try {
+      const userRef = doc(db, "users", currentUser.userID);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        const likedAds = userData.likedAds || [];
+
+        if (likedAds.length === 0) {
+          setFavorites([]);
+          return;
+        }
+
+        const adsRef = collection(db, "allads");
+        const q = query(adsRef, where("__name__", "in", likedAds));
+        const snapshot = await getDocs(q);
+
+        const favoriteAds = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setFavorites(favoriteAds);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Fehler beim Laden der Favoriten.");
     }
   };
 
@@ -173,6 +207,38 @@ const User = () => {
                     {" "}
                     Anzeige löschen
                   </button>
+                </div>
+              ))
+            )}
+          </div>
+          <h2 className={styles.headline}>Deine Favoriten</h2>
+          <div className={styles.userAds}>
+            {favorites.length === 0 ? (
+              <p>Keine Favoriten gefunden.</p>
+            ) : (
+              favorites.map((ad) => (
+                <div key={ad.id} className={styles.productList}>
+                  <NavLink
+                    to={`/product/${ad.id}`}
+                    className={styles.productItem}
+                  >
+                    <img src={ad.images?.[0]} alt={ad.title} />
+                    <div className={styles.productInfo}>
+                      <h3>{ad.title}</h3>
+                      <p>{ad.description?.slice(0, 80)}...</p>
+                      <p>
+                        <strong>{ad.price}</strong>
+                      </p>
+                      <p className={styles.createdAt}>Online seit:</p>
+                      <div className={styles.createdAt}>
+                        {ad.createdAt?.toDate().toLocaleDateString("de-DE", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </div>
+                    </div>
+                  </NavLink>
                 </div>
               ))
             )}
