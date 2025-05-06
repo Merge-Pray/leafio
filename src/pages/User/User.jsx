@@ -158,19 +158,21 @@ const User = () => {
                           year: "numeric",
                         })}
                       </div>
-                      <button className={styles.submitButton}>
-                        {" "}
-                        Anzeige bearbeiten
-                      </button>
-                      <button
-                        onClick={() => deleteAd(ad.id)}
-                        className={styles.submitButton}
-                      >
-                        {" "}
-                        Anzeige löschen
-                      </button>
                     </div>
                   </NavLink>
+                  <NavLink
+                    to={`/editad/${ad.id}`}
+                    className={styles.submitButton}
+                  >
+                    Anzeige bearbeiten
+                  </NavLink>
+                  <button
+                    onClick={() => deleteAd(ad.id)}
+                    className={styles.submitButton}
+                  >
+                    {" "}
+                    Anzeige löschen
+                  </button>
                 </div>
               ))
             )}

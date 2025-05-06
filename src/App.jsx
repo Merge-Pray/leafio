@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import NotFound from "./pages/NotFound/NotFound";
 import ProductNotFound from "./pages/ProductNotFound/ProductNotFound";
 import ProductList from "./pages/ProductList/ProductList";
+import EditAd from "./pages/EditAd/EditAd";
 
 function App() {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
@@ -30,19 +31,23 @@ function App() {
     <>
       {isDesktop ? <Header /> : <Headermobile />}
       <section className="routercontent">
-      <Routes>
-  <Route path="/" element={<Landingpage />} />
-  <Route path="login" element={<Login />} />
-  <Route path="placead" element={<PlaceAd />} />
-  <Route path="about" element={<About />} />
-  <Route path="/user/:userID" element={<User />} />
-  <Route path="register" element={<Register />} />
-  <Route path="/product/:id" element={<ProductPage />} />
-  <Route path="/category/:category" element={<ProductList />} />
-  <Route path="/products" element={<ProductList />} />
-  <Route path="/product/productnotfound" element={<ProductNotFound />} />
-  <Route path="*" element={<NotFound />} />
-</Routes>
+        <Routes>
+          <Route path="/" element={<Landingpage />} />
+          <Route path="login" element={<Login />} />
+          <Route path="placead" element={<PlaceAd />} />
+          <Route path="about" element={<About />} />
+          <Route path="/user/:userID" element={<User />} />
+          <Route path="register" element={<Register />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/category/:category" element={<ProductList />} />
+          <Route path="/products" element={<ProductList />} />
+          <Route
+            path="/product/productnotfound"
+            element={<ProductNotFound />}
+          />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/editad/:adID" element={<EditAd />} />
+        </Routes>
       </section>
       <Footer />
     </>
