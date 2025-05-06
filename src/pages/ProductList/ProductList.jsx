@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams, NavLink } from "react-router-dom";
+import { useLocation, useParams, NavLink } from "react-router";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import CategoryListing from "../../components/CategoryListing/CategoryListing";

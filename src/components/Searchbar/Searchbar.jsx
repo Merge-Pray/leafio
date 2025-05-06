@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import styles from "./searchbar.module.css";
@@ -27,7 +27,7 @@ const Searchbar = () => {
         });
 
         const sortedCities = Object.entries(cityCounts)
-          .sort((a, b) => b[1] - a[1]) // optional: nach Häufigkeit
+          .sort((a, b) => b[1] - a[1])
           .map(([cityName]) => cityName);
 
         setAvailableCities(sortedCities);
