@@ -75,3 +75,39 @@
 .backButton:hover {
   background-color: #004d2d;
 }
+
+.productList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.productItem {
+  display: flex;
+  gap: 1rem;
+  background-color: #f8f8f8;
+  padding: 1rem;
+  /* border-radius: 8px; */
+  text-decoration: none;
+  color: inherit;
+  margin: 0.5rem 0;
+}
+
+.productItem img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+@media (max-width: 768px) {
+  .productItem img {
+    width: 40%;
+    height: auto;
+  }
+}

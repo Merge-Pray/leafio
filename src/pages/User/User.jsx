@@ -4,10 +4,14 @@ import styles from "./user.module.css";
 import { useEffect, useState } from "react";
 import EditUser from "./EditUser.jsx";
 import { useNavigate } from "react-router";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../config/firebaseConfig";
 
 const User = () => {
   const { userID } = useParams();
   const currentUser = useUserStore((state) => state.currentUser);
+  const [userAds, setUserAds] = useState([]);
+  const [error, setError] = useState(null);
   const [editUserData, setEditUserData] = useState(false);
   const navigate = useNavigate();
 
@@ -16,8 +20,26 @@ const User = () => {
       setTimeout(() => {
         navigate("/login");
       }, 5000);
+    } else {
+      fetchUserAds();
     }
   }, []);
+
+  const fetchUserAds = async () => {
+    try {
+      const adsRef = collection(db, "allads");
+      const q = query(adsRef, where("userID", "==", currentUser.userID));
+      const snapshot = await getDocs(q);
+      const ads = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setUserAds(ads);
+    } catch (err) {
+      console.error(err);
+      setError("Fehler beim Laden der Anzeigen.");
+    }
+  };
 
   if (!currentUser) {
     return (
@@ -78,8 +100,34 @@ const User = () => {
             >
               Daten ändern
             </button>
-            <NavLink to="/placead">Anzeige erstellen</NavLink>
-            <h2 className={styles.headline}>Deine Anzeigen</h2>
+            <NavLink to="/placead" className={styles.submitButton}>
+              Anzeige erstellen
+            </NavLink>
+          </div>
+          <h2 className={styles.headline}>Deine Anzeigen</h2>
+          {error && <p className={styles.errorMessage}>{error}</p>}
+          <div className={styles.userAds}>
+            {userAds.length === 0 ? (
+              <p>Keine Anzeigen gefunden.</p>
+            ) : (
+              userAds.map((ad) => (
+                <div key={ad.id} className={styles.productList}>
+                  <NavLink
+                    to={`/product/${ad.id}`}
+                    className={styles.productItem}
+                  >
+                    <img src={ad.images?.[0]} alt={ad.title} />
+                    <div className={styles.productInfo}>
+                      <h3>{ad.title}</h3>
+                      <p>{ad.description?.slice(0, 80)}...</p>
+                      <p>
+                        <strong>{ad.price}</strong>
+                      </p>
+                    </div>
+                  </NavLink>
+                </div>
+              ))
+            )}
           </div>
         </div>
       ) : (
