@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import styles from "./ProductPage.module.css";
@@ -38,11 +39,9 @@ const ProductPage = () => {
 
         setProduct({ id: docSnap.id, ...data, views: newViews });
 
-        // Check if the user has already liked the product
         if (currentUser) {
           const userRef = doc(db, "users", currentUser.userID);
           const userSnap = await getDoc(userRef);
-
           if (userSnap.exists()) {
             const userData = userSnap.data();
             if (userData.likedAds?.includes(id)) {
@@ -52,7 +51,6 @@ const ProductPage = () => {
           }
         }
 
-        // Fetch location coordinates based on ZIP code
         if (data.location?.zip) {
           const res = await fetch(
             `https://nominatim.openstreetmap.org/search?postalcode=${data.location.zip}&country=Germany&format=json`
@@ -86,8 +84,6 @@ const ProductPage = () => {
     const docRef = doc(db, "allads", product.id);
     const newLikes = (product.likes || 0) + 1;
 
-    const userRef = doc(db, "users", currentUser.userID);
-
     try {
       await updateDoc(docRef, { likes: newLikes });
       setProduct({ ...product, likes: newLikes });
@@ -108,6 +104,11 @@ const ProductPage = () => {
 
   return (
     <section className={styles.productPage}>
+      <div className={styles.backButtonWrapper}>
+  <button className={styles.backButton} onClick={() => navigate(-1)}>
+    ← Zurück
+  </button>
+</div>
       <div className={styles.imageSection}>
         <img
           src={product.images?.[0]}
@@ -118,13 +119,30 @@ const ProductPage = () => {
 
       <div className={styles.infoSection}>
         <h1 className={styles.title}>{product.title}</h1>
+        <span>
+           {" "}
+            <Link
+              to={`/products?category=${encodeURIComponent(product.category)}`}
+              className={styles.categoryLink}
+            >
+              {product.category}
+            </Link>
+          </span>
         <p className={styles.price}>{product.price}</p>
         <p className={styles.description}>{product.description}</p>
-
+        {product.tags?.length > 0 && (
+            <div className={styles.tagWrapper}>
+              {product.tags.map((tag, index) => (
+                <span key={index} className={styles.tagBadge}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         <div className={styles.meta}>
-          <span>Standort: {product.location?.city}</span>
+          <span>📍 Standort: {product.location?.city}</span>
           <span>
-            Online seit:{" "}
+            📅 Online seit:{" "}
             {product.createdAt?.toDate().toLocaleDateString("de-DE", {
               day: "2-digit",
               month: "long",
@@ -133,6 +151,9 @@ const ProductPage = () => {
           </span>
           <span>👁️ {product.views ?? 0} Aufrufe</span>
           <span>❤️ {product.likes ?? 0} Likes</span>
+         
+
+          
         </div>
 
         <div className={styles.actions}>
