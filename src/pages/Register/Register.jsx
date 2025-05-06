@@ -10,6 +10,7 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
     realName: {
       first: "",
       last: "",
@@ -20,7 +21,8 @@ const Register = () => {
       zip: "",
     },
   });
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -44,6 +46,10 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (formData.password !== formData.confirmPassword) {
+        setErrorMessage("Passwords do not match.");
+        return;
+      }
       const usersRef = collection(db, "users");
 
       const usernameQuery = query(
@@ -135,15 +141,56 @@ const Register = () => {
           onChange={handleChange}
           required
         />
-        <input
-          className={styles.textInput}
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
+        <div className={styles.passwordWrapper}>
+          <input
+            className={styles.textInputPw}
+            type={showPassword ? "text" : "password"}
+            name="password"
+            id="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <span
+            className={styles.eyeIcon}
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            <img
+              src={
+                showPassword ? "/assets/eye-closed.svg" : "/assets/eye-open.svg"
+              }
+              alt={showPassword ? "Hide password" : "Show password"}
+              className={styles.eyeIconImage}
+            />
+          </span>
+        </div>
+        <div className={styles.passwordWrapper}>
+          <input
+            className={styles.textInputPw}
+            type={showPassword2 ? "text" : "password"}
+            name="confirmPassword"
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+          <span
+            className={styles.eyeIcon}
+            onClick={() => setShowPassword2((prev) => !prev)}
+          >
+            <img
+              src={
+                showPassword2
+                  ? "/assets/eye-closed.svg"
+                  : "/assets/eye-open.svg"
+              }
+              alt={showPassword2 ? "Hide password" : "Show password"}
+              className={styles.eyeIconImage}
+            />
+          </span>
+        </div>
         <input
           className={styles.textInput}
           type="text"

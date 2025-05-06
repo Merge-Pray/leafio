@@ -1,6 +1,6 @@
 .headerMobile {
   display: flex;
-  height: 6vh;
+  height: 7vh;
   padding: 0.5rem;
   position: fixed;
   z-index: 1000;
@@ -44,7 +44,11 @@
 }
 
 .linkUser::before {
-  background-image: url(/public/assets/user-solid.svg);
+  background-image: url(/public/assets/user-solid-white.svg);
+}
+
+.logout::before {
+  background-image: url(/public/assets/right-from-bracket-solid.svg);
 }
 
 .placead::before {
@@ -57,7 +61,7 @@
 
 .toggleMenu {
   position: fixed;
-  top: 6vh;
+  top: 7vh;
   right: 0;
   width: 100%;
   height: calc(100vh - 6vh);
@@ -67,7 +71,7 @@
   flex-direction: column;
   align-items: start;
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   overflow-y: auto;
   color: white;
 }
@@ -75,9 +79,11 @@
 .user {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   gap: 0.5rem;
   padding: 0.5rem;
+  width: 90%;
+  border-top: 1px solid #ddd;
 }
 
 .link:visited,
@@ -86,16 +92,22 @@
 }
 
 .categories {
-  border-top: 1px solid black;
+  border-top: 1px solid #ddd;
   width: 90%;
+}
+
+.categoryItem {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
 }
 
 .categorylist {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   padding: 0;
   margin: 0;
   list-style: none;
-  width: 90%;
+  width: 100%;
 }
