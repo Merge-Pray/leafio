@@ -7,7 +7,7 @@ import PlaceAd from "./pages/PlaceAd/PlaceAd";
 import Register from "./pages/Register/Register";
 import User from "./pages/User/User";
 import Header from "./components/Header/Header";
-import Footer from "./components/Footer/footer";
+import Footer from "./components/Footer/Footer";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import Headermobile from "./components/Headermobile/Headermobile";
 import { useEffect, useState } from "react";
