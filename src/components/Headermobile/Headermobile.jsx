@@ -27,6 +27,7 @@ const Headermobile = () => {
             className={`${styles.imgMobile}`}
             src="/assets/icon.svg"
             alt="logo"
+            onClick={toggleMenu}
           />
         </NavLink>
         <SearchbarMobile />
@@ -67,7 +68,7 @@ const Headermobile = () => {
                       key={index}
                       onClick={toggleMenu}
                     >
-                      <li>{category.name}</li>
+                      <li className={styles.categoryItem}>{category.name}</li>
                     </NavLink>
                   ))}
                 </ul>
@@ -76,21 +77,23 @@ const Headermobile = () => {
           ) : (
             <>
               <p>Willkommen {`${currentUser.username}`}, du bist eingeloggt!</p>
-              <NavLink
-                className={`${styles.linkHome} ${styles.link}`}
-                to="/"
-                onClick={toggleMenu}
-              >
-                Home
-              </NavLink>
-              <NavLink to={`/`}>
-                <p
-                  onClick={handleLogout}
-                  className={`${styles.linkUser} ${styles.link}`}
+              <div className={styles.user}>
+                <NavLink
+                  className={`${styles.linkHome} ${styles.link}`}
+                  to="/"
+                  onClick={toggleMenu}
                 >
-                  Logout
-                </p>{" "}
-              </NavLink>
+                  Home
+                </NavLink>
+                <NavLink to={`/`}>
+                  <p
+                    onClick={handleLogout}
+                    className={`${styles.logout} ${styles.link}`}
+                  >
+                    Logout
+                  </p>{" "}
+                </NavLink>
+              </div>
               <div className={`${styles.line} ${styles.user}`}>
                 {" "}
                 <NavLink
@@ -107,19 +110,21 @@ const Headermobile = () => {
                 >
                   <p>Anzeige erstellen</p>
                 </NavLink>{" "}
-                <h3 className={styles.headline}>Kategorien</h3>
-                <ul>
-                  {categories.map((category, index) => (
-                    <NavLink
-                      to={`/category/${encodeURIComponent(category.name)}`}
-                      className={`${styles.linkPlant} ${styles.link}`}
-                      key={index}
-                      onClick={toggleMenu}
-                    >
-                      <li>{category.name}</li>
-                    </NavLink>
-                  ))}
-                </ul>
+                <div className={styles.categories}>
+                  <h3 className={styles.headline}>Kategorien</h3>
+                  <ul className={styles.categorylist}>
+                    {categories.map((category, index) => (
+                      <NavLink
+                        to={`/category/${encodeURIComponent(category.name)}`}
+                        className={`${styles.linkPlant} ${styles.link}`}
+                        key={index}
+                        onClick={toggleMenu}
+                      >
+                        <li className={styles.categoryItem}>{category.name}</li>
+                      </NavLink>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </>
           )}
