@@ -106,6 +106,12 @@
   gap: 0.3rem;
 }
 
+.createdAt {
+  font-size: 0.7rem;
+  color: #999;
+  /* margin-top: auto; */
+}
+
 @media (max-width: 768px) {
   .productItem img {
     width: 40%;
