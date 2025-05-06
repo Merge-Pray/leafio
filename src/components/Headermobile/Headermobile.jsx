@@ -27,7 +27,7 @@ const Headermobile = () => {
             className={`${styles.imgMobile}`}
             src="/assets/icon.svg"
             alt="logo"
-            onClick={toggleMenu}
+            
           />
         </NavLink>
         <SearchbarMobile />

@@ -30,22 +30,19 @@ function App() {
     <>
       {isDesktop ? <Header /> : <Headermobile />}
       <section className="routercontent">
-        <Routes>
-          <Route path="/" element={<Landingpage />} />
-          <Route path="login" element={<Login />} />
-          <Route path="placead" element={<PlaceAd />} />
-          <Route path="about" element={<About />} />
-          <Route path="/user/:userID" element={<User />} />
-          <Route path="register" element={<Register />} />
-          {/* <Route path="/products" element={<ProductList />} /> */}
-          <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="*" element={<NotFound />} />
-          <Route
-            path="/product/productnotfound"
-            element={<ProductNotFound />}
-          />
-          <Route path="/category/:category" element={<ProductList />} />
-        </Routes>
+      <Routes>
+  <Route path="/" element={<Landingpage />} />
+  <Route path="login" element={<Login />} />
+  <Route path="placead" element={<PlaceAd />} />
+  <Route path="about" element={<About />} />
+  <Route path="/user/:userID" element={<User />} />
+  <Route path="register" element={<Register />} />
+  <Route path="/product/:id" element={<ProductPage />} />
+  <Route path="/category/:category" element={<ProductList />} />
+  <Route path="/products" element={<ProductList />} />
+  <Route path="/product/productnotfound" element={<ProductNotFound />} />
+  <Route path="*" element={<NotFound />} />
+</Routes>
       </section>
       <Footer />
     </>
