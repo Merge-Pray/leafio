@@ -4,7 +4,16 @@ import styles from "./user.module.css";
 import { useEffect, useState } from "react";
 import EditUser from "./EditUser.jsx";
 import { useNavigate } from "react-router";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  arrayRemove,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 
 const User = () => {
@@ -38,6 +47,24 @@ const User = () => {
     } catch (err) {
       console.error(err);
       setError("Fehler beim Laden der Anzeigen.");
+    }
+  };
+
+  const deleteAd = async (adId) => {
+    const confirmDelete = window.confirm(
+      "Möchten Sie diese Anzeige wirklich löschen?"
+    );
+    if (!confirmDelete) return;
+    try {
+      const adRef = doc(db, "allads", adId);
+      await deleteDoc(adRef);
+      const userRef = doc(db, "users", currentUser.userID);
+      await updateDoc(userRef, { ownAds: arrayRemove(adId) });
+      setUserAds((prev) => prev.filter((ad) => ad.id !== adId));
+      navigate(`/user/${currentUser.userID}`);
+    } catch (error) {
+      console.error(error);
+      setError("Fehler beim Löschen der Anzeige.");
     }
   };
 
@@ -123,6 +150,25 @@ const User = () => {
                       <p>
                         <strong>{ad.price}</strong>
                       </p>
+                      <p className={styles.createdAt}>Online seit:</p>
+                      <div className={styles.createdAt}>
+                        {ad.createdAt?.toDate().toLocaleDateString("de-DE", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </div>
+                      <button className={styles.submitButton}>
+                        {" "}
+                        Anzeige bearbeiten
+                      </button>
+                      <button
+                        onClick={() => deleteAd(ad.id)}
+                        className={styles.submitButton}
+                      >
+                        {" "}
+                        Anzeige löschen
+                      </button>
                     </div>
                   </NavLink>
                 </div>
