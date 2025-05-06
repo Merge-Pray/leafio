@@ -1,6 +1,7 @@
 .headerMobile {
   display: flex;
   height: 7vh;
+  align-items: center;
   padding: 0.5rem;
   position: fixed;
   z-index: 1000;
@@ -11,12 +12,12 @@
 }
 
 .imgMobile {
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
 }
 
 .imgNav {
-  margin-left: 5px;
+  margin-left: 6px;
   transition: transform 0.3s ease;
 }
 
