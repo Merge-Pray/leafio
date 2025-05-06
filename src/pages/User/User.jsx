@@ -169,7 +169,7 @@ const User = () => {
           {error && <p className={styles.errorMessage}>{error}</p>}
           <div className={styles.userAds}>
             {userAds.length === 0 ? (
-              <p>Keine Anzeigen gefunden.</p>
+              <p className={styles.errormessage}>Keine Anzeigen gefunden.</p>
             ) : (
               userAds.map((ad) => (
                 <div key={ad.id} className={styles.productList}>
@@ -196,13 +196,13 @@ const User = () => {
                   </NavLink>
                   <NavLink
                     to={`/editad/${ad.id}`}
-                    className={styles.submitButton}
+                    className={`${styles.submitButton} ${styles.adButton}`}
                   >
                     Anzeige bearbeiten
                   </NavLink>
                   <button
                     onClick={() => deleteAd(ad.id)}
-                    className={styles.submitButton}
+                    className={`${styles.submitButton} ${styles.adButton}`}
                   >
                     {" "}
                     Anzeige löschen
@@ -214,7 +214,7 @@ const User = () => {
           <h2 className={styles.headline}>Deine Favoriten</h2>
           <div className={styles.userAds}>
             {favorites.length === 0 ? (
-              <p>Keine Favoriten gefunden.</p>
+              <p className={styles.errormessage}>Keine Favoriten gefunden.</p>
             ) : (
               favorites.map((ad) => (
                 <div key={ad.id} className={styles.productList}>
