@@ -161,11 +161,11 @@ const User = () => {
             >
               Daten ändern
             </button>
-            <NavLink to="/placead" className={styles.submitButton}>
-              Anzeige erstellen
-            </NavLink>
           </div>
           <h2 className={styles.headline}>Deine Anzeigen</h2>
+          <NavLink to="/placead" className={styles.submitButton}>
+            Anzeige erstellen
+          </NavLink>
           {error && <p className={styles.errorMessage}>{error}</p>}
           <div className={styles.userAds}>
             {userAds.length === 0 ? (
@@ -194,19 +194,21 @@ const User = () => {
                       </div>
                     </div>
                   </NavLink>
-                  <NavLink
-                    to={`/editad/${ad.id}`}
-                    className={`${styles.submitButton} ${styles.adButton}`}
-                  >
-                    Anzeige bearbeiten
-                  </NavLink>
-                  <button
-                    onClick={() => deleteAd(ad.id)}
-                    className={`${styles.submitButton} ${styles.adButton}`}
-                  >
-                    {" "}
-                    Anzeige löschen
-                  </button>
+                  <div className={styles.adButtons}>
+                    <NavLink
+                      to={`/editad/${ad.id}`}
+                      className={`${styles.submitButton} ${styles.adButton}`}
+                    >
+                      Anzeige bearbeiten
+                    </NavLink>
+                    <button
+                      onClick={() => deleteAd(ad.id)}
+                      className={`${styles.submitButton} ${styles.adButton}`}
+                    >
+                      {" "}
+                      Anzeige löschen
+                    </button>
+                  </div>
                 </div>
               ))
             )}

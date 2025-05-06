@@ -121,9 +121,14 @@
   text-align: center;
 }
 
+.adButtons {
+  display: flex;
+  justify-content: space-around;
+}
+
 .adButton {
   font-size: 0.7rem;
-  width: 100px;
+  width: 40%;
 }
 
 @media (max-width: 768px) {
