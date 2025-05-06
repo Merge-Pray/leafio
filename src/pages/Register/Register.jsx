@@ -2,7 +2,7 @@ import styles from "./register.module.css";
 import { useState } from "react";
 import { auth, db } from "../../config/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { query, where, collection, getDocs } from "firebase/firestore";
 
 const Register = () => {

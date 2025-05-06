@@ -104,6 +104,11 @@ const ProductPage = () => {
 
   return (
     <section className={styles.productPage}>
+      <div className={styles.backButtonWrapper}>
+  <button className={styles.backButton} onClick={() => navigate(-1)}>
+    ← Zurück
+  </button>
+</div>
       <div className={styles.imageSection}>
         <img
           src={product.images?.[0]}

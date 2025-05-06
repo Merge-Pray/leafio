@@ -13,14 +13,13 @@
   padding: 0.3rem 0.6rem;
   border-radius: 5px;
   font-size: 0.85rem;
-  font-weight: 500;
+  
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
 .categoryLink:hover {
-  background-color: #6d6d6d; 
-  color: white;
+  background-color: #d0d0d0; 
   text-decoration: none;
 }
 
@@ -165,4 +164,25 @@
 
   .imageWrapper{
     width: 100px;
+  }
+
+  .backButtonWrapper {
+    width: 100%;
+    /* margin-bottom: -1rem; */
+    margin-top: -2rem;
+  }
+  
+  .backButton {
+    background-color: #e0e0e0;
+    color: #333;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .backButton:hover {
+    background-color: #d0d0d0;
   }
