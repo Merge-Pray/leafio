@@ -11,6 +11,19 @@
   max-width: 25%;
 }
 
+.productItemPlaceholder {
+  flex: 3;
+  gap: 1rem;
+  
+  width: 100%;
+  margin: 0rem auto;
+  background-color: #f8f8f8;
+  padding: 1rem;
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+}
+
 .productList {
   flex: 3;
   display: flex;

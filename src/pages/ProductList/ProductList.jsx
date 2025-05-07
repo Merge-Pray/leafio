@@ -76,7 +76,11 @@ const ProductList = () => {
       </div>
       <div className={styles.productList}>
         {error && <p>{error}</p>}
-        {products.length === 0 && !error && <p>Keine Produkte gefunden.</p>}
+        {products.length === 0 && !error && (
+  <div className={styles.productItemPlaceholder}>
+    <p><strong>Leider Keine Produkte gefunden.</strong>Versuche es mit einem anderen Suchbegriff. Viel Erfolg und viel Spass! Dein Leafio Team.</p>
+  </div>
+)}
         {products.map((product) => (
           <NavLink
             to={`/product/${product.id}`}
