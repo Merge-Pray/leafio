@@ -67,6 +67,10 @@
   background-image: url(/public/assets/icon_w.svg);
 }
 
+.favourites::before {
+  background-image: url(/public/assets/heart-solid.svg);
+}
+
 .toggleMenu {
   position: fixed;
   top: 60px;

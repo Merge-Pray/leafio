@@ -131,6 +131,10 @@
   width: 40%;
 }
 
+#favourites {
+  scroll-margin-top: 70px;
+}
+
 @media (max-width: 768px) {
   .productItem img {
     width: 40%;

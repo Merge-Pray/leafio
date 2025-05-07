@@ -1,4 +1,4 @@
-import { NavLink, useParams } from "react-router";
+import { NavLink, useLocation, useParams } from "react-router";
 import useUserStore from "../../hooks/userStore";
 import styles from "./user.module.css";
 import { useEffect, useState } from "react";
@@ -25,6 +25,17 @@ const User = () => {
   const [error, setError] = useState(null);
   const [editUserData, setEditUserData] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   useEffect(() => {
     if (!currentUser) {
@@ -33,7 +44,7 @@ const User = () => {
       }, 5000);
     } else {
       fetchUserAds();
-      fetchFavorites(); // Favoriten laden
+      fetchFavorites();
     }
   }, []);
 
@@ -213,7 +224,9 @@ const User = () => {
               ))
             )}
           </div>
-          <h2 className={styles.headline}>Deine Favoriten</h2>
+          <h2 className={styles.headline} id="favourites">
+            Deine Favoriten
+          </h2>
           <div className={styles.userAds}>
             {favorites.length === 0 ? (
               <p className={styles.errormessage}>Keine Favoriten gefunden.</p>

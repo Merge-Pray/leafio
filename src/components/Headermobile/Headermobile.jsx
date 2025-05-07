@@ -27,7 +27,6 @@ const Headermobile = () => {
             className={`${styles.imgMobile}`}
             src="/assets/icon.svg"
             alt="logo"
-            
           />
         </NavLink>
         <SearchbarMobile />
@@ -109,6 +108,13 @@ const Headermobile = () => {
                   onClick={toggleMenu}
                 >
                   <p>Anzeige erstellen</p>
+                </NavLink>{" "}
+                <NavLink
+                  className={`${styles.link} ${styles.favourites}`}
+                  to={`/user/${currentUser.userID}#favourites`}
+                  onClick={toggleMenu}
+                >
+                  <p>Favouriten</p>
                 </NavLink>{" "}
                 <div className={styles.categories}>
                   <h3 className={styles.headline}>Kategorien</h3>
