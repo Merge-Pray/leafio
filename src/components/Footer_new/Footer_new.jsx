@@ -1,6 +1,6 @@
-import styles from "./footer.module.css";
+import styles from "./footer_new.module.css";
 
-const Footer = () => {
+const Footer_new = () => {
   return (
     <footer className={styles.footer}>
       <p className={styles.text}>
@@ -11,7 +11,7 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default Footer_new;
 
 
 //tets
