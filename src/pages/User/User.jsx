@@ -28,14 +28,14 @@ const User = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.hash) {
+    if (location.hash && favorites.length > 0) {
       const id = location.hash.replace("#", "");
       const el = document.getElementById(id);
       if (el) {
         el.scrollIntoView({ behavior: "smooth" });
       }
     }
-  }, [location.hash]);
+  }, [location.hash, favorites]);
 
   useEffect(() => {
     if (!currentUser) {
