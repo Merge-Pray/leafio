@@ -1,4 +1,4 @@
-import { NavLink, useParams } from "react-router";
+import { NavLink, useLocation, useParams } from "react-router";
 import useUserStore from "../../hooks/userStore";
 import styles from "./user.module.css";
 import { useEffect, useState } from "react";
@@ -25,6 +25,17 @@ const User = () => {
   const [error, setError] = useState(null);
   const [editUserData, setEditUserData] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   useEffect(() => {
     if (!currentUser) {
@@ -33,7 +44,7 @@ const User = () => {
       }, 5000);
     } else {
       fetchUserAds();
-      fetchFavorites(); // Favoriten laden
+      fetchFavorites();
     }
   }, []);
 
@@ -131,120 +142,132 @@ const User = () => {
             <span className={styles.user}>{`${currentUser.username}`}</span> in
             deinem Benutzerkonto!
           </h1>
-          <h2 className={styles.headline}>Deine Daten</h2>
-          <div className={styles.box}>
-            <p>
-              <span className={styles.userContent}>Emailadresse:</span>{" "}
-              {`${currentUser.email}`}
-            </p>
-            <p>
-              <span className={styles.userContent}>Name: </span>
-              {`${currentUser.realName.first}`} {`${currentUser.realName.last}`}
-            </p>
-            <p>
-              <span className={styles.userContent}>Adresse: </span>{" "}
-              {`${currentUser.address.street}`}, {`${currentUser.address.zip}`}{" "}
-              {`${currentUser.address.city}`}
-            </p>
-            <p>
-              {" "}
-              <span className={styles.userContent}>Mitglied seit: </span>
-              {new Date(
-                currentUser.createdAt.seconds * 1000 +
-                  Math.floor(currentUser.createdAt.nanoseconds / 1_000_000)
-              ).toLocaleString()}
-            </p>
-            <button
-              type="submit"
-              onClick={() => setEditUserData(true)}
-              className={styles.submitButton}
+          <section className={styles.section}>
+            <h2 className={styles.headline}>Deine Daten</h2>
+            <div className={styles.box}>
+              <p>
+                <span className={styles.userContent}>Emailadresse:</span>{" "}
+                {`${currentUser.email}`}
+              </p>
+              <p>
+                <span className={styles.userContent}>Name: </span>
+                {`${currentUser.realName.first}`}{" "}
+                {`${currentUser.realName.last}`}
+              </p>
+              <p>
+                <span className={styles.userContent}>Adresse: </span>{" "}
+                {`${currentUser.address.street}`},{" "}
+                {`${currentUser.address.zip}`} {`${currentUser.address.city}`}
+              </p>
+              <p>
+                {" "}
+                <span className={styles.userContent}>Mitglied seit: </span>
+                {new Date(
+                  currentUser.createdAt.seconds * 1000 +
+                    Math.floor(currentUser.createdAt.nanoseconds / 1_000_000)
+                ).toLocaleString()}
+              </p>
+              <button
+                type="submit"
+                onClick={() => setEditUserData(true)}
+                className={`${styles.submitButton} ${styles.editButton}`}
+              >
+                Daten ändern
+              </button>
+            </div>{" "}
+          </section>
+          <section className={styles.section}>
+            <h2 className={styles.headline}>Deine Anzeigen</h2>
+            <NavLink
+              to="/placead"
+              className={`${styles.submitButton} ${styles.placeAdButton}`}
             >
-              Daten ändern
-            </button>
-          </div>
-          <h2 className={styles.headline}>Deine Anzeigen</h2>
-          <NavLink to="/placead" className={styles.submitButton}>
-            Anzeige erstellen
-          </NavLink>
-          {error && <p className={styles.errorMessage}>{error}</p>}
-          <div className={styles.userAds}>
-            {userAds.length === 0 ? (
-              <p className={styles.errormessage}>Keine Anzeigen gefunden.</p>
-            ) : (
-              userAds.map((ad) => (
-                <div key={ad.id} className={styles.productList}>
-                  <NavLink
-                    to={`/product/${ad.id}`}
-                    className={styles.productItem}
-                  >
-                    <img src={ad.images?.[0]} alt={ad.title} />
-                    <div className={styles.productInfo}>
-                      <h3>{ad.title}</h3>
-                      <p>{ad.description?.slice(0, 80)}...</p>
-                      <p>
-                        <strong>{ad.price}</strong>
-                      </p>
-                      <p className={styles.createdAt}>Online seit:</p>
-                      <div className={styles.createdAt}>
-                        {ad.createdAt?.toDate().toLocaleDateString("de-DE", {
-                          day: "2-digit",
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </div>
-                    </div>
-                  </NavLink>
-                  <div className={styles.adButtons}>
+              Neue Anzeige erstellen
+            </NavLink>
+            {error && <p className={styles.errorMessage}>{error}</p>}
+            <div className={styles.userAds}>
+              {userAds.length === 0 ? (
+                <p className={styles.errormessage}>Keine Anzeigen gefunden.</p>
+              ) : (
+                userAds.map((ad) => (
+                  <div key={ad.id} className={styles.productList}>
                     <NavLink
-                      to={`/editad/${ad.id}`}
-                      className={`${styles.submitButton} ${styles.adButton}`}
+                      to={`/product/${ad.id}`}
+                      className={styles.productItem}
                     >
-                      Anzeige bearbeiten
-                    </NavLink>
-                    <button
-                      onClick={() => deleteAd(ad.id)}
-                      className={`${styles.submitButton} ${styles.adButton}`}
-                    >
-                      {" "}
-                      Anzeige löschen
-                    </button>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-          <h2 className={styles.headline}>Deine Favoriten</h2>
-          <div className={styles.userAds}>
-            {favorites.length === 0 ? (
-              <p className={styles.errormessage}>Keine Favoriten gefunden.</p>
-            ) : (
-              favorites.map((ad) => (
-                <div key={ad.id} className={styles.productList}>
-                  <NavLink
-                    to={`/product/${ad.id}`}
-                    className={styles.productItem}
-                  >
-                    <img src={ad.images?.[0]} alt={ad.title} />
-                    <div className={styles.productInfo}>
-                      <h3>{ad.title}</h3>
-                      <p>{ad.description?.slice(0, 80)}...</p>
-                      <p>
-                        <strong>{ad.price}</strong>
-                      </p>
-                      <p className={styles.createdAt}>Online seit:</p>
-                      <div className={styles.createdAt}>
-                        {ad.createdAt?.toDate().toLocaleDateString("de-DE", {
-                          day: "2-digit",
-                          month: "long",
-                          year: "numeric",
-                        })}
+                      <img src={ad.images?.[0]} alt={ad.title} />
+                      <div className={styles.productInfo}>
+                        <h3>{ad.title}</h3>
+                        <p>{ad.description?.slice(0, 80)}...</p>
+                        <p>
+                          <strong>{ad.price}</strong>
+                        </p>
+                        <p className={styles.createdAt}>Online seit:</p>
+                        <div className={styles.createdAt}>
+                          {ad.createdAt?.toDate().toLocaleDateString("de-DE", {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          })}
+                        </div>
                       </div>
+                    </NavLink>
+                    <div className={styles.adButtons}>
+                      <NavLink
+                        to={`/editad/${ad.id}`}
+                        className={`${styles.submitButton} ${styles.adButton}`}
+                      >
+                        Anzeige bearbeiten
+                      </NavLink>
+                      <button
+                        onClick={() => deleteAd(ad.id)}
+                        className={`${styles.submitButton} ${styles.adButton}`}
+                      >
+                        {" "}
+                        Anzeige löschen
+                      </button>
                     </div>
-                  </NavLink>
-                </div>
-              ))
-            )}
-          </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+          <section className={styles.section}>
+            <h2 className={styles.headline} id="favourites">
+              Deine Favoriten
+            </h2>
+            <div className={styles.userAds}>
+              {favorites.length === 0 ? (
+                <p className={styles.errormessage}>Keine Favoriten gefunden.</p>
+              ) : (
+                favorites.map((ad) => (
+                  <div key={ad.id} className={styles.productList}>
+                    <NavLink
+                      to={`/product/${ad.id}`}
+                      className={styles.productItem}
+                    >
+                      <img src={ad.images?.[0]} alt={ad.title} />
+                      <div className={styles.productInfo}>
+                        <h3>{ad.title}</h3>
+                        <p>{ad.description?.slice(0, 80)}...</p>
+                        <p>
+                          <strong>{ad.price}</strong>
+                        </p>
+                        <p className={styles.createdAt}>Online seit:</p>
+                        <div className={styles.createdAt}>
+                          {ad.createdAt?.toDate().toLocaleDateString("de-DE", {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          })}
+                        </div>
+                      </div>
+                    </NavLink>
+                  </div>
+                ))
+              )}
+            </div>{" "}
+          </section>
         </div>
       ) : (
         <EditUser setEditUserData={setEditUserData} />
