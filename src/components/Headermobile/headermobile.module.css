@@ -1,6 +1,6 @@
 .headerMobile {
   display: flex;
-  height: 7vh;
+  height: 60px;
   align-items: center;
   padding: 0.5rem;
   position: fixed;
@@ -69,7 +69,7 @@
 
 .toggleMenu {
   position: fixed;
-  top: 7vh;
+  top: 60px;
   right: 0;
   width: 100%;
   height: calc(100vh - 6vh);
