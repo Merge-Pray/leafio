@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router";
 import styles from "./footer_new.module.css";
 
 const Footer_new = () => {
@@ -10,9 +10,9 @@ const Footer_new = () => {
           (April/Mai 2025) und nicht für den produktiven Betrieb gedacht.
         </p>
         <div className={styles.linkRow}>
-          <Link to="/about" className={styles.footerLink}>
+          <NavLink to="/about" className={styles.footerLink}>
             Über Leafio
-          </Link>
+          </NavLink>
         </div>
       </div>
     </footer>
