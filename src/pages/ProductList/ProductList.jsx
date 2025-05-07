@@ -86,9 +86,20 @@ const ProductList = () => {
             <img src={product.images?.[0]} alt={product.title} />
             <div className={styles.productInfo}>
               <h3>{product.title}</h3>
-              <p>{product.description?.slice(0, 80)}...</p>
-              <p><strong>{product.price}</strong></p>
-              <p>{product.location?.city}</p>
+              <p className={styles.priceBadge}>{product.price}</p>
+              
+              <p>{product.description?.slice(0, 100)}...</p>
+             
+              <p className={styles.city}>{product.location?.city}</p>
+             
+              <p className={styles.createdAt}>Online seit:</p>
+<div className={styles.createdAt}>
+  {product.createdAt?.toDate().toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  })}
+</div>
             </div>
           </NavLink>
         ))}
