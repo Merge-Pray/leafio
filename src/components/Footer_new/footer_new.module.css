@@ -1,0 +1,23 @@
+:root {
+  --green--Background: linear-gradient(
+    -81deg,
+    rgba(122, 201, 67, 1) 10%,
+    rgba(0, 104, 55, 1) 100%
+  );
+}
+
+.footer {
+  background: var(--green--Background);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  color: white;
+  text-align: center;
+}
+
+.text {
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
