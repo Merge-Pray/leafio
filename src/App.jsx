@@ -7,7 +7,7 @@ import PlaceAd from "./pages/PlaceAd/PlaceAd";
 import Register from "./pages/Register/Register";
 import User from "./pages/User/User";
 import Header from "./components/Header/Header";
-import Footer from "./components/Footer/footer";
+import Footer_new from "./components/Footer_new/Footer_new";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import Headermobile from "./components/Headermobile/Headermobile";
 import { useEffect, useState } from "react";
@@ -49,7 +49,7 @@ function App() {
           <Route path="/editad/:adID" element={<EditAd />} />
         </Routes>
       </section>
-      <Footer />
+      <Footer_new/>
     </>
   );
 }
