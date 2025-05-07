@@ -40,6 +40,6 @@ body {
   flex: 1;
 }
 
-.routercontent.mobile {
-  margin-top: 60px;
+.mobile {
+  margin-top: 80px;
 }

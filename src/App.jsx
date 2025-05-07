@@ -30,7 +30,7 @@ function App() {
   return (
     <>
       {isDesktop ? <Header /> : <Headermobile />}
-      <section className={`routercontent ${isDesktop ? "" : "mobile"}`}>
+      <section className={`routercontent ${!isDesktop ? "mobile" : ""}`}>
         <Routes>
           <Route path="/" element={<Landingpage />} />
           <Route path="login" element={<Login />} />
