@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import ProductNotFound from "./pages/ProductNotFound/ProductNotFound";
 import ProductList from "./pages/ProductList/ProductList";
 import EditAd from "./pages/EditAd/EditAd";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 function App() {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
@@ -29,6 +30,8 @@ function App() {
 
   return (
     <>
+      {" "}
+      <ScrollToTop />
       {isDesktop ? <Header /> : <Headermobile />}
       <section className={`routercontent ${!isDesktop ? "mobile" : ""}`}>
         <Routes>
