@@ -3,27 +3,27 @@ import styles from "./banner.module.css";
 
 const banners = [
   {
-    image: "/assets/banner/banner1.png",
+    image: "/assets/banner/banner10.png",
     leftText: "PLANT SHARING",
     rightText: "& GIFTING"
   },
   {
-    image: "/assets/banner/banner2.png",
+    image: "/assets/banner/banner20.png",
     leftText: "GROW TOGETHER",
     rightText: "GIVE WITH HEART"
   },
   {
-    image: "/assets/banner/banner3.png",
+    image: "/assets/banner/banner30.png",
     leftText: "GREEN FRIENDS",
     rightText: "BIG IMPACT"
   },
   {
-    image: "/assets/banner/banner4.png",
+    image: "/assets/banner/banner40.png",
     leftText: "GROW PLANTS",
     rightText: "GROW CONNECTIONS"
   },
   {
-    image: "/assets/banner/banner5.png",
+    image: "/assets/banner/banner50.png",
     leftText: "PLANTS NEED",
     rightText: "PEOPLE TOO"
   }
