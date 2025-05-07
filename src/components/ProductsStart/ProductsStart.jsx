@@ -14,7 +14,7 @@ const ProductStart = () => {
     const fetchAds = async () => {
       try {
         const allAdsCollection = collection(db, "allads");
-        const adsQuery = query(allAdsCollection, orderBy("createdAt", "desc"), limit(8));
+        const adsQuery = query(allAdsCollection, orderBy("createdAt", "desc"), limit(9));
         const querySnapshot = await getDocs(adsQuery);
         const adsData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
