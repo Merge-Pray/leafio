@@ -12,6 +12,3 @@ const Footer_new = () => {
 };
 
 export default Footer_new;
-
-
-//tets
