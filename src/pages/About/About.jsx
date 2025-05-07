@@ -39,6 +39,16 @@ const About = () => {
         <h2>📮 Kontakt</h2>
         <p>Feedback, Lob oder Verbesserungsvorschläge an unser Projektteam:</p>
         <ul className={styles.contactList}>
+        <li>
+            <a
+              href="https://github.com/SarahDomscheit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.link}
+            >
+              Sarah - @SarahDomscheit
+            </a>
+          </li>
           <li>
             <a
               href="https://github.com/cmgoersch"
@@ -46,19 +56,10 @@ const About = () => {
               rel="noopener noreferrer"
               className={styles.link}
             >
-              @cmgoersch
+              Calle - @cmgoersch
             </a>
           </li>
-          <li>
-            <a
-              href="https://github.com/SarahDomscheit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.link}
-            >
-              @SarahDomscheit
-            </a>
-          </li>
+         
           <li>
             <a
               href="https://github.com/benNurtjipta"
@@ -66,7 +67,7 @@ const About = () => {
               rel="noopener noreferrer"
               className={styles.link}
             >
-              @benNurtjipta
+              Ben - @benNurtjipta
             </a>
           </li>
         </ul>
