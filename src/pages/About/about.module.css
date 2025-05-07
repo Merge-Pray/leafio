@@ -1,0 +1,109 @@
+:root {
+  --dark--green: #2f5d50;
+}
+
+.aboutPage {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #fdfdfd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  font-family: system-ui, sans-serif;
+  color: #333;
+}
+
+.aboutPage h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: var(--dark--green);
+  text-align: center;
+}
+
+.aboutPage section {
+  margin-bottom: 2rem;
+}
+
+.aboutPage h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.6rem;
+  color: #222;
+}
+
+.aboutPage p {
+  margin-bottom: 20px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.aboutPage ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.aboutPage strong {
+  color: var(--dark--green);
+}
+
+/* 🔗 Link-Styling */
+.link {
+  color: var(--dark--green);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #1b382f;
+  text-decoration: underline;
+}
+
+/* 📄 Kontaktliste */
+.contactList {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* 🔗 Optional: externes Link-Symbol */
+.link::after {
+  content: " ↗";
+  font-size: 0.8rem;
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .aboutPage {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  .aboutPage h1 {
+    font-size: 1.6rem;
+  }
+
+  .aboutPage h2 {
+    font-size: 1.2rem;
+  }
+}
+
+.backButton {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 1rem;
+  background-color: var(--dark--green);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.backButton:hover {
+  background-color: #1b382f;
+}
