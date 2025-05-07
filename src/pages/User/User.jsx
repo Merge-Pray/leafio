@@ -35,7 +35,7 @@ const User = () => {
         el.scrollIntoView({ behavior: "smooth" });
       }
     }
-  }, [location]);
+  }, [location.hash]);
 
   useEffect(() => {
     if (!currentUser) {
