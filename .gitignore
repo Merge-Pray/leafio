@@ -1,21 +1,13 @@
-# File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos
+######################################################
+# Betriebssystem-spezifische Dateien
+######################################################
 
-### macOS ###
-# General
+# macOS
 .DS_Store
 .AppleDouble
 .LSOverride
-
-# Icon must end with two \r
 Icon
-
-
-# Thumbnails
 ._*
-
-# Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
 .Spotlight-V100
@@ -23,40 +15,76 @@ Icon
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
-
-### macOS Patch ###
-# iCloud generated files
 *.icloud
 
-### VisualStudioCode ###
-.vscode/*
-.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
 
-# Local History for Visual Studio Code
+# Linux
+*~
+
+######################################################
+# Entwicklungsumgebungen und Editoren
+######################################################
+
+# VS Code
+.vscode/
 .history/
-
-# Built Visual Studio Code Extensions
+.ionide
 *.vsix
 
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
-.ionide
+# JetBrains IDEs (WebStorm, IntelliJ, etc.)
+.idea/
+*.iml
 
-node_modules
+# Vim/Neovim
+*.swp
+*.swo
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos
+######################################################
+# Node.js & JavaScript-Projekte
+######################################################
 
-# Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
+# Paket- und Cacheverzeichnisse
+node_modules/
+.pnpm-debug.log
+.yarn-debug.log
+.yarn-error.log
+npm-debug.log*
 
+# Abhängigkeiten
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+######################################################
+# Vite + React Build-Output
+######################################################
+
+# Build-Ordner (wird von Vercel automatisch erzeugt)
+dist/
+
+######################################################
+# Umgebungsvariablen
+######################################################
+
+.env
+.env.local
+.env.*.local
+
+######################################################
+# Temporäre Dateien & Logs
+######################################################
+
+*.log
+*.tmp
+temp/
+.cache/
