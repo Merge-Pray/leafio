@@ -30,7 +30,7 @@ function App() {
   return (
     <>
       {isDesktop ? <Header /> : <Headermobile />}
-      <section className="routercontent">
+      <section className={`routercontent ${isDesktop ? "" : "mobile"}`}>
         <Routes>
           <Route path="/" element={<Landingpage />} />
           <Route path="login" element={<Login />} />
@@ -49,7 +49,7 @@ function App() {
           <Route path="/editad/:adID" element={<EditAd />} />
         </Routes>
       </section>
-      <Footer_new/>
+      <Footer_new />
     </>
   );
 }
