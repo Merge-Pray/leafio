@@ -8,14 +8,24 @@ const banners = [
     rightText: "& GIFTING"
   },
   {
-    image: "/assets/banner/Banner2.png",
+    image: "/assets/banner/banner2.png",
     leftText: "GROW TOGETHER",
     rightText: "GIVE WITH HEART"
   },
   {
-    image: "/assets/banner/Banner3.png",
+    image: "/assets/banner/banner3.png",
     leftText: "GREEN FRIENDS",
     rightText: "BIG IMPACT"
+  },
+  {
+    image: "/assets/banner/banner4.png",
+    leftText: "GROW PLANTS",
+    rightText: "GROW CONNECTIONS"
+  },
+  {
+    image: "/assets/banner/banner5.png",
+    leftText: "PLANTS NEED",
+    rightText: "PEOPLE TOO"
   }
 ];
 
@@ -33,7 +43,7 @@ const Banner = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % banners.length);
-    }, 8000);
+    }, 11000);
     return () => clearInterval(interval);
   }, []);
 
