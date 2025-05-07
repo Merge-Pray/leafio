@@ -41,6 +41,30 @@
   gap: 0.3rem;
 }
 
+.createdAt{
+  font-size: 0.7rem;
+  color: gray;
+  margin: -0.2rem 0; 
+}
+
+.priceBadge {
+  display: inline-block;
+  background: var(--green--Background);
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  width: fit-content;
+  margin: 0.5rem 0;
+}
+
+.city {
+  color: gray;
+  font-size: 0.85rem;
+}
+
 @media (max-width: 768px) {
   .productListWrapper {
     /* flex-direction: column; */
