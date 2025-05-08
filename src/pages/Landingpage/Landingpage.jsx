@@ -5,6 +5,7 @@ import ProductStart from "../../components/ProductsStart/ProductsStart";
 import CategoryListing from "../../components/CategoryListing/CategoryListing";
 import { categories } from "../PlaceAd/CategorySelector";
 import styles from "./landingpage.module.css";
+import UserBar from "../../components/UserBar/UserBar";
 
 const Landingpage = () => {
   return (
@@ -13,6 +14,7 @@ const Landingpage = () => {
       <CategoryBar />
       <div className={styles.contentWrapper}>
         <CategoryListing categories={categories} />
+        <UserBar />
         <ProductStart />
       </div>
     </div>

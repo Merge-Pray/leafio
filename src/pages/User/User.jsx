@@ -184,7 +184,7 @@ const User = () => {
               Nachrichten anzeigen
             </NavLink>
           </section>
-          <section className={styles.section}>
+          <section className={styles.section} id="ads">
             <h2 className={styles.headline}>Deine Anzeigen</h2>
             <NavLink
               to="/placead"
@@ -240,10 +240,8 @@ const User = () => {
               )}
             </div>
           </section>
-          <section className={styles.section}>
-            <h2 className={styles.headline} id="favourites">
-              Deine Favoriten
-            </h2>
+          <section className={styles.section} id="favourites">
+            <h2 className={styles.headline}>Deine Favoriten</h2>
             <div className={styles.userAds}>
               {favorites.length === 0 ? (
                 <p className={styles.errormessage}>Keine Favoriten gefunden.</p>

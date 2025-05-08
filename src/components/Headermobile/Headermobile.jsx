@@ -114,7 +114,7 @@ const Headermobile = () => {
                   to={`/user/${currentUser.userID}#favourites`}
                   onClick={toggleMenu}
                 >
-                  <p>Favouriten</p>
+                  <p>Favoriten</p>
                 </NavLink>{" "}
                 <div className={styles.categories}>
                   <h3 className={styles.headline}>Kategorien</h3>
