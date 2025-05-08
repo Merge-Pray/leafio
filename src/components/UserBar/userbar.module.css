@@ -53,6 +53,10 @@
   background-image: url(/assets/Meine_Inserate.svg);
 }
 
+.placead::before {
+  background-image: url(/public/assets/placead.svg);
+}
+
 .label {
   font-size: 0.9rem;
   color: white;
