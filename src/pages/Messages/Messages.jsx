@@ -122,6 +122,14 @@ const Messages = () => {
           }
         }
         setProductDetails(productData);
+
+        if (view === "received") {
+          const batchUpdates = querySnapshot.docs.map((doc) =>
+            updateDoc(doc.ref, { isRead: true })
+          );
+          await Promise.all(batchUpdates);
+          console.log("Alle empfangenen Nachrichten als gelesen markiert.");
+        }
       } catch (err) {
         console.error(
           "Fehler beim Abrufen der Nachrichten oder Benutzerdetails:",
@@ -135,24 +143,7 @@ const Messages = () => {
     fetchMessages();
   }, [currentUser, view]);
 
-  const toggleMessage = async (messageId) => {
-    const message = messages.find((msg) => msg.id === messageId);
-
-    if (!message) return;
-
-    if (!message.isRead && currentUser.userID === message.recipientID) {
-      try {
-        const messageRef = doc(db, "messages", messageId);
-        await updateDoc(messageRef, { isRead: true });
-        setMessages((prevMessages) =>
-          prevMessages.map((msg) =>
-            msg.id === messageId ? { ...msg, isRead: true } : msg
-          )
-        );
-      } catch (err) {
-        console.error("Fehler beim Aktualisieren der Nachricht:", err);
-      }
-    }
+  const toggleMessage = (messageId) => {
     setExpandedMessage(expandedMessage === messageId ? null : messageId);
     setReplyingTo(null);
   };
@@ -190,6 +181,49 @@ const Messages = () => {
       console.error("Fehler beim Senden der Antwort:", err);
       alert(
         "Die Antwort konnte nicht gesendet werden. Bitte versuche es erneut."
+      );
+    }
+  };
+
+  const handleDelete = async (message) => {
+    try {
+      const messageRef = doc(db, "messages", message.id);
+
+      if (currentUser.userID === message.recipientID) {
+        await updateDoc(messageRef, { visibleForRecipient: false });
+      } else if (currentUser.userID === message.senderID) {
+        await updateDoc(messageRef, { visibleForSender: false });
+      }
+      setMessages((prevMessages) =>
+        prevMessages.filter((msg) => msg.id !== message.id)
+      );
+      alert("Nachricht erfolgreich gelöscht.");
+    } catch (err) {
+      console.error("Fehler beim Löschen der Nachricht:", err);
+      alert(
+        "Die Nachricht konnte nicht gelöscht werden. Bitte versuche es erneut."
+      );
+    }
+  };
+
+  const handleRestore = async (message) => {
+    try {
+      const messageRef = doc(db, "messages", message.id);
+
+      if (currentUser.userID === message.recipientID) {
+        await updateDoc(messageRef, { visibleForRecipient: true });
+      } else if (currentUser.userID === message.senderID) {
+        await updateDoc(messageRef, { visibleForSender: true });
+      }
+      setMessages((prevMessages) =>
+        prevMessages.filter((msg) => msg.id !== message.id)
+      );
+
+      alert("Nachricht erfolgreich wiederhergestellt.");
+    } catch (err) {
+      console.error("Fehler beim Wiederherstellen der Nachricht:", err);
+      alert(
+        "Die Nachricht konnte nicht wiederhergestellt werden. Bitte versuche es erneut."
       );
     }
   };
@@ -280,6 +314,21 @@ const Messages = () => {
                           message.timestamp?.seconds * 1000
                         ).toLocaleString()}
                       </small>
+                      {view === "trash" ? (
+                        <button
+                          onClick={() => handleRestore(message)}
+                          className={styles.restoreButton}
+                        >
+                          Wiederherstellen
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleDelete(message)}
+                          className={styles.deleteButton}
+                        >
+                          Löschen
+                        </button>
+                      )}
                     </div>
                     <div
                       className={styles.messageTitle}
