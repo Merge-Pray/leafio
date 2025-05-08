@@ -31,6 +31,13 @@
   padding: 0.1rem;
   color: black;
 }
+.loginFont2 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 0.6rem;
+  padding: 0.1rem;
+  color: black;
+}
 
 .searchbar {
   background: var(--green--Background);
@@ -61,4 +68,15 @@
 
 .user {
   color: var(--light--green);
+}
+
+.unreadBadge {
+  background-color: red;
+  color: white;
+  font-size: 0.6rem;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 0.2rem 0.5rem;
+  margin-left: 0.5rem;
+  display: inline-block;
 }
