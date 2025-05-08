@@ -72,7 +72,11 @@
 }
 
 .messages::before {
-  background-image: url(/public/assets/envelope-white.svg);
+  background-image: url(/public/assets/message_w.svg);
+}
+
+.ads::before {
+  background-image: url(/assets/Meine_Inserate.svg);
 }
 
 .toggleMenu {

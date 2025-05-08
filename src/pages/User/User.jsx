@@ -28,11 +28,18 @@ const User = () => {
   const location = useLocation();
 
   useEffect(() => {
+    window.history.scrollRestoration = "manual";
+
     if (location.hash && favorites.length > 0) {
       const id = location.hash.replace("#", "");
       const el = document.getElementById(id);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
+        setTimeout(() => {
+          const yOffset = -80;
+          const y =
+            el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }, 100);
       }
     }
   }, [location.hash, favorites]);
