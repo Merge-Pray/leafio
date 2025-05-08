@@ -13,10 +13,13 @@ const Landingpage = () => {
       <Banner />
       <CategoryBar />
       <div className={styles.contentWrapper}>
-        <CategoryListing categories={categories} />
-        <UserBar />
-        <ProductStart />
-      </div>
+  <div className={styles.leftColumn}>
+  <UserBar />
+    <CategoryListing categories={categories} />
+    
+  </div>
+  <ProductStart />
+</div>
     </div>
   );
 };

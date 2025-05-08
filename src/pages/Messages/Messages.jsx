@@ -18,7 +18,7 @@ import { NavLink } from "react-router";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
-  const [view, setView] = useState("received");
+  const [view, setView] = useState("received"); // Standardansicht ist "Empfangen"
   const [expandedMessage, setExpandedMessage] = useState(null);
   const [replyingTo, setReplyingTo] = useState(null);
   const [replyContent, setReplyContent] = useState("");
@@ -33,15 +33,63 @@ const Messages = () => {
 
       try {
         const messagesRef = collection(db, "messages");
-        const q = query(
-          messagesRef,
-          where(
-            view === "received" ? "recipientID" : "senderID",
-            "==",
-            currentUser.userID
-          ),
-          orderBy("timestamp", "desc")
-        );
+        let q;
+
+        if (view === "received") {
+          // Fetch received messages
+          q = query(
+            messagesRef,
+            where("recipientID", "==", currentUser.userID),
+            where("visibleForRecipient", "==", true),
+            orderBy("timestamp", "desc")
+          );
+        } else if (view === "sent") {
+          // Fetch sent messages
+          q = query(
+            messagesRef,
+            where("senderID", "==", currentUser.userID),
+            where("visibleForSender", "==", true),
+            orderBy("timestamp", "desc")
+          );
+        } else if (view === "trash") {
+          // Fetch messages in the trash
+          const receivedTrashQuery = query(
+            messagesRef,
+            where("recipientID", "==", currentUser.userID),
+            where("visibleForRecipient", "==", false)
+          );
+
+          const sentTrashQuery = query(
+            messagesRef,
+            where("senderID", "==", currentUser.userID),
+            where("visibleForSender", "==", false)
+          );
+
+          const [receivedTrashSnapshot, sentTrashSnapshot] = await Promise.all([
+            getDocs(receivedTrashQuery),
+            getDocs(sentTrashQuery),
+          ]);
+
+          const receivedTrashMessages = receivedTrashSnapshot.docs.map(
+            (doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            })
+          );
+
+          const sentTrashMessages = sentTrashSnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+
+          const allTrashMessages = [
+            ...receivedTrashMessages,
+            ...sentTrashMessages,
+          ];
+          setMessages(allTrashMessages);
+          return;
+        }
+
         const querySnapshot = await getDocs(q);
 
         const fetchedMessages = querySnapshot.docs.map((doc) => ({
@@ -60,7 +108,8 @@ const Messages = () => {
         for (const userId of userIds) {
           const userDoc = await getDoc(doc(db, "users", userId));
           if (userDoc.exists()) {
-            userData[userId] = userDoc.data().username || "Unknown User";
+            userData[userId] =
+              userDoc.data().username || "Unbekannter Benutzer";
           }
         }
         setUserDetails(userData);
@@ -82,10 +131,13 @@ const Messages = () => {
             updateDoc(doc.ref, { isRead: true })
           );
           await Promise.all(batchUpdates);
-          console.log("All received messages marked as read.");
+          console.log("Alle empfangenen Nachrichten als gelesen markiert.");
         }
       } catch (err) {
-        console.error("Error fetching messages or user details:", err);
+        console.error(
+          "Fehler beim Abrufen der Nachrichten oder Benutzerdetails:",
+          err
+        );
       } finally {
         setLoading(false);
       }
@@ -93,13 +145,6 @@ const Messages = () => {
 
     fetchMessages();
   }, [currentUser, view]);
-
-  const toggleView = () => {
-    const newView = view === "received" ? "sent" : "received";
-    setView(newView);
-    setExpandedMessage(null);
-    setReplyingTo(null);
-  };
 
   const toggleMessage = (messageId) => {
     setExpandedMessage(expandedMessage === messageId ? null : messageId);
@@ -110,12 +155,12 @@ const Messages = () => {
     e.preventDefault();
 
     if (!currentUser) {
-      alert("You need to log in to send messages.");
+      alert("Du musst eingeloggt sein, um Nachrichten zu senden.");
       return;
     }
 
     if (!replyContent.trim()) {
-      alert("Please write a reply before sending.");
+      alert("Bitte schreibe eine Antwort, bevor du sie sendest.");
       return;
     }
 
@@ -128,18 +173,75 @@ const Messages = () => {
         timestamp: serverTimestamp(),
         isRead: false,
         productId: message.productId,
+        visibleForSender: true,
+        visibleForRecipient: true,
       });
 
-      alert("Reply sent successfully!");
+      alert("Antwort erfolgreich gesendet!");
       setReplyingTo(null);
       setReplyContent("");
     } catch (err) {
-      console.error("Error sending reply:", err);
-      alert("Failed to send the reply. Please try again.");
+      console.error("Fehler beim Senden der Antwort:", err);
+      alert(
+        "Die Antwort konnte nicht gesendet werden. Bitte versuche es erneut."
+      );
     }
   };
 
-  if (loading) return <div className={styles.status}>Loading messages...</div>;
+  const handleDelete = async (message) => {
+    try {
+      const messageRef = doc(db, "messages", message.id);
+
+      if (currentUser.userID === message.recipientID) {
+        // Set visibleForRecipient to false
+        await updateDoc(messageRef, { visibleForRecipient: false });
+      } else if (currentUser.userID === message.senderID) {
+        // Set visibleForSender to false
+        await updateDoc(messageRef, { visibleForSender: false });
+      }
+
+      // Remove the message from the UI
+      setMessages((prevMessages) =>
+        prevMessages.filter((msg) => msg.id !== message.id)
+      );
+
+      alert("Nachricht erfolgreich gelöscht.");
+    } catch (err) {
+      console.error("Fehler beim Löschen der Nachricht:", err);
+      alert(
+        "Die Nachricht konnte nicht gelöscht werden. Bitte versuche es erneut."
+      );
+    }
+  };
+
+  const handleRestore = async (message) => {
+    try {
+      const messageRef = doc(db, "messages", message.id);
+
+      if (currentUser.userID === message.recipientID) {
+        // Restore visibleForRecipient
+        await updateDoc(messageRef, { visibleForRecipient: true });
+      } else if (currentUser.userID === message.senderID) {
+        // Restore visibleForSender
+        await updateDoc(messageRef, { visibleForSender: true });
+      }
+
+      // Remove the message from the trash view
+      setMessages((prevMessages) =>
+        prevMessages.filter((msg) => msg.id !== message.id)
+      );
+
+      alert("Nachricht erfolgreich wiederhergestellt.");
+    } catch (err) {
+      console.error("Fehler beim Wiederherstellen der Nachricht:", err);
+      alert(
+        "Die Nachricht konnte nicht wiederhergestellt werden. Bitte versuche es erneut."
+      );
+    }
+  };
+
+  if (loading)
+    return <div className={styles.status}>Nachrichten werden geladen...</div>;
 
   const groupedMessages = messages.reduce((acc, message) => {
     const { productId } = message;
@@ -151,18 +253,45 @@ const Messages = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.messagesContainer}>
-        <button onClick={toggleView} className={styles.toggleButton}>
-          {view === "received"
-            ? "View Sent Messages"
-            : "View Received Messages"}
-        </button>
+        <div className={styles.viewButtons}>
+          <button
+            onClick={() => setView("received")}
+            className={`${styles.viewButton} ${
+              view === "received" ? styles.active : ""
+            }`}
+          >
+            Posteingang
+          </button>
+          <button
+            onClick={() => setView("sent")}
+            className={`${styles.viewButton} ${
+              view === "sent" ? styles.active : ""
+            }`}
+          >
+            Gesendet
+          </button>
+          <button
+            onClick={() => setView("trash")}
+            className={`${styles.viewButton} ${
+              view === "trash" ? styles.active : ""
+            }`}
+          >
+            Papierkorb
+          </button>
+        </div>
 
         <div className={styles.header}>
-          <h2>{view === "received" ? "Received Messages" : "Sent Messages"}</h2>
+          <h2>
+            {view === "received"
+              ? "Empfangene Nachrichten"
+              : view === "sent"
+              ? "Gesendete Nachrichten"
+              : "Papierkorb"}
+          </h2>
         </div>
 
         {Object.keys(groupedMessages).length === 0 ? (
-          <p className={styles.noMessages}>No messages to display.</p>
+          <p className={styles.noMessages}>Keine Nachrichten zum Anzeigen.</p>
         ) : (
           Object.entries(groupedMessages).map(([productId, messages]) => {
             const product = productDetails[productId];
@@ -183,7 +312,7 @@ const Messages = () => {
                         {product.title}
                       </>
                     ) : (
-                      `Product ID: ${productId}`
+                      `Produkt-ID: ${productId}`
                     )}
                   </NavLink>
                 </h3>
@@ -191,12 +320,27 @@ const Messages = () => {
                   <div key={message.id} className={styles.messageItem}>
                     <div className={styles.messageMeta}>
                       <small>
-                        From: {userDetails[message.senderID]} | To:{" "}
+                        Von: {userDetails[message.senderID]} | An:{" "}
                         {userDetails[message.recipientID]} |{" "}
                         {new Date(
                           message.timestamp?.seconds * 1000
                         ).toLocaleString()}
                       </small>
+                      {view === "trash" ? (
+                        <button
+                          onClick={() => handleRestore(message)}
+                          className={styles.restoreButton}
+                        >
+                          Wiederherstellen
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleDelete(message)}
+                          className={styles.deleteButton}
+                        >
+                          Löschen
+                        </button>
+                      )}
                     </div>
                     <div
                       className={styles.messageTitle}
@@ -215,7 +359,9 @@ const Messages = () => {
                           }
                           className={styles.replyButton}
                         >
-                          {replyingTo === message.id ? "Cancel Reply" : "Reply"}
+                          {replyingTo === message.id
+                            ? "Antwort abbrechen"
+                            : "Antworten"}
                         </button>
                         {replyingTo === message.id && (
                           <form
@@ -225,7 +371,7 @@ const Messages = () => {
                             <textarea
                               value={replyContent}
                               onChange={(e) => setReplyContent(e.target.value)}
-                              placeholder="Write your reply here..."
+                              placeholder="Schreibe deine Antwort hier..."
                               className={styles.replyInput}
                               required
                             />
@@ -233,7 +379,7 @@ const Messages = () => {
                               type="submit"
                               className={styles.sendReplyButton}
                             >
-                              Send Reply
+                              Antworten
                             </button>
                           </form>
                         )}

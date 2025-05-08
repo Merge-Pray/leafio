@@ -85,7 +85,7 @@ const Header = () => {
                   to={`/user/${currentUser.userID}/messages`}
                 >
                   {unreadMessagesCount > 0 && (
-                    <p className={`${styles.loginFont2} ${styles.messages}`}>
+                    <p className={`${styles.login} ${styles.messages}`}>
                       Neue Nachrichten
                       <span className={styles.unreadBadge}>
                         {unreadMessagesCount}

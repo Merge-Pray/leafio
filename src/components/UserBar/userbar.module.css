@@ -1,35 +1,146 @@
 .wrapper {
-  width: 30%;
-  text-align: center;
+  display: flex;
+  justify-content: flex-start;
+  background: var(--green--Background);
+  padding-left: 1rem;
+  gap: 0.5rem;
+  align-items: flex-start;
+  padding: 0.4rem 0;
+  max-width: 1000px;
+  flex-wrap: wrap;
 }
 
 .link {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 1rem;
+  justify-content: flex-start;
   cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 100%;
+  max-width: 200px;
+  padding: 0rem 0.1rem;
+  margin: 0.1rem;
+  text-decoration: none;
+  color: white;
+}
+
+.link:hover {
+  transform: scale(1.02);
+  /* font-weight: bold; */
 }
 
 .link::before {
   content: "";
-  width: 1rem;
-  height: 1rem;
-  margin-right: 0.5rem;
+  width: 24px;
+  height: 24px;
+  margin: 10px;
   display: inline-block;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
 }
 
-/* Icons für jede Kategorie */
 .messages::before {
-  background-image: url(/public/assets/envelope-solid.svg);
+  background-image: url(/assets/message_w.svg);
 }
 
 .favourites::before {
-  background-image: url(/public/assets/heart-solid-black.svg);
+  background-image: url(/assets/heart-solid-white.svg);
 }
 
 .ads::before {
-  background-image: url(/public/assets/icon.svg);
+  background-image: url(/assets/Meine_Inserate.svg);
+}
+
+.label {
+  font-size: 0.9rem;
+  color: white;
+  text-align: left;
+}
+
+@media (max-width: 1000px) {
+  .link::before {
+    margin: 10px;
+  }
+}
+
+@media (max-width: 700px) {
+  .link {
+    display: none;
+  }
+}
+
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popupBox {
+  background: white;
+  color: black;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 300px;
+  width: 90%;
+  animation: popupFadeIn 0.3s ease;
+}
+
+.popupBox button {
+  margin-top: 1rem;
+  background-color: var(--dark--green, #006837);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+@keyframes popupFadeIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.popupButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.popupButtons button {
+  background-color: var(--dark--green, #006837);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.popupButtons button:last-child {
+  background-color: #ccc;
+  color: #333;
+}
+
+.popupButtons button:hover {
+  opacity: 0.9;
 }
