@@ -174,3 +174,9 @@
   color: #888;
   margin-bottom: 0.5rem;
 }
+
+@media (max-width: 769px) {
+  .wrapper {
+    width: 350px;
+  }
+}
