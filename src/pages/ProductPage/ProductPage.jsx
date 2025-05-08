@@ -27,6 +27,7 @@ const ProductPage = () => {
   const [likeDisabled, setLikeDisabled] = useState(false);
   const [mapLat, setMapLat] = useState(null);
   const [mapLon, setMapLon] = useState(null);
+  const [adOwnerUsername, setAdOwnerUsername] = useState(""); // New state for the ad owner's username
   const navigate = useNavigate();
   const currentUser = useUserStore((state) => state.currentUser);
 
@@ -45,7 +46,6 @@ const ProductPage = () => {
         const data = docSnap.data();
         const newViews = (data.views || 0) + 1;
 
-        // Update views without requiring userID in the payload
         if (currentUser) {
           try {
             await updateDoc(docRef, { views: newViews });
@@ -56,7 +56,18 @@ const ProductPage = () => {
 
         setProduct({ id: docSnap.id, ...data, views: newViews });
 
-        // Fetch user data
+        if (data.userID) {
+          try {
+            const userRef = doc(db, "users", data.userID);
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists()) {
+              setAdOwnerUsername(userSnap.data().username); // Fetch and set the username of the ad owner
+            }
+          } catch (err) {
+            console.error("Error fetching ad owner's username:", err);
+          }
+        }
+
         if (currentUser) {
           try {
             const userRef = doc(db, "users", currentUser.userID);
@@ -73,7 +84,6 @@ const ProductPage = () => {
           }
         }
 
-        // Fetch location data
         if (data.location?.zip) {
           const res = await fetch(
             `https://nominatim.openstreetmap.org/search?postalcode=${data.location.zip}&country=Germany&format=json`
@@ -108,7 +118,6 @@ const ProductPage = () => {
     const newLikes = (product.likes || 0) + 1;
 
     try {
-      // Update likes without requiring userID in the payload
       await updateDoc(docRef, { likes: newLikes });
       setProduct({ ...product, likes: newLikes });
       setLiked(true);
@@ -265,6 +274,7 @@ const ProductPage = () => {
 
         {showForm && (
           <form className={styles.contactForm} onSubmit={handleSendMessage}>
+            <p className={styles.formRecipient}>An: {adOwnerUsername}</p>
             <input
               type="text"
               name="subject"
@@ -308,8 +318,8 @@ const ProductPage = () => {
         </div>
       )}
       <div className={styles.moreProductsWrapper}>
-  <MoreProducts />
-</div>
+        <MoreProducts />
+      </div>
     </section>
   );
 };
