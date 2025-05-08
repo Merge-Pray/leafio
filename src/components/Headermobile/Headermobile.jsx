@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchbarMobile from "../SearchbarMobile/SearchbarMobile";
 import styles from "./headermobile.module.css";
 import { NavLink } from "react-router";
@@ -31,11 +31,9 @@ const Headermobile = () => {
         </NavLink>
         <SearchbarMobile />
         <img
-
           className={`${styles.imgMobile} ${styles.imgNav}
           ${isMenuOpen ? styles.imgNavOpen : ""}`}
           src="/assets/burger_b.svg"
-
           alt="logo"
           onClick={toggleMenu}
         />
@@ -111,6 +109,13 @@ const Headermobile = () => {
                 onClick={toggleMenu}
               >
                 <p>Anzeige erstellen</p>
+              </NavLink>
+              <NavLink
+                className={`${styles.link} ${styles.ads}`}
+                to={`/user/${currentUser.userID}#ads`}
+                onClick={toggleMenu}
+              >
+                <p>Meine Anzeigen</p>
               </NavLink>
               <NavLink
                 className={`${styles.link} ${styles.favourites}`}
