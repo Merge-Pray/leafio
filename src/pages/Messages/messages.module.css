@@ -212,3 +212,16 @@
 .deleteButton:hover {
   text-decoration: underline;
 }
+
+.restoreButton {
+  background: none;
+  border: none;
+  color: green;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.restoreButton:hover {
+  text-decoration: underline;
+}

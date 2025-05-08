@@ -33,28 +33,63 @@ const Messages = () => {
 
       try {
         const messagesRef = collection(db, "messages");
-        const q = query(
-          messagesRef,
-          where(
-            view === "received"
-              ? "recipientID"
-              : view === "sent"
-              ? "senderID"
-              : null, // Papierkorb!! später machen
-            "==",
-            currentUser.userID
-          ),
-          where(
-            view === "received"
-              ? "visibleForRecipient"
-              : view === "sent"
-              ? "visibleForSender"
-              : null,
-            "==",
-            true
-          ),
-          orderBy("timestamp", "desc")
-        );
+        let q;
+
+        if (view === "received") {
+          // Fetch received messages
+          q = query(
+            messagesRef,
+            where("recipientID", "==", currentUser.userID),
+            where("visibleForRecipient", "==", true),
+            orderBy("timestamp", "desc")
+          );
+        } else if (view === "sent") {
+          // Fetch sent messages
+          q = query(
+            messagesRef,
+            where("senderID", "==", currentUser.userID),
+            where("visibleForSender", "==", true),
+            orderBy("timestamp", "desc")
+          );
+        } else if (view === "trash") {
+          // Fetch messages in the trash
+          const receivedTrashQuery = query(
+            messagesRef,
+            where("recipientID", "==", currentUser.userID),
+            where("visibleForRecipient", "==", false)
+          );
+
+          const sentTrashQuery = query(
+            messagesRef,
+            where("senderID", "==", currentUser.userID),
+            where("visibleForSender", "==", false)
+          );
+
+          const [receivedTrashSnapshot, sentTrashSnapshot] = await Promise.all([
+            getDocs(receivedTrashQuery),
+            getDocs(sentTrashQuery),
+          ]);
+
+          const receivedTrashMessages = receivedTrashSnapshot.docs.map(
+            (doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            })
+          );
+
+          const sentTrashMessages = sentTrashSnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+
+          const allTrashMessages = [
+            ...receivedTrashMessages,
+            ...sentTrashMessages,
+          ];
+          setMessages(allTrashMessages);
+          return;
+        }
+
         const querySnapshot = await getDocs(q);
 
         const fetchedMessages = querySnapshot.docs.map((doc) => ({
@@ -179,6 +214,32 @@ const Messages = () => {
     }
   };
 
+  const handleRestore = async (message) => {
+    try {
+      const messageRef = doc(db, "messages", message.id);
+
+      if (currentUser.userID === message.recipientID) {
+        // Restore visibleForRecipient
+        await updateDoc(messageRef, { visibleForRecipient: true });
+      } else if (currentUser.userID === message.senderID) {
+        // Restore visibleForSender
+        await updateDoc(messageRef, { visibleForSender: true });
+      }
+
+      // Remove the message from the trash view
+      setMessages((prevMessages) =>
+        prevMessages.filter((msg) => msg.id !== message.id)
+      );
+
+      alert("Nachricht erfolgreich wiederhergestellt.");
+    } catch (err) {
+      console.error("Fehler beim Wiederherstellen der Nachricht:", err);
+      alert(
+        "Die Nachricht konnte nicht wiederhergestellt werden. Bitte versuche es erneut."
+      );
+    }
+  };
+
   if (loading)
     return <div className={styles.status}>Nachrichten werden geladen...</div>;
 
@@ -265,12 +326,21 @@ const Messages = () => {
                           message.timestamp?.seconds * 1000
                         ).toLocaleString()}
                       </small>
-                      <button
-                        onClick={() => handleDelete(message)}
-                        className={styles.deleteButton}
-                      >
-                        Löschen
-                      </button>
+                      {view === "trash" ? (
+                        <button
+                          onClick={() => handleRestore(message)}
+                          className={styles.restoreButton}
+                        >
+                          Wiederherstellen
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleDelete(message)}
+                          className={styles.deleteButton}
+                        >
+                          Löschen
+                        </button>
+                      )}
                     </div>
                     <div
                       className={styles.messageTitle}
