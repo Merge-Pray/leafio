@@ -41,7 +41,7 @@ const UserBar = () => {
             </NavLink>
             <NavLink
               className={`${styles.link} ${styles.placead}`}
-              to={`/user/${currentUser.userID}/placeAd`}
+              to={`/placeAd`}
             >
               <p className={styles.label}>Neue Anzeige</p>
             </NavLink>
