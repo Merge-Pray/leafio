@@ -197,7 +197,6 @@ const Messages = () => {
       setMessages((prevMessages) =>
         prevMessages.filter((msg) => msg.id !== message.id)
       );
-      alert("Nachricht erfolgreich gelöscht.");
     } catch (err) {
       console.error("Fehler beim Löschen der Nachricht:", err);
       alert(
@@ -218,8 +217,6 @@ const Messages = () => {
       setMessages((prevMessages) =>
         prevMessages.filter((msg) => msg.id !== message.id)
       );
-
-      alert("Nachricht erfolgreich wiederhergestellt.");
     } catch (err) {
       console.error("Fehler beim Wiederherstellen der Nachricht:", err);
       alert(
@@ -314,21 +311,6 @@ const Messages = () => {
                           message.timestamp?.seconds * 1000
                         ).toLocaleString()}
                       </small>
-                      {view === "trash" ? (
-                        <button
-                          onClick={() => handleRestore(message)}
-                          className={styles.restoreButton}
-                        >
-                          Wiederherstellen
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handleDelete(message)}
-                          className={styles.deleteButton}
-                        >
-                          Löschen
-                        </button>
-                      )}
                     </div>
                     <div
                       className={styles.messageTitle}
@@ -339,19 +321,36 @@ const Messages = () => {
                     {expandedMessage === message.id && (
                       <div className={styles.messageBody}>
                         <p>{message.content}</p>
-                        <button
-                          onClick={() =>
-                            setReplyingTo(
-                              replyingTo === message.id ? null : message.id
-                            )
-                          }
-                          className={styles.replyButton}
-                        >
-                          {replyingTo === message.id
-                            ? "Antwort abbrechen"
-                            : "Antworten"}
-                        </button>
-                        {replyingTo === message.id && (
+                        {view === "trash" ? (
+                          <button
+                            onClick={() => handleRestore(message)}
+                            className={styles.restoreButton}
+                          >
+                            Wiederherstellen
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleDelete(message)}
+                            className={styles.deleteButton}
+                          >
+                            Löschen
+                          </button>
+                        )}
+                        {view !== "trash" && (
+                          <button
+                            onClick={() =>
+                              setReplyingTo(
+                                replyingTo === message.id ? null : message.id
+                              )
+                            }
+                            className={styles.replyButton}
+                          >
+                            {replyingTo === message.id
+                              ? "Antwort abbrechen"
+                              : "Antworten"}
+                          </button>
+                        )}
+                        {replyingTo === message.id && view !== "trash" && (
                           <form
                             className={styles.replyForm}
                             onSubmit={(e) => handleReply(e, message)}

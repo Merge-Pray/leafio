@@ -98,24 +98,30 @@
 }
 
 .messageBody {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-top: 1px solid #ddd;
   font-size: 0.9rem;
   color: #555;
 }
 
 .replyButton {
-  margin-top: 0.5rem;
-  padding: 0.4rem 0.8rem;
-  background-color: var(--dark--green);
+  display: block;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background-color: #7ac943;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
+  text-align: center;
+  width: 100%;
   transition: background-color 0.3s ease;
 }
 
 .replyButton:hover {
-  background-color: #004d2d;
+  background-color: #5a9f32;
 }
 
 .productLink {
@@ -146,10 +152,9 @@
 
 .replyInput {
   width: 100%;
-  min-height: 80px;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
 }
@@ -183,51 +188,50 @@
 
 .viewButton {
   padding: 0.5rem 0.6rem;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  background-color: #7ac943;
+  border: 1px solid #7ac943;
   border-radius: 4px;
   cursor: pointer;
+  color: white;
   transition: background-color 0.3s ease;
 }
 
 .viewButton:hover {
-  background-color: #e0e0e0;
+  background-color: #5a9f32;
 }
 
 .viewButton.active {
-  background-color: #007bff;
+  background-color: #5a9f32;
   color: white;
-  border-color: #007bff;
+  border-color: #5a9f32;
 }
 
-.deleteButton {
-  background: none;
+.deleteButton,
+.restoreButton {
+  display: block;
+  margin: 0.5rem 0 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background-color: #ff4d4d;
+  color: white;
   border: none;
-  color: red;
-  font-size: 0.8rem;
+  border-radius: 4px;
   cursor: pointer;
-  margin-left: 1rem;
-}
-
-.deleteButton:hover {
-  text-decoration: underline;
+  text-align: center;
+  width: 100%;
 }
 
 .restoreButton {
-  background: none;
-  border: none;
-  color: green;
-  font-size: 0.8rem;
-  cursor: pointer;
-  margin-left: 1rem;
+  background-color: #4caf50;
 }
 
+.deleteButton:hover,
 .restoreButton:hover {
-  text-decoration: underline;
+  opacity: 0.9;
 }
 
 @media (max-width: 769px) {
   .wrapper {
-    width: 350px;
+    width: 360px;
   }
 }
