@@ -175,6 +175,7 @@
   margin-bottom: 0.5rem;
 }
 
+
 .viewButtons {
   display: flex;
   gap: 1rem;
@@ -224,4 +225,10 @@
 
 .restoreButton:hover {
   text-decoration: underline;
+
+@media (max-width: 769px) {
+  .wrapper {
+    width: 350px;
+  }
+
 }
