@@ -54,7 +54,7 @@
 }
 
 .placead::before {
-  background-image: url(/public/assets/placead.svg);
+  background-image: url(/public/assets/plusicon.svg);
 }
 
 .label {

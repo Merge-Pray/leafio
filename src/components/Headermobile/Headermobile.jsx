@@ -104,11 +104,18 @@ const Headermobile = () => {
                 <p>Zum Konto</p>
               </NavLink>
               <NavLink
-                className={`${styles.link} ${styles.placead}`}
-                to="/placead"
+                className={`${styles.link} ${styles.messages}`}
+                to={`/user/${currentUser.userID}/messages`}
                 onClick={toggleMenu}
               >
-                <p>Anzeige erstellen</p>
+                <p>Nachrichten</p>
+              </NavLink>
+              <NavLink
+                className={`${styles.link} ${styles.favourites}`}
+                to={`/user/${currentUser.userID}#favourites`}
+                onClick={toggleMenu}
+              >
+                <p>Meine Favoriten</p>
               </NavLink>
               <NavLink
                 className={`${styles.link} ${styles.ads}`}
@@ -118,19 +125,13 @@ const Headermobile = () => {
                 <p>Meine Anzeigen</p>
               </NavLink>
               <NavLink
-                className={`${styles.link} ${styles.favourites}`}
-                to={`/user/${currentUser.userID}#favourites`}
+                className={`${styles.link} ${styles.placead}`}
+                to="/placead"
                 onClick={toggleMenu}
               >
-                <p>Favoriten</p>
+                <p>Neue Anzeige</p>
               </NavLink>
-              <NavLink
-                className={`${styles.link} ${styles.messages}`}
-                to={`/user/${currentUser.userID}/messages`}
-                onClick={toggleMenu}
-              >
-                <p>Nachrichten</p>
-              </NavLink>
+
               <div className={styles.categories}>
                 <h3 className={styles.headline}>Kategorien</h3>
                 <ul className={styles.categorylist}>
