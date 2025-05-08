@@ -31,18 +31,56 @@ const Headermobile = () => {
         </NavLink>
         <SearchbarMobile />
         <img
+
           className={`${styles.imgMobile} ${styles.imgNav}
           ${isMenuOpen ? styles.imgNavOpen : ""}`}
-          src="/assets/burger_w.svg"
+          src="/assets/burger_b.svg"
+
           alt="logo"
           onClick={toggleMenu}
         />
       </div>
-      {isMenuOpen && (
-        <div className={styles.toggleMenu}>
-          {" "}
-          {currentUser === null ? (
-            <>
+      <div
+        className={`${styles.toggleMenu} ${
+          isMenuOpen ? styles.toggleMenuOpen : ""
+        }`}
+      >
+        {currentUser === null ? (
+          <>
+            <NavLink
+              className={`${styles.linkHome} ${styles.link}`}
+              to="/"
+              onClick={toggleMenu}
+            >
+              Home
+            </NavLink>
+            <NavLink
+              className={`${styles.linkUser} ${styles.link}`}
+              to="/login"
+              onClick={toggleMenu}
+            >
+              Login
+            </NavLink>
+            <div className={styles.categories}>
+              <h3 className={styles.headline}>Kategorien</h3>
+              <ul className={styles.categorylist}>
+                {categories.map((category, index) => (
+                  <NavLink
+                    to={`/category/${encodeURIComponent(category.name)}`}
+                    className={`${styles.linkPlant} ${styles.link}`}
+                    key={index}
+                    onClick={toggleMenu}
+                  >
+                    <li className={styles.categoryItem}>{category.name}</li>
+                  </NavLink>
+                ))}
+              </ul>
+            </div>
+          </>
+        ) : (
+          <>
+            <p>Willkommen {`${currentUser.username}`}, du bist eingeloggt!</p>
+            <div className={styles.user}>
               <NavLink
                 className={`${styles.linkHome} ${styles.link}`}
                 to="/"
@@ -50,12 +88,43 @@ const Headermobile = () => {
               >
                 Home
               </NavLink>
+              <NavLink to={`/`}>
+                <p
+                  onClick={handleLogout}
+                  className={`${styles.logout} ${styles.link}`}
+                >
+                  Logout
+                </p>
+              </NavLink>
+            </div>
+            <div className={`${styles.line} ${styles.user}`}>
               <NavLink
                 className={`${styles.linkUser} ${styles.link}`}
-                to="/login"
+                to={`/user/${currentUser.userID}`}
                 onClick={toggleMenu}
               >
-                Login
+                <p>Zum Konto</p>
+              </NavLink>
+              <NavLink
+                className={`${styles.link} ${styles.placead}`}
+                to="/placead"
+                onClick={toggleMenu}
+              >
+                <p>Anzeige erstellen</p>
+              </NavLink>
+              <NavLink
+                className={`${styles.link} ${styles.favourites}`}
+                to={`/user/${currentUser.userID}#favourites`}
+                onClick={toggleMenu}
+              >
+                <p>Favoriten</p>
+              </NavLink>
+              <NavLink
+                className={`${styles.link} ${styles.messages}`}
+                to={`/user/${currentUser.userID}/messages`}
+                onClick={toggleMenu}
+              >
+                <p>Nachrichten</p>
               </NavLink>
               <div className={styles.categories}>
                 <h3 className={styles.headline}>Kategorien</h3>
@@ -72,77 +141,10 @@ const Headermobile = () => {
                   ))}
                 </ul>
               </div>
-            </>
-          ) : (
-            <>
-              <p>Willkommen {`${currentUser.username}`}, du bist eingeloggt!</p>
-              <div className={styles.user}>
-                <NavLink
-                  className={`${styles.linkHome} ${styles.link}`}
-                  to="/"
-                  onClick={toggleMenu}
-                >
-                  Home
-                </NavLink>
-                <NavLink to={`/`}>
-                  <p
-                    onClick={handleLogout}
-                    className={`${styles.logout} ${styles.link}`}
-                  >
-                    Logout
-                  </p>{" "}
-                </NavLink>
-              </div>
-              <div className={`${styles.line} ${styles.user}`}>
-                {" "}
-                <NavLink
-                  className={`${styles.linkUser} ${styles.link}`}
-                  to={`/user/${currentUser.userID}`}
-                  onClick={toggleMenu}
-                >
-                  <p>Zum Konto</p>
-                </NavLink>{" "}
-                <NavLink
-                  className={`${styles.link} ${styles.placead}`}
-                  to="/placead"
-                  onClick={toggleMenu}
-                >
-                  <p>Anzeige erstellen</p>
-                </NavLink>{" "}
-                <NavLink
-                  className={`${styles.link} ${styles.favourites}`}
-                  to={`/user/${currentUser.userID}#favourites`}
-                  onClick={toggleMenu}
-                >
-                  <p>Favoriten</p>
-                </NavLink>{" "}
-                <NavLink
-                  className={`${styles.link} ${styles.messages}`}
-                  to={`/user/${currentUser.userID}/messages`}
-                  onClick={toggleMenu}
-                >
-                  <p>Nachrichten</p>
-                </NavLink>{" "}
-                <div className={styles.categories}>
-                  <h3 className={styles.headline}>Kategorien</h3>
-                  <ul className={styles.categorylist}>
-                    {categories.map((category, index) => (
-                      <NavLink
-                        to={`/category/${encodeURIComponent(category.name)}`}
-                        className={`${styles.linkPlant} ${styles.link}`}
-                        key={index}
-                        onClick={toggleMenu}
-                      >
-                        <li className={styles.categoryItem}>{category.name}</li>
-                      </NavLink>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-      )}
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 };

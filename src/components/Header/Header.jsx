@@ -19,6 +19,13 @@ const Header = () => {
   const currentUser = useUserStore((state) => state.currentUser);
   const setCurrentUser = useUserStore((state) => state.setCurrentUser);
   const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
+  const [confirmLogout, setConfirmLogout] = useState(false);
+
+  const handleLogoutClick = () => {
+    setConfirmLogout(true);
+    setShowPopup(true);
+  };
 
   const handleLogout = async () => {
     try {
@@ -31,6 +38,8 @@ const Header = () => {
 
       await signOut(auth);
       setCurrentUser(null);
+      setConfirmLogout(false);
+
       console.log("User successfully logged out.");
     } catch (error) {
       console.error("Error logging out:", error.message);
@@ -68,17 +77,19 @@ const Header = () => {
         <div>
           {currentUser ? (
             <div className={`${styles.nav}`}>
-              <p className={styles.loginFont}>
-                Willkommen{" "}
-                <span className={styles.user}>{`${currentUser.username}`}</span>{" "}
-              </p>
-
               <NavLink
                 className={styles.link}
                 to={`/user/${currentUser.userID}`}
               >
+                <p className={styles.loginFont}>
+                  Willkommen{" "}
+                  <span
+                    className={styles.user}
+                  >{`${currentUser.username}`}</span>{" "}
+                </p>
+
                 <img
-                  className={`${styles.imgLogin}`}
+                  className={`${styles.imgUser}`}
                   src="/assets/usericon.svg"
                   alt="userlogo"
                 />
@@ -91,11 +102,15 @@ const Header = () => {
               >
                 <img
                   className={`${styles.imgMessage}`}
-                  src="/assets/message.svg"
+                  src={
+                    unreadMessagesCount > 0
+                      ? "/assets/message_w.svg"
+                      : "/assets/message.svg"
+                  }
                   alt="nachrichtenfeld"
                 />
                 {unreadMessagesCount > 0 && (
-                  <p className={`${styles.login} ${styles.messages}`}>
+                  <p>
                     <span className={styles.unreadBadge}>
                       {unreadMessagesCount}
                     </span>
@@ -103,7 +118,10 @@ const Header = () => {
                 )}
               </NavLink>
               <NavLink to={`/`}>
-                <button onClick={handleLogout} className={styles.logoutButton}>
+                <button
+                  onClick={handleLogoutClick}
+                  className={styles.logoutButton}
+                >
                   Logout
                 </button>
               </NavLink>
@@ -125,6 +143,21 @@ const Header = () => {
       <div className={`${styles.searchbar}`}>
         <Searchbar />
       </div>
+
+      {confirmLogout && (
+        <div
+          className={styles.popupOverlay}
+          onClick={() => setConfirmLogout(false)}
+        >
+          <div className={styles.popupBox} onClick={(e) => e.stopPropagation()}>
+            <p>Möchtest du dich wirklich ausloggen?</p>
+            <div className={styles.popupButtons}>
+              <button onClick={handleLogout}>Ja</button>
+              <button onClick={() => setConfirmLogout(false)}>Abbrechen</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
