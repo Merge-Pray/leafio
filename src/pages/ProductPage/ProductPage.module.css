@@ -199,3 +199,9 @@
   .backButton:hover {
     background-color: #d0d0d0;
   }
+
+  .moreProductsWrapper {
+    margin-top: 0rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+  }
