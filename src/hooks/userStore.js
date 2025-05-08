@@ -5,7 +5,13 @@ const useUserStore = create(
   persist(
     (set) => ({
       currentUser: null,
-      setCurrentUser: (user) => set({ currentUser: user }),
+      setCurrentUser: (user) =>
+        set({
+          currentUser: {
+            userID: user.userID,
+            username: user.username,
+          },
+        }),
       clearUser: () => set({ currentUser: null }),
     }),
     {
