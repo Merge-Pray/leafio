@@ -174,3 +174,41 @@
   color: #888;
   margin-bottom: 0.5rem;
 }
+
+.viewButtons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.viewButton {
+  padding: 0.5rem 1rem;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.viewButton:hover {
+  background-color: #e0e0e0;
+}
+
+.viewButton.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.deleteButton:hover {
+  text-decoration: underline;
+}

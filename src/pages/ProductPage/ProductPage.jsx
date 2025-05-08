@@ -158,7 +158,17 @@ const ProductPage = () => {
       alert("Please fill in both the subject and message.");
       return;
     }
-
+    console.log({
+      senderID: currentUser.userID,
+      recipientID: product.userID,
+      content: messageContent,
+      title: messageTitle,
+      timestamp: serverTimestamp(),
+      isRead: false,
+      productId: product.id,
+      visibleForSender: true,
+      visibleForRecipient: true,
+    });
     try {
       await addDoc(collection(db, "messages"), {
         senderID: currentUser.userID,
@@ -168,6 +178,8 @@ const ProductPage = () => {
         timestamp: serverTimestamp(),
         isRead: false,
         productId: product.id,
+        visibleForSender: true,
+        visibleForRecipient: true,
       });
 
       alert("Message sent successfully!");
