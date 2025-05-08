@@ -43,3 +43,7 @@ body {
 .routercontent.mobile {
   margin-top: 70px;
 }
+
+body.splashing {
+  background-color: #0f6e30;
+}

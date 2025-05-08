@@ -14,7 +14,7 @@
 }
 
 .aboutPage h1 {
-  font-size: 2.2rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
   color: var(--dark--green);
   text-align: center;
@@ -106,4 +106,17 @@
 
 .backButton:hover {
   background-color: #1b382f;
+}
+
+.logoelement {
+  display: flex;
+  justify-content: center; /* horizontal zentrieren */
+  align-items: center;     /* vertikal zentrieren */
+  margin-bottom: 2rem;
+}
+
+.logo {
+  width: 20rem;
+  height: auto;
+  animation: wiggle 0.8s ease;
 }
