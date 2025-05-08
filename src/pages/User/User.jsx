@@ -20,15 +20,30 @@ import { db } from "../../config/firebaseConfig";
 const User = () => {
   const { userID } = useParams();
   const currentUser = useUserStore((state) => state.currentUser);
+  const [userData, setUserData] = useState(null);
   const [userAds, setUserAds] = useState([]);
-  const [favorites, setFavorites] = useState([]); // State für Favoriten
+  const [favorites, setFavorites] = useState([]);
   const [error, setError] = useState(null);
   const [editUserData, setEditUserData] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
+
+    if (!currentUser) {
+      setTimeout(() => {
+        navigate("/login");
+      }, 5000);
+    } else {
+      fetchUserData();
+      fetchUserAds();
+      fetchFavorites();
+    }
+  }, []);
+
+  useEffect(() => {
     window.history.scrollRestoration = "manual";
+
 
     if (location.hash && favorites.length > 0) {
       const id = location.hash.replace("#", "");
@@ -44,16 +59,21 @@ const User = () => {
     }
   }, [location.hash, favorites]);
 
-  useEffect(() => {
-    if (!currentUser) {
-      setTimeout(() => {
-        navigate("/login");
-      }, 5000);
-    } else {
-      fetchUserAds();
-      fetchFavorites();
+  const fetchUserData = async () => {
+    try {
+      const userRef = doc(db, "users", currentUser.userID);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        setUserData(userSnap.data());
+      } else {
+        setError("Benutzerdaten konnten nicht geladen werden.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Fehler beim Laden der Benutzerdaten.");
     }
-  }, []);
+  };
 
   const fetchUserAds = async () => {
     try {
@@ -140,9 +160,17 @@ const User = () => {
     );
   }
 
+  if (!userData) {
+    return (
+      <div className={styles.container}>
+        <h1 className={styles.errorCode}>Lade Benutzerdaten...</h1>
+      </div>
+    );
+  }
+
   return (
     <>
-      {!editUserData && currentUser !== null ? (
+      {!editUserData ? (
         <div className={styles.container}>
           <h1 className={styles.headline}>
             Willkommen{" "}
@@ -154,24 +182,23 @@ const User = () => {
             <div className={styles.box}>
               <p>
                 <span className={styles.userContent}>Emailadresse:</span>{" "}
-                {`${currentUser.email}`}
+                {`${userData.email}`}
               </p>
               <p>
                 <span className={styles.userContent}>Name: </span>
-                {`${currentUser.realName.first}`}{" "}
-                {`${currentUser.realName.last}`}
+                {`${userData.realName.first}`} {`${userData.realName.last}`}
               </p>
               <p>
                 <span className={styles.userContent}>Adresse: </span>{" "}
-                {`${currentUser.address.street}`},{" "}
-                {`${currentUser.address.zip}`} {`${currentUser.address.city}`}
+                {`${userData.address.street}`}, {`${userData.address.zip}`}{" "}
+                {`${userData.address.city}`}
               </p>
               <p>
                 {" "}
                 <span className={styles.userContent}>Mitglied seit: </span>
                 {new Date(
-                  currentUser.createdAt.seconds * 1000 +
-                    Math.floor(currentUser.createdAt.nanoseconds / 1_000_000)
+                  userData.createdAt.seconds * 1000 +
+                    Math.floor(userData.createdAt.nanoseconds / 1_000_000)
                 ).toLocaleString()}
               </p>
               <button

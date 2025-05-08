@@ -37,7 +37,7 @@ const Header = () => {
       }
 
       await signOut(auth);
-      setCurrentUser(null);
+      useUserStore.getState().clearUser();
       setConfirmLogout(false);
 
       console.log("User successfully logged out.");

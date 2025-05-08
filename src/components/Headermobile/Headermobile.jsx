@@ -11,7 +11,7 @@ const Headermobile = () => {
   const setCurrentUser = useUserStore((state) => state.setCurrentUser);
 
   const handleLogout = () => {
-    setCurrentUser(null);
+    useUserStore.getState().clearUser();
     setIsMenuOpen(false);
   };
 
