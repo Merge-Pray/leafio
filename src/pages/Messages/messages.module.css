@@ -175,7 +175,6 @@
   margin-bottom: 0.5rem;
 }
 
-
 .viewButtons {
   display: flex;
   gap: 1rem;
@@ -183,7 +182,7 @@
 }
 
 .viewButton {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.6rem;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -231,5 +230,4 @@
   .wrapper {
     width: 350px;
   }
-
 }
