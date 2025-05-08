@@ -14,7 +14,7 @@ import {
 import { db } from "../../config/firebaseConfig";
 import styles from "./messages.module.css";
 import useUserStore from "../../hooks/userStore";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
