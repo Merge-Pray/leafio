@@ -67,41 +67,46 @@ const Header = () => {
 
         <div>
           {currentUser ? (
-            <div>
+            <div className={`${styles.nav}`}>
               <p className={styles.loginFont}>
                 Willkommen{" "}
                 <span className={styles.user}>{`${currentUser.username}`}</span>{" "}
-                , du bist eingeloggt!
               </p>
-              <div className={`${styles.nav}`}>
-                <NavLink
-                  className={styles.link}
-                  to={`/user/${currentUser.userID}`}
-                >
-                  <p className={styles.loginFont}>Zum Konto</p>
-                </NavLink>
-                <NavLink
-                  className={`${styles.link} ${styles.messages}`}
-                  to={`/user/${currentUser.userID}/messages`}
-                >
-                  {unreadMessagesCount > 0 && (
-                    <p className={`${styles.login} ${styles.messages}`}>
-                      Neue Nachrichten
-                      <span className={styles.unreadBadge}>
-                        {unreadMessagesCount}
-                      </span>
-                    </p>
-                  )}
-                </NavLink>
-                <NavLink to={`/`}>
-                  <button
-                    onClick={handleLogout}
-                    className={styles.logoutButton}
-                  >
-                    Logout
-                  </button>
-                </NavLink>
-              </div>
+
+              <NavLink
+                className={styles.link}
+                to={`/user/${currentUser.userID}`}
+              >
+                <img
+                  className={`${styles.imgLogin}`}
+                  src="/assets/usericon.svg"
+                  alt="userlogo"
+                />
+              </NavLink>
+              <NavLink
+                className={`${styles.link} ${styles.messages} ${
+                  unreadMessagesCount > 0 ? styles.hasMessages : ""
+                }`}
+                to={`/user/${currentUser.userID}/messages`}
+              >
+                <img
+                  className={`${styles.imgMessage}`}
+                  src="/assets/message.svg"
+                  alt="nachrichtenfeld"
+                />
+                {unreadMessagesCount > 0 && (
+                  <p className={`${styles.login} ${styles.messages}`}>
+                    <span className={styles.unreadBadge}>
+                      {unreadMessagesCount}
+                    </span>
+                  </p>
+                )}
+              </NavLink>
+              <NavLink to={`/`}>
+                <button onClick={handleLogout} className={styles.logoutButton}>
+                  Logout
+                </button>
+              </NavLink>
             </div>
           ) : (
             <div>

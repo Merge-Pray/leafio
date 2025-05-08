@@ -24,6 +24,11 @@
   height: 20px;
 }
 
+.imgMessage {
+  width: 15px;
+  height: 15px;
+}
+
 .loginFont {
   font-family: "Poppins", sans-serif;
   font-weight: 600;
@@ -31,6 +36,9 @@
   padding: 0.1rem;
   color: black;
   text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 .loginFont2 {
   font-family: "Poppins", sans-serif;
@@ -46,15 +54,15 @@
 
 .nav {
   display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  flex-direction: row;
+  gap: 1rem;
 }
 
 .logoutButton {
   font-size: 0.9rem;
   background: var(--dark--green);
   height: 25px;
-  width: 130px;
+  width: 80px;
   margin: 0.1rem;
   padding: 0.1rem;
   border-radius: 1rem;
@@ -75,21 +83,6 @@
   color: black;
 }
 
-.link::before {
-  content: "";
-  width: 1rem;
-  height: 1rem;
-  margin-right: 0.5rem;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  background-repeat: no-repeat;
-}
-
-.messages::before {
-  background-image: url(/public/assets/envelope-solid.svg);
-}
-
 .user {
   color: var(--light--green);
 }
@@ -101,22 +94,19 @@
   justify-content: center;
   width: 2rem;
   height: 2rem;
+  background-color: #e0e0e0;
+  border-radius: 8px;
 }
 
 .unreadBadge {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
+  margin-left: 0.5rem;
   color: white;
-  font-size: 0.7rem;
   font-weight: bold;
-  border-radius: 50%;
+}
+
+.messages.hasMessages .unreadBadge {
+  color: white;
+  background-color: red;
   padding: 0.2rem 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 1.2rem;
-  height: 1.2rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 0.8rem;
 }
