@@ -11,6 +11,7 @@ import {
   query,
   where,
   getDocs,
+  onSnapshot,
 } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
@@ -37,24 +38,20 @@ const Header = () => {
   };
 
   useEffect(() => {
-    const fetchUnreadMessages = async () => {
-      if (!currentUser) return;
+    if (!currentUser) return;
 
-      try {
-        const messagesRef = collection(db, "messages");
-        const q = query(
-          messagesRef,
-          where("recipientID", "==", currentUser.userID),
-          where("isRead", "==", false)
-        );
-        const querySnapshot = await getDocs(q);
-        setUnreadMessagesCount(querySnapshot.size);
-      } catch (error) {
-        console.error("Error fetching unread messages:", error.message);
-      }
-    };
+    const messagesRef = collection(db, "messages");
+    const q = query(
+      messagesRef,
+      where("recipientID", "==", currentUser.userID),
+      where("isRead", "==", false)
+    );
 
-    fetchUnreadMessages();
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      setUnreadMessagesCount(snapshot.size);
+    });
+
+    return () => unsubscribe();
   }, [currentUser]);
 
   return (
