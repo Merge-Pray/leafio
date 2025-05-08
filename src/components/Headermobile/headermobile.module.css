@@ -71,6 +71,10 @@
   background-image: url(/public/assets/heart-solid.svg);
 }
 
+.messages::before {
+  background-image: url(/public/assets/envelope-white.svg);
+}
+
 .toggleMenu {
   position: fixed;
   top: 60px;

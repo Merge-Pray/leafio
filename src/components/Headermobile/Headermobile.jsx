@@ -116,6 +116,13 @@ const Headermobile = () => {
                 >
                   <p>Favoriten</p>
                 </NavLink>{" "}
+                <NavLink
+                  className={`${styles.link} ${styles.messages}`}
+                  to={`/user/${currentUser.userID}/messages`}
+                  onClick={toggleMenu}
+                >
+                  <p>Nachrichten</p>
+                </NavLink>{" "}
                 <div className={styles.categories}>
                   <h3 className={styles.headline}>Kategorien</h3>
                   <ul className={styles.categorylist}>

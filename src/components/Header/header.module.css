@@ -30,6 +30,7 @@
   font-size: 0.9rem;
   padding: 0.1rem;
   color: black;
+  text-align: center;
 }
 .loginFont2 {
   font-family: "Poppins", sans-serif;
@@ -45,7 +46,8 @@
 
 .nav {
   display: flex;
-  justify-content: space-evenly;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .logoutButton {
@@ -62,21 +64,59 @@
   cursor: pointer;
 }
 
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .link:visited {
   color: black;
+}
+
+.link::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  background-repeat: no-repeat;
+}
+
+.messages::before {
+  background-image: url(/public/assets/envelope-solid.svg);
 }
 
 .user {
   color: var(--light--green);
 }
 
+.messages {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+}
+
 .unreadBadge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
   background-color: red;
   color: white;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   font-weight: bold;
   border-radius: 50%;
   padding: 0.2rem 0.5rem;
-  margin-left: 0.5rem;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }

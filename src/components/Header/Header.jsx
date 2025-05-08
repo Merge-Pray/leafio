@@ -81,11 +81,11 @@ const Header = () => {
                   <p className={styles.loginFont}>Zum Konto</p>
                 </NavLink>
                 <NavLink
-                  className={styles.link}
+                  className={`${styles.link} ${styles.messages}`}
                   to={`/user/${currentUser.userID}/messages`}
                 >
                   {unreadMessagesCount > 0 && (
-                    <p className={styles.loginFont2}>
+                    <p className={`${styles.loginFont2} ${styles.messages}`}>
                       Neue Nachrichten
                       <span className={styles.unreadBadge}>
                         {unreadMessagesCount}
