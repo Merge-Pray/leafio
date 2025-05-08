@@ -177,6 +177,14 @@ const User = () => {
             </div>{" "}
           </section>
           <section className={styles.section}>
+            <NavLink
+              to={`/user/${currentUser.userID}/messages`}
+              className={`${styles.submitButton} ${styles.messagesButton}`}
+            >
+              Nachrichten anzeigen
+            </NavLink>
+          </section>
+          <section className={styles.section}>
             <h2 className={styles.headline}>Deine Anzeigen</h2>
             <NavLink
               to="/placead"

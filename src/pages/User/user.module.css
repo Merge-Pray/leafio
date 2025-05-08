@@ -160,3 +160,21 @@
     height: auto;
   }
 }
+
+.messagesButton {
+  display: inline-block;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  background-color: var(--dark--green);
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.messagesButton:hover {
+  background-color: #004d2d;
+}

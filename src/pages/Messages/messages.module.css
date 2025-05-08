@@ -1,0 +1,176 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  width: 600px;
+}
+
+.messagesContainer {
+  width: 100%;
+  max-width: 800px;
+  min-height: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.messagesContent {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.toggleButton {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--dark--green);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.toggleButton:hover {
+  background-color: #004d2d;
+}
+
+.noMessages {
+  text-align: center;
+  color: #666;
+  font-size: 1rem;
+  padding: 2rem 0;
+}
+
+.productGroup {
+  margin-bottom: 2rem;
+}
+
+.productTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--dark--green);
+}
+
+.messageItem {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+}
+
+.messageItem:hover {
+  background-color: #f0f0f0;
+}
+
+.messageTitle {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.messageBody {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.replyButton {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background-color: var(--dark--green);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.replyButton:hover {
+  background-color: #004d2d;
+}
+
+.productLink {
+  display: flex;
+  align-items: center;
+  color: var(--dark--green);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.productLink:hover {
+  text-decoration: underline;
+}
+
+.productImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.replyForm {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.replyInput {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.sendReplyButton {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  background-color: var(--dark--green);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sendReplyButton:hover {
+  background-color: #004d2d;
+}
+
+.messageMeta {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}

@@ -7,6 +7,9 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  addDoc,
+  collection,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import styles from "./ProductPage.module.css";
@@ -140,6 +143,41 @@ const ProductPage = () => {
     }
   };
 
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+
+    if (!currentUser) {
+      alert("You need to log in to send messages.");
+      return;
+    }
+
+    const messageContent = e.target.message.value.trim();
+    const messageTitle = e.target.subject.value.trim();
+
+    if (!messageContent || !messageTitle) {
+      alert("Please fill in both the subject and message.");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "messages"), {
+        senderID: currentUser.userID,
+        recipientID: product.userID,
+        content: messageContent,
+        title: messageTitle,
+        timestamp: serverTimestamp(),
+        isRead: false,
+        productId: product.id,
+      });
+
+      alert("Message sent successfully!");
+      setShowForm(false);
+    } catch (err) {
+      console.error("Error sending message:", err);
+      alert("Failed to send the message. Please try again.");
+    }
+  };
+
   if (loading) return <div className={styles.status}>Lade Produkt...</div>;
   if (error) return <div className={styles.status}>{error}</div>;
 
@@ -161,7 +199,6 @@ const ProductPage = () => {
       <div className={styles.infoSection}>
         <h1 className={styles.title}>{product.title}</h1>
         <span>
-
           <Link
             to={`/products?category=${encodeURIComponent(product.category)}`}
             className={styles.categoryLink}
@@ -196,7 +233,13 @@ const ProductPage = () => {
 
         <div className={styles.actions}>
           <button
-            onClick={() => setShowForm(!showForm)}
+            onClick={() => {
+              if (!currentUser) {
+                alert("You need to log in to send messages.");
+                return;
+              }
+              setShowForm(!showForm);
+            }}
             className={`${styles.actionButton} ${styles.messageButton}`}
           >
             Nachricht schreiben
@@ -219,13 +262,20 @@ const ProductPage = () => {
         </div>
 
         {showForm && (
-          <form className={styles.contactForm}>
+          <form className={styles.contactForm} onSubmit={handleSendMessage}>
             <input
               type="text"
+              name="subject"
               placeholder="Betreff (z. B. Interesse an Ihrem Angebot)"
               className={styles.subjectInput}
+              required
             />
-            <textarea placeholder="Deine Nachricht an den/die Verkäufer*in..." />
+            <textarea
+              name="message"
+              placeholder="Deine Nachricht an den/die Verkäufer*in..."
+              className={styles.messageInput}
+              required
+            />
             <button type="submit" className={styles.actionButton}>
               Senden
             </button>

@@ -1,14 +1,23 @@
+import React, { useEffect, useState } from "react";
 import styles from "./header.module.css";
 import useUserStore from "../../hooks/userStore";
 import Searchbar from "../Searchbar/Searchbar";
 import { NavLink } from "react-router";
 import { auth, db } from "../../config/firebaseConfig";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
 const Header = () => {
   const currentUser = useUserStore((state) => state.currentUser);
   const setCurrentUser = useUserStore((state) => state.setCurrentUser);
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
 
   const handleLogout = async () => {
     try {
@@ -27,11 +36,31 @@ const Header = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchUnreadMessages = async () => {
+      if (!currentUser) return;
+
+      try {
+        const messagesRef = collection(db, "messages");
+        const q = query(
+          messagesRef,
+          where("recipientID", "==", currentUser.userID),
+          where("isRead", "==", false)
+        );
+        const querySnapshot = await getDocs(q);
+        setUnreadMessagesCount(querySnapshot.size);
+      } catch (error) {
+        console.error("Error fetching unread messages:", error.message);
+      }
+    };
+
+    fetchUnreadMessages();
+  }, [currentUser]);
+
   return (
     <>
       <div className={`${styles.header}`}>
         <NavLink to="/">
-          {" "}
           <img
             className={`${styles.imgLogo}`}
             src="/assets/logo.svg"
@@ -48,12 +77,24 @@ const Header = () => {
                 , du bist eingeloggt!
               </p>
               <div className={`${styles.nav}`}>
-                {" "}
                 <NavLink
                   className={styles.link}
                   to={`/user/${currentUser.userID}`}
                 >
                   <p className={styles.loginFont}>Zum Konto</p>
+                </NavLink>
+                <NavLink
+                  className={styles.link}
+                  to={`/user/${currentUser.userID}/messages`}
+                >
+                  {unreadMessagesCount > 0 && (
+                    <p className={styles.loginFont2}>
+                      Neue Nachrichten
+                      <span className={styles.unreadBadge}>
+                        {unreadMessagesCount}
+                      </span>
+                    </p>
+                  )}
                 </NavLink>
                 <NavLink to={`/`}>
                   <button
@@ -67,14 +108,12 @@ const Header = () => {
             </div>
           ) : (
             <div>
-              {" "}
               <NavLink className={`${styles.login}`} to="/login">
                 <img
                   className={`${styles.imgLogin}`}
                   src="/assets/user-solid.svg"
                   alt="userlogo"
                 />
-
                 <p className={`${styles.loginFont}`}>Login</p>
               </NavLink>
             </div>
@@ -87,4 +126,5 @@ const Header = () => {
     </>
   );
 };
+
 export default Header;

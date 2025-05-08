@@ -50,6 +50,7 @@ const Register = () => {
         setErrorMessage("Passwords do not match.");
         return;
       }
+
       const usersRef = collection(db, "users");
 
       const usernameQuery = query(
@@ -57,21 +58,15 @@ const Register = () => {
         where("username", "==", formData.username)
       );
       const usernameSnapshot = await getDocs(usernameQuery);
-
       if (!usernameSnapshot.empty) {
-        setErrorMessage(
-          "Username is already taken. Please choose another one."
-        );
+        setErrorMessage("Username is already taken.");
         return;
       }
 
       const emailQuery = query(usersRef, where("email", "==", formData.email));
       const emailSnapshot = await getDocs(emailQuery);
-
       if (!emailSnapshot.empty) {
-        setErrorMessage(
-          "Email is already registered. Please use another email."
-        );
+        setErrorMessage("Email is already registered.");
         return;
       }
 
