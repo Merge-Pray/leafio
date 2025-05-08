@@ -66,6 +66,12 @@ const UserBar = () => {
             >
               <p className={styles.label}>Anzeigen</p>
             </div>
+            <div
+              className={`${styles.link} ${styles.placead}`}
+              onClick={() => handleClick("/login")}
+            >
+              <p className={styles.label}>Neue Anzeige</p>
+            </div>
           </>
         )}
       </div>
