@@ -225,6 +225,7 @@
 
 .restoreButton:hover {
   text-decoration: underline;
+}
 
 @media (max-width: 769px) {
   .wrapper {
