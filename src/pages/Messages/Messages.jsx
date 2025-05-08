@@ -14,7 +14,7 @@ import {
 import { db } from "../../config/firebaseConfig";
 import styles from "./messages.module.css";
 import useUserStore from "../../hooks/userStore";
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -169,7 +169,7 @@ const Messages = () => {
             return (
               <div key={productId} className={styles.productGroup}>
                 <h3 className={styles.productTitle}>
-                  <Link
+                  <NavLink
                     to={`/product/${productId}`}
                     className={styles.productLink}
                   >
@@ -185,7 +185,7 @@ const Messages = () => {
                     ) : (
                       `Product ID: ${productId}`
                     )}
-                  </Link>
+                  </NavLink>
                 </h3>
                 {messages.map((message) => (
                   <div key={message.id} className={styles.messageItem}>

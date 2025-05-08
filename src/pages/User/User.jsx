@@ -179,7 +179,7 @@ const User = () => {
           <section className={styles.section}>
             <NavLink
               to={`/user/${currentUser.userID}/messages`}
-              className={`${styles.submitButton} ${styles.messagesButton}`}
+              className={`${styles.submitButton} ${styles.editButton}`}
             >
               Nachrichten anzeigen
             </NavLink>
