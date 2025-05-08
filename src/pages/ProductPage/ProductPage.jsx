@@ -14,6 +14,7 @@ import {
 import { db } from "../../config/firebaseConfig";
 import styles from "./ProductPage.module.css";
 import useUserStore from "../../hooks/userStore";
+import MoreProducts from "../../components/MoreProducts/MoreProducts";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -317,6 +318,9 @@ const ProductPage = () => {
           </p>
         </div>
       )}
+      <div className={styles.moreProductsWrapper}>
+  <MoreProducts />
+</div>
     </section>
   );
 };
