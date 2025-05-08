@@ -10,29 +10,20 @@ import {
   arrayUnion,
   doc,
   serverTimestamp,
+  getDoc,
 } from "firebase/firestore";
-
 import useUserStore from "../../hooks/userStore";
-
 import { useNavigate } from "react-router";
 
 const PlaceAd = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!currentUser) {
-      setTimeout(() => {
-        navigate("/login");
-      }, 5000);
-    }
-  }, []);
-
   const currentUser = useUserStore((state) => state.currentUser);
+  const [userData, setUserData] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     price: "",
     description: "",
   });
-
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedFlags, setSelectedFlags] = useState([]);
@@ -42,6 +33,31 @@ const PlaceAd = () => {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+
+  useEffect(() => {
+    if (!currentUser) {
+      setTimeout(() => {
+        navigate("/login");
+      }, 5000);
+    } else {
+      fetchUserData();
+    }
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      const userRef = doc(db, "users", currentUser.userID);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        setUserData(userSnap.data());
+      } else {
+        setError("Benutzerdaten konnten nicht geladen werden.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Fehler beim Laden der Benutzerdaten.");
+    }
+  };
 
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
@@ -61,13 +77,11 @@ const PlaceAd = () => {
     setUploadProgress(0);
     const urls = [];
     const filenames = [];
-
     for (const file of images) {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", "ebqndymu");
       formData.append("folder", `ads/${currentUser.userID}`);
-
       try {
         const response = await fetch(
           `https://api.cloudinary.com/v1_1/dgzbudchq/image/upload`,
@@ -76,11 +90,9 @@ const PlaceAd = () => {
             body: formData,
           }
         );
-
         if (!response.ok) {
           throw new Error("Fehler beim Hochladen eines oder mehrerer Bilder.");
         }
-
         const data = await response.json();
         urls.push(data.secure_url);
         filenames.push(file.name);
@@ -92,7 +104,6 @@ const PlaceAd = () => {
         return;
       }
     }
-
     setImageURLs(urls);
     setIsUploading(false);
     setUploadedFiles(filenames);
@@ -108,34 +119,28 @@ const PlaceAd = () => {
     e.preventDefault();
     setError("");
     setSuccessMessage("");
-
     if (!currentUser) {
       setError("Du musst eingeloggt sein, um eine Anzeige zu erstellen.");
       return;
     }
-
     if (images.length === 0) {
       setError("Du musst mindestens ein Bild hochladen.");
       return;
     }
-
     if (isUploading) {
       setError("Bitte warte, bis die Bilder hochgeladen wurden.");
       return;
     }
-
     if (imageURLs.length === 0 && images.length > 0) {
       setError(
         "Die Bilder konnten nicht hochgeladen werden. Bitte versuche es erneut."
       );
       return;
     }
-
     if (!selectedCategory) {
       setError("Bitte wähle eine Kategorie.");
       return;
     }
-
     try {
       const adData = {
         title: formData.title,
@@ -148,24 +153,19 @@ const PlaceAd = () => {
         likes: 0,
         images: imageURLs,
         location: {
-          city: currentUser.address?.city || "",
-          zip: currentUser.address?.zip || "",
-          street: currentUser.address?.street || "",
+          city: userData?.address?.city || "",
+          zip: userData?.address?.zip || "",
+          street: userData?.address?.street || "",
         },
         userID: currentUser.userID,
       };
-
       const adRef = await addDoc(collection(db, "allads"), adData);
-
       const adID = adRef.id;
-
       await updateDoc(adRef, { adID });
-
       const userRef = doc(db, "users", currentUser.userID);
       await updateDoc(userRef, {
         ownAds: arrayUnion(adID),
       });
-
       setSuccessMessage("Anzeige erfolgreich erstellt!");
       setFormData({ title: "", price: "", description: "" });
       setSelectedCategory("");
@@ -185,7 +185,6 @@ const PlaceAd = () => {
     return (
       <div className={styles.container}>
         <h1 className={styles.errorCode}>Du musst dich einloggen!</h1>
-
         <p className={styles.subtext}>
           Du wirst automatisch zum Login weitergeleitet...
         </p>
@@ -227,12 +226,10 @@ const PlaceAd = () => {
           onChange={handleChange}
           required
         />
-
         <CategorySelector
           onCategoryChange={setSelectedCategory}
           onFlagsChange={setSelectedFlags}
         />
-
         <input
           id="fileInput"
           className={styles.hiddenFileInput}
@@ -241,11 +238,9 @@ const PlaceAd = () => {
           multiple
           onChange={handleFileChange}
         />
-
         <label htmlFor="fileInput" className={styles.customFileButton}>
           Bilder auswählen
         </label>
-
         {images.length > 0 && !isUploading && (
           <button
             type="button"
@@ -255,7 +250,6 @@ const PlaceAd = () => {
             Bilder hochladen
           </button>
         )}
-
         {isUploading && (
           <div className={styles.progressBarContainer}>
             <div
@@ -266,7 +260,6 @@ const PlaceAd = () => {
             </div>
           </div>
         )}
-
         {uploadedFiles.length > 0 && (
           <div className={styles.fileNamesContainer}>
             <h3>Hochgeladene Dateien:</h3>
@@ -279,12 +272,10 @@ const PlaceAd = () => {
             </ul>
           </div>
         )}
-
         {error && <p className={styles.errorMessage}>{error}</p>}
         {successMessage && (
           <p className={styles.successMessage}>{successMessage}</p>
         )}
-
         <button
           type="submit"
           className={styles.submitButton}
@@ -295,7 +286,6 @@ const PlaceAd = () => {
           Anzeige erstellen
         </button>
       </form>
-
       {imageURLs.length > 0 && (
         <div className={styles.imagePreviewContainer}>
           {imageURLs.map((url, idx) => (
