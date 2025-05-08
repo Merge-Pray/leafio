@@ -1,6 +1,6 @@
 // src/components/SplashScreen/SplashScreen.jsx
 import { useEffect } from "react";
-import styles from "./SplashScreen.module.css";
+import styles from "./splashScreen.module.css";
 import logo from "/assets/logo_w.svg"; // Pfad anpassen!
 
 const SplashScreen = ({ onFinish }) => {
