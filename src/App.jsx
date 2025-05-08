@@ -17,21 +17,42 @@ import ProductList from "./pages/ProductList/ProductList";
 import EditAd from "./pages/EditAd/EditAd";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Messages from "./pages/Messages/Messages";
+import SplashScreen from "./components/SplashScreen/SplashScreen";
 
 function App() {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
+  const [showSplash, setShowSplash] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 769px)");
     const handleChange = (e) => setIsDesktop(e.matches);
-
     mediaQuery.addEventListener("change", handleChange);
+
+    // Splash nur auf Mobilgeräten beim ersten Besuch
+    const isMobile = window.innerWidth < 768;
+    const splashSeen = localStorage.getItem("splashSeen");
+
+    if (isMobile && !splashSeen) {
+      setShowSplash(true);
+      localStorage.setItem("splashSeen", "true");
+      document.body.classList.add("splashing");
+    }
+
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
+  useEffect(() => {
+    if (!showSplash) {
+      document.body.classList.remove("splashing");
+    }
+  }, [showSplash]);
+
+  if (showSplash) {
+    return <SplashScreen onFinish={() => setShowSplash(false)} />;
+  }
+
   return (
     <>
-      {" "}
       <ScrollToTop />
       {isDesktop ? <Header /> : <Headermobile />}
       <section className={`routercontent ${!isDesktop ? "mobile" : ""}`}>
@@ -46,10 +67,7 @@ function App() {
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/category/:category" element={<ProductList />} />
           <Route path="/products" element={<ProductList />} />
-          <Route
-            path="/product/productnotfound"
-            element={<ProductNotFound />}
-          />
+          <Route path="/product/productnotfound" element={<ProductNotFound />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/editad/:adID" element={<EditAd />} />
         </Routes>
