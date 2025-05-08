@@ -40,7 +40,6 @@
   margin: 0.5rem;
   width: 1000px;
   border-radius: 1rem;
-  
 }
 
 .selectSearchbar {
@@ -51,17 +50,16 @@
   padding: 0.2rem;
   border-radius: 1rem;
   font-family: "Poppins", sans-serif;
-  
 }
 
 .buttonSearchbar {
   font-size: 1rem;
-  background: var(--dark--green);
+  background: var(--light--green);
   height: 35px;
   width: 130px;
   margin: 0.2rem;
   padding: 0.2rem;
-  border-radius: 1rem;
+  border-radius: 8px;
   color: white;
   border: none;
   font-family: "Poppins", sans-serif;
