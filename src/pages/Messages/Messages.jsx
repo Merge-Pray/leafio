@@ -18,7 +18,7 @@ import { NavLink } from "react-router";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
-  const [view, setView] = useState("received"); // Standardansicht ist "Empfangen"
+  const [view, setView] = useState("received");
   const [expandedMessage, setExpandedMessage] = useState(null);
   const [replyingTo, setReplyingTo] = useState(null);
   const [replyContent, setReplyContent] = useState("");
@@ -36,7 +36,6 @@ const Messages = () => {
         let q;
 
         if (view === "received") {
-          // Fetch received messages
           q = query(
             messagesRef,
             where("recipientID", "==", currentUser.userID),
@@ -44,7 +43,6 @@ const Messages = () => {
             orderBy("timestamp", "desc")
           );
         } else if (view === "sent") {
-          // Fetch sent messages
           q = query(
             messagesRef,
             where("senderID", "==", currentUser.userID),
@@ -52,7 +50,6 @@ const Messages = () => {
             orderBy("timestamp", "desc")
           );
         } else if (view === "trash") {
-          // Fetch messages in the trash
           const receivedTrashQuery = query(
             messagesRef,
             where("recipientID", "==", currentUser.userID),
@@ -193,18 +190,13 @@ const Messages = () => {
       const messageRef = doc(db, "messages", message.id);
 
       if (currentUser.userID === message.recipientID) {
-        // Set visibleForRecipient to false
         await updateDoc(messageRef, { visibleForRecipient: false });
       } else if (currentUser.userID === message.senderID) {
-        // Set visibleForSender to false
         await updateDoc(messageRef, { visibleForSender: false });
       }
-
-      // Remove the message from the UI
       setMessages((prevMessages) =>
         prevMessages.filter((msg) => msg.id !== message.id)
       );
-
       alert("Nachricht erfolgreich gelöscht.");
     } catch (err) {
       console.error("Fehler beim Löschen der Nachricht:", err);
@@ -219,14 +211,10 @@ const Messages = () => {
       const messageRef = doc(db, "messages", message.id);
 
       if (currentUser.userID === message.recipientID) {
-        // Restore visibleForRecipient
         await updateDoc(messageRef, { visibleForRecipient: true });
       } else if (currentUser.userID === message.senderID) {
-        // Restore visibleForSender
         await updateDoc(messageRef, { visibleForSender: true });
       }
-
-      // Remove the message from the trash view
       setMessages((prevMessages) =>
         prevMessages.filter((msg) => msg.id !== message.id)
       );
