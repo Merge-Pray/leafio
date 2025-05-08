@@ -1,13 +1,18 @@
 import styles from "./about.module.css";
 import { NavLink } from "react-router";
+import logo from "/assets/logo.svg";
 
 const About = () => {
   return (
     <div className={styles.aboutPage}>
-      <h1>Über Leafio</h1>
 
+<div className={styles.logoelement}>
+      <img src={logo} alt="Logo" className={styles.logo} />
+    </div>
+      {/* <h1>Über Leafio</h1> */}
       <section>
         <h2>🌱 Was ist Leafio?</h2>
+
         <p>
           Leafio ist eine Plattform für Pflanzen-Kleinanzeigen – entwickelt mit React, Firebase
           und einem klaren Ziel: Anzeigen, die stilvoll sind. Du kannst Pflanzen verschenken, geschenkt bekommen, kaufen,
@@ -19,9 +24,11 @@ const About = () => {
       <section>
         <h2>🔧 Funktionen</h2>
         <ul>
+        <li>Userverwaltung mit eigenem Konto</li>
           <li>Erstellen & Verwalten von Pflanzenanzeigen</li>
           <li>Suche nach Titel, Beschreibung, Kategorie oder Stadt</li>
           <li>Liken, Teilen & Anzeigenkarten mit Standort</li>
+          <li>Nachrichten System für Nutzer</li>
           <li>Mobile-freundlich & voll responsive</li>
         </ul>
       </section>
