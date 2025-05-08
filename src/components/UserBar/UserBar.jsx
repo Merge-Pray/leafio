@@ -39,6 +39,12 @@ const UserBar = () => {
             >
               <p className={styles.label}>Meine Anzeigen</p>
             </NavLink>
+            <NavLink
+              className={`${styles.link} ${styles.placead}`}
+              to={`/user/${currentUser.userID}/placeAd`}
+            >
+              <p className={styles.label}>Neue Anzeige</p>
+            </NavLink>
           </>
         ) : (
           <>
@@ -65,16 +71,19 @@ const UserBar = () => {
       </div>
 
       {showPopup && (
-  <div className={styles.popupOverlay} onClick={() => setShowPopup(false)}>
-    <div className={styles.popupBox} onClick={(e) => e.stopPropagation()}>
-      <p>Bitte logge Dich ein, um fortzufahren.</p>
-      <div className={styles.popupButtons}>
-        <button onClick={() => navigate("/login")}>Zum Login</button>
-        <button onClick={() => setShowPopup(false)}>Jetzt nicht</button>
-      </div>
-    </div>
-  </div>
-)}
+        <div
+          className={styles.popupOverlay}
+          onClick={() => setShowPopup(false)}
+        >
+          <div className={styles.popupBox} onClick={(e) => e.stopPropagation()}>
+            <p>Bitte logge Dich ein, um fortzufahren.</p>
+            <div className={styles.popupButtons}>
+              <button onClick={() => navigate("/login")}>Zum Login</button>
+              <button onClick={() => setShowPopup(false)}>Jetzt nicht</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
