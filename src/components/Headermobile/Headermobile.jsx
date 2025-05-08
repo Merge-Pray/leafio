@@ -33,7 +33,7 @@ const Headermobile = () => {
         <img
           className={`${styles.imgMobile} ${styles.imgNav}
           ${isMenuOpen ? styles.imgNavOpen : ""}`}
-          src="/assets/burger_w.svg"
+          src="/assets/burger_b.svg"
           alt="logo"
           onClick={toggleMenu}
         />
