@@ -1,10 +1,15 @@
 .container {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 450px;
   margin: 2rem auto;
   background: #ffffff;
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .headline {
@@ -18,7 +23,9 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
+  padding: 0 2rem;
 }
 
 .textInput {
@@ -86,4 +93,14 @@
 .eyeIconImage {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+@media (min-width: 769px) {
+  .container {
+    width: 600px;
+  }
+
+  .formcontainer {
+    width: 500px;
+  }
 }
