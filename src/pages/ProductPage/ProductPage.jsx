@@ -211,7 +211,7 @@ const ProductPage = () => {
         <h1 className={styles.title}>{product.title}</h1>
         <span>
           <Link
-            to={`/products?category=${encodeURIComponent(product.category)}`}
+            to={`/category/${encodeURIComponent(product.category)}`}
             className={styles.categoryLink}
           >
             {product.category}
