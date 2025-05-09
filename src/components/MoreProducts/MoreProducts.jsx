@@ -4,7 +4,7 @@ import { db } from "../../config/firebaseConfig";
 import styles from "./moreProducts.module.css"; 
 import { NavLink } from "react-router";
 
-const MoreProducts = () => {
+const MoreProducts = ({ excludeId }) => {
   const [ads, setAds] = useState([]);
   const [error, setError] = useState(null);
 
@@ -18,8 +18,11 @@ const MoreProducts = () => {
           ...doc.data(),
         }));
 
+        // 🔍 Aktuelles Produkt herausfiltern
+        const filteredAds = allAds.filter((ad) => ad.id !== excludeId);
+
         // 🔀 Zufällig mischen und 4 nehmen
-        const shuffled = allAds.sort(() => 0.5 - Math.random());
+        const shuffled = filteredAds.sort(() => 0.5 - Math.random());
         const selected = shuffled.slice(0, 4);
 
         setAds(selected);
@@ -30,7 +33,7 @@ const MoreProducts = () => {
     };
 
     fetchRandomAds();
-  }, []);
+  }, [excludeId]);
 
   if (error) return <div>{error}</div>;
   if (ads.length === 0) return null;

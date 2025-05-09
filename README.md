@@ -24,4 +24,3 @@ Dieses Projekt dient zugleich der praktischen Anwendung von im Kurs gelernten We
 https://excalidraw.com/#room=704a7e2eedaac491a4dd,Y53Ynffv9YiQ6SSWkM22Sg
 
 https://pads.ccc.de/sarahcalleben
-

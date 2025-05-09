@@ -318,7 +318,7 @@ const ProductPage = () => {
         </div>
       )}
       <div className={styles.moreProductsWrapper}>
-        <MoreProducts />
+        <MoreProducts excludeId={product.id} />
       </div>
     </section>
   );
