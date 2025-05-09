@@ -321,6 +321,20 @@ const Messages = () => {
                     {expandedMessage === message.id && (
                       <div className={styles.messageBody}>
                         <p>{message.content}</p>
+                        {view !== "trash" && (
+                          <button
+                            onClick={() =>
+                              setReplyingTo(
+                                replyingTo === message.id ? null : message.id
+                              )
+                            }
+                            className={styles.replyButton}
+                          >
+                            {replyingTo === message.id
+                              ? "Antwort abbrechen"
+                              : "Antworten"}
+                          </button>
+                        )}
                         {view === "trash" ? (
                           <button
                             onClick={() => handleRestore(message)}
@@ -336,20 +350,7 @@ const Messages = () => {
                             Löschen
                           </button>
                         )}
-                        {view !== "trash" && (
-                          <button
-                            onClick={() =>
-                              setReplyingTo(
-                                replyingTo === message.id ? null : message.id
-                              )
-                            }
-                            className={styles.replyButton}
-                          >
-                            {replyingTo === message.id
-                              ? "Antwort abbrechen"
-                              : "Antworten"}
-                          </button>
-                        )}
+
                         {replyingTo === message.id && view !== "trash" && (
                           <form
                             className={styles.replyForm}
