@@ -95,6 +95,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .messageBody {
@@ -234,4 +237,13 @@
   .wrapper {
     width: 360px;
   }
+}
+
+.arrowIcon {
+  width: 12px;
+  height: 12px;
+  margin-left: 8px;
+  margin-bottom: 3px;
+  vertical-align: middle;
+  transition: transform 0.3s ease;
 }

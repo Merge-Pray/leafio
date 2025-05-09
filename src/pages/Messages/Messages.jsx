@@ -317,6 +317,13 @@ const Messages = () => {
                       onClick={() => toggleMessage(message.id)}
                     >
                       {message.title}
+                      <img
+                        src={`/assets/arrow-${
+                          expandedMessage === message.id ? "up" : "down"
+                        }-solid.svg`}
+                        alt="epxand"
+                        className={styles.arrowIcon}
+                      />
                     </div>
                     {expandedMessage === message.id && (
                       <div className={styles.messageBody}>
