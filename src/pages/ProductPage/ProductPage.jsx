@@ -270,6 +270,47 @@ const ProductPage = () => {
           >
             📤 Teilen {shared && "(Kopiert ✔)"}
           </button>
+          <div className={styles.shareIcons}>
+  <a
+    href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=Schau%20dir%20diese%20Pflanze%20an!`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={styles.iconButton}
+    title="Auf Twitter teilen"
+  >
+    <img src="/assets/twitter.svg" alt="Twitter" />
+  </a>
+
+  <a
+    href={`https://bsky.app/intent/compose?text=${encodeURIComponent("Schau dir diese Pflanze an: " + window.location.href)}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={styles.iconButton}
+    title="Auf Bluesky teilen"
+  >
+    <img src="/assets/bluesky.svg" alt="Bluesky" />
+  </a>
+
+  <a
+    href="https://www.instagram.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className={styles.iconButton}
+    title="Auf Instagram teilen (Screenshot posten)"
+  >
+    <img src="/assets/instagram.svg" alt="Instagram" />
+  </a>
+
+  <a
+    href={`https://signal.me/#p/text=${encodeURIComponent("Check das hier: " + window.location.href)}`}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={styles.iconButton}
+    title="Per Signal teilen"
+  >
+    <img src="/assets/signal.svg" alt="Signal" />
+  </a>
+</div>
         </div>
 
         {showForm && (
